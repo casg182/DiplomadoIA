@@ -1,0 +1,105 @@
+============================================================
+  INSTRUCCIONES DE INSTALACIÓN - MACRO NUEVA SOCIEDAD
+============================================================
+
+REQUISITOS:
+  - Microsoft Excel 2010 o superior
+  - Macros habilitadas (.xlsm)
+
+------------------------------------------------------------
+PASO 1 - CREAR EL LIBRO
+------------------------------------------------------------
+1. Abrir Excel
+2. Crear un libro nuevo
+3. Guardar como tipo: "Libro de Excel habilitado para macros (*.xlsm)"
+   Nombre sugerido: NuevaSociedad.xlsm
+
+------------------------------------------------------------
+PASO 2 - IMPORTAR EL MÓDULO PRINCIPAL
+------------------------------------------------------------
+1. Presionar Alt + F11 para abrir el Editor de Visual Basic
+2. En el menú: Archivo > Importar archivo...
+   - Seleccionar el archivo: NuevaSociedad_Macro.bas
+   - Clic en Abrir
+
+   --- ALTERNATIVA (copiar y pegar) ---
+   a. En el Editor VBA: Insertar > Módulo
+   b. Copiar TODO el contenido de NuevaSociedad_Macro.bas
+   c. Pegarlo en el módulo vacío
+
+------------------------------------------------------------
+PASO 3 - AGREGAR EL EVENTO DE LA HOJA (actualización automática)
+------------------------------------------------------------
+1. En el panel izquierdo del Editor VBA, expandir "Hojas"
+   (aparecerá después de ejecutar la macro por primera vez)
+2. Buscar "Formulario" y hacer doble clic
+3. Copiar el contenido de HojaFormulario_Evento.bas
+   y pegarlo en la ventana que se abre
+   (IMPORTANTE: pegar solo el contenido DENTRO de los subs,
+   sin la primera línea "Attribute VB_Name...")
+
+   --- CUÁNDO HACERLO ---
+   Este paso se hace DESPUÉS de ejecutar InicializarFormulario
+   por primera vez, ya que la hoja se crea en ese momento.
+
+------------------------------------------------------------
+PASO 4 - EJECUTAR LA MACRO DE INICIALIZACIÓN
+------------------------------------------------------------
+1. Cerrar el Editor VBA
+2. En Excel: Herramientas > Macro > Macros
+   (o presionar Alt + F8)
+3. Seleccionar: InicializarFormulario
+4. Clic en "Ejecutar"
+
+La macro creará automáticamente:
+  ✅ Hoja "Formulario" con las 29 preguntas
+  ✅ Hoja "BaseDatos" con opciones configurables
+  ✅ 12 hojas de módulo (ocultas inicialmente):
+     - GL - Contabilidad
+     - AP - Ctas por Pagar
+     - AR - Ctas por Cobrar
+     - AA - Activos Fijos
+     - FM - Presupuesto
+     - FI - Config. Financiera
+     - CO-GL - Lugares
+     - ICO - Intercompañía
+     - SD - Facturación
+     - Tesorería
+     - Tes. Avanzada
+     - CO - Centros Costo
+
+------------------------------------------------------------
+INSTRUCCIONES DE USO
+------------------------------------------------------------
+1. Diligenciar las preguntas en la columna "Respuesta" (E)
+2. Para preguntas Sí/No: usar el desplegable
+3. Para listas configurables (azul claro): consultar la
+   hoja "BaseDatos" y escribir el valor seleccionado
+4. Presionar el botón "ACTUALIZAR HOJAS DE CONFIGURACIÓN"
+   para habilitar las hojas según las respuestas
+
+LÓGICA DE HABILITACIÓN:
+  - GL (Contabilidad): SIEMPRE visible
+  - FI (Config. Financiera): SIEMPRE visible
+  - AP (Cuentas por Pagar): se habilita si Q8 = Sí
+  - AR (Cuentas por Cobrar): se habilita si Q9 = Sí
+  - AA (Activos Fijos): se habilita si Q10 = Sí
+  - FM (Presupuesto): se habilita si Q13 = Sí
+  - CO-GL (Lugares): se habilita si Q17 = Sí
+  - ICO (Intercompañía): se habilita si Q20 tiene valor
+  - SD (Facturación): se habilita si Q23 = Sí
+  - Tesorería: se habilita si Q24 tiene valor
+  - Tes. Avanzada: se habilita si Q26 = Sí
+  - CO (Centros Costo): se habilita si Q28 tiene valor
+
+------------------------------------------------------------
+PERSONALIZACIÓN
+------------------------------------------------------------
+- Para agregar opciones a los desplegables: editar la
+  hoja "BaseDatos" directamente
+- Para cambiar colores o diseño: modificar las funciones
+  ObtenerColorModulo() y CrearHojaFormulario() en el módulo
+- Para agregar nuevas preguntas: modificar el arreglo
+  "preguntas()" en CrearHojaFormulario()
+
+============================================================
