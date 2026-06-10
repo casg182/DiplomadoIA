@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configurador de Sociedades SAP S/4HANA — Artefacto de prueba</title>
+<style>
+  :root {
+    --azul: #0a6ed1;
+    --azul-oscuro: #0854a0;
+    --gris-fondo: #f5f6f7;
+    --gris-borde: #d9d9d9;
+    --texto: #32363a;
+    --verde: #107e3e;
+    --naranja: #e9730c;
+    --rojo: #bb0000;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--gris-fondo);
+    color: var(--texto);
+  }
+  header {
+    background: linear-gradient(90deg, var(--azul-oscuro), var(--azul));
+    color: #fff;
+    padding: 16px 24px;
+  }
+  header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+  header p { margin: 4px 0 0; font-size: 13px; opacity: .85; }
+  nav {
+    background: #fff;
+    border-bottom: 1px solid var(--gris-borde);
+    display: flex;
+    gap: 4px;
+    padding: 0 24px;
+  }
+  nav button {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 12px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--texto);
+  }
+  nav button.activo {
+    border-bottom-color: var(--azul);
+    color: var(--azul);
+    font-weight: 600;
+  }
+  main { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  .tarjeta {
+    background: #fff;
+    border: 1px solid var(--gris-borde);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .tarjeta h2 { margin: 0 0 4px; font-size: 16px; color: var(--azul-oscuro); }
+  .tarjeta h3 { margin: 16px 0 8px; font-size: 14px; }
+  .pregunta { padding: 14px 0; border-bottom: 1px solid #eee; }
+  .pregunta:last-child { border-bottom: none; }
+  .pregunta label.titulo { display: block; font-weight: 600; margin-bottom: 6px; font-size: 14px; }
+  .pregunta .ayuda { font-size: 12px; color: #6a6d70; margin: -2px 0 8px; }
+  .obligatoria { color: var(--rojo); }
+  input[type=text], input[type=number], select, textarea {
+    width: 100%;
+    max-width: 480px;
+    padding: 8px 10px;
+    border: 1px solid var(--gris-borde);
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  textarea { max-width: 100%; }
+  .opcion-radio { display: block; margin: 4px 0; font-size: 14px; cursor: pointer; }
+  .opcion-radio input { margin-right: 8px; }
+  button.principal, button.secundario, button.peligro, button.mini {
+    border: none;
+    border-radius: 4px;
+    padding: 9px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+  button.principal { background: var(--azul); color: #fff; }
+  button.principal:hover { background: var(--azul-oscuro); }
+  button.secundario { background: #fff; color: var(--azul); border: 1px solid var(--azul); }
+  button.peligro { background: #fff; color: var(--rojo); border: 1px solid var(--rojo); }
+  button.mini { padding: 4px 10px; font-size: 12px; background: #eef4fb; color: var(--azul-oscuro); border: 1px solid #c3d8ef; margin: 2px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { border: 1px solid var(--gris-borde); padding: 8px; text-align: left; vertical-align: top; }
+  th { background: #eef4fb; color: var(--azul-oscuro); }
+  .etiqueta {
+    display: inline-block;
+    background: #eef4fb;
+    color: var(--azul-oscuro);
+    border-radius: 10px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+  .barra-progreso { background: #e3e3e3; border-radius: 6px; height: 10px; margin: 8px 0 16px; overflow: hidden; }
+  .barra-progreso div { background: var(--verde); height: 100%; width: 0; transition: width .3s; }
+  .error { color: var(--rojo); font-size: 12px; margin-top: 4px; }
+  .aviso {
+    background: #fff8e6;
+    border: 1px solid #f0c674;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .exito {
+    background: #e8f5e9;
+    border: 1px solid #a5d6a7;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .fila-admin { display: flex; align-items: center; gap: 8px; padding: 8px; border-bottom: 1px solid #eee; }
+  .fila-admin:hover { background: #f8fbff; }
+  .fila-admin .texto-preg { flex: 1; font-size: 14px; }
+  .editor-campo { margin-bottom: 10px; }
+  .editor-campo label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 3px; color: #515559; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .caja-mapeo {
+    background: #fafafa;
+    border: 1px dashed var(--gris-borde);
+    border-radius: 6px;
+    padding: 12px;
+    margin: 8px 0;
+  }
+  .caja-mapeo h4 { margin: 0 0 8px; font-size: 12px; color: var(--naranja); text-transform: uppercase; letter-spacing: .5px; }
+  .pie { text-align: center; font-size: 12px; color: #888; padding: 16px; }
+  @media print {
+    nav, header p, .no-imprimir { display: none !important; }
+    body { background: #fff; }
+    .tarjeta { border: none; padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏢 Configurador de Sociedades — SAP S/4HANA</h1>
+  <p>Aplicación low-code para el levantamiento de datos y la determinación de la configuración de sociedades nuevas. <b>🧪 Versión artefacto de prueba:</b> los datos viven solo en esta sesión y las exportaciones se muestran en pantalla para copiar.</p>
+</header>
+
+<nav class="no-imprimir">
+  <button id="tab-cuestionario" class="activo" onclick="cambiarVista('cuestionario')">📝 Cuestionario</button>
+  <button id="tab-plan" onclick="cambiarVista('plan')">📋 Plan de configuración</button>
+  <button id="tab-admin" onclick="cambiarVista('admin')">⚙️ Administración</button>
+</nav>
+
+<main>
+  <div id="vista-cuestionario"></div>
+  <div id="vista-plan" style="display:none"></div>
+  <div id="vista-admin" style="display:none"></div>
+</main>
+
+<div class="pie">🧪 Artefacto de prueba · Los datos viven en memoria durante la sesión · La versión completa (index.html) guarda en localStorage y descarga archivos</div>
+
+<script>
+"use strict";
+
+/* ============================================================
+   CAPA DE COMPATIBILIDAD PARA SANDBOX (artefactos de Claude)
+   - localStorage puede estar bloqueado: se usa memoria.
+   - confirmar() está deshabilitado: las acciones se confirman solas.
+   - Las descargas pueden bloquearse: el contenido exportado se
+     muestra en un panel para copiar.
+   ============================================================ */
+const almacen = (() => {
+  try {
+    almacen.setItem("__probe", "1");
+    localStorage.removeItem("__probe");
+    return localStorage;
+  } catch (e) {
+    const mem = {};
+    return { getItem: k => (k in mem ? mem[k] : null), setItem: (k, v) => { mem[k] = String(v); } };
+  }
+})();
+function confirmar(msg) { return true; }
+
+function mostrarExport(nombre, contenido) {
+  let panel = document.getElementById("panel-export");
+  if (!panel) {
+    panel = document.createElement("div");
+    panel.id = "panel-export";
+    panel.style.cssText = "position:fixed;inset:5% 10%;background:#fff;border:2px solid var(--azul);border-radius:10px;padding:18px;z-index:1000;overflow:auto;box-shadow:0 8px 30px rgba(0,0,0,.3)";
+    panel.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+      <h2 style="margin:0;font-size:16px;color:var(--azul-oscuro)">⬇️ Contenido exportado (copie y guarde en un archivo)</h2>
+      <button class="peligro" onclick="document.getElementById(&quot;panel-export&quot;).remove()">✖ Cerrar</button>
+      </div><div id="panel-export-cuerpo"></div>`;
+    document.body.appendChild(panel);
+  }
+  const cuerpo = document.getElementById("panel-export-cuerpo");
+  const id = "ta_" + Math.random().toString(36).slice(2, 8);
+  const bloque = document.createElement("div");
+  bloque.innerHTML = `<h3 style="margin:14px 0 6px;font-size:13px">📄 ${esc(nombre)}
+    <button class="mini" onclick="copiarExport(&quot;${id}&quot;)">📋 Copiar</button></h3>
+    <textarea id="${id}" readonly style="width:100%;height:160px;font-family:monospace;font-size:11px"></textarea>`;
+  cuerpo.appendChild(bloque);
+  document.getElementById(id).value = contenido;
+}
+function copiarExport(id) {
+  const ta = document.getElementById(id);
+  ta.select();
+  try { navigator.clipboard.writeText(ta.value); } catch (e) { document.execCommand("copy"); }
+}
+
+/* ============================================================
+   CATÁLOGO POR DEFECTO
+   Preguntas, opciones de respuesta y su traducción a
+   actividades de configuración en SAP S/4HANA.
+   Tipos de pregunta: texto | unica | si_no
+   ============================================================ */
+const CONFIG_DEFAULT = {
+  version: 1,
+  secciones: [
+    { id: "general",     nombre: "1. Datos generales de la sociedad", orden: 1 },
+    { id: "contable",    nombre: "2. Estructura contable (FI)",       orden: 2 },
+    { id: "controlling", nombre: "3. Controlling (CO)",               orden: 3 },
+    { id: "impuestos",   nombre: "4. Impuestos",                      orden: 4 },
+    { id: "documentos",  nombre: "5. Documentos y crédito",           orden: 5 }
+  ],
+  preguntas: [
+    {
+      id: "p_bukrs", seccion: "general", orden: 1, tipo: "texto", obligatoria: true,
+      texto: "¿Cuál será el código de la nueva sociedad?",
+      ayuda: "Código alfanumérico de 4 posiciones (ej. CO01).",
+      dependeDe: null,
+      mapeoDirecto: {
+        descripcionConfig: "Definir la sociedad (crear/copiar)",
+        transaccion: "OX02 / EC01",
+        rutaIMG: "Estructura de la empresa > Definición > Gestión financiera > Tratar, copiar, borrar, verificar sociedad",
+        tablaCampo: "T001-BUKRS",
+        valorPropuesto: "{respuesta}",
+        notas: "Se recomienda copiar desde una sociedad de referencia para heredar parametrizaciones."
+      },
+      opciones: []
+    },
+    {
+      id: "p_nombre", seccion: "general", orden: 2, tipo: "texto", obligatoria: true,
+      texto: "¿Cuál es la razón social de la sociedad?",
+      ayuda: "Nombre legal completo de la compañía.",
+      dependeDe: null,
+      mapeoDirecto: {
+        descripcionConfig: "Datos de la sociedad: razón social y dirección",
+        transaccion: "OX02",
+        rutaIMG: "Estructura de la empresa > Definición > Gestión financiera > Tratar, copiar, borrar, verificar sociedad",
+        tablaCampo: "T001-BUTXT / ADRC",
+        valorPropuesto: "{respuesta}",
+        notas: "Completar también la dirección completa (botón Dirección en OX02)."
+      },
+      opciones: []
+    },
+    {
+      id: "p_pais", seccion: "general", orden: 3, tipo: "unica", obligatoria: true,
+      texto: "¿En qué país operará la sociedad?",
+      ayuda: "El país determina el esquema de cálculo de impuestos y las parametrizaciones legales.",
+      dependeDe: null, mapeoDirecto: null,
+      opciones: [
+        { id: "o_pais_co", texto: "Colombia", mapeo: { descripcionConfig: "Asignar país y esquema de impuestos Colombia", transaccion: "OX02 / OBBG", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Asignar país a esquema de cálculo", tablaCampo: "T001-LAND1 / T005-KALSM", valorPropuesto: "LAND1 = CO; Esquema = TAXCO", notas: "Verificar localización Colombia (medios magnéticos, facturación electrónica)." } },
+        { id: "o_pais_mx", texto: "México", mapeo: { descripcionConfig: "Asignar país y esquema de impuestos México", transaccion: "OX02 / OBBG", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Asignar país a esquema de cálculo", tablaCampo: "T001-LAND1 / T005-KALSM", valorPropuesto: "LAND1 = MX; Esquema = TAXMX", notas: "Considerar localización México (CFDI, complementos de pago)." } },
+        { id: "o_pais_pe", texto: "Perú", mapeo: { descripcionConfig: "Asignar país y esquema de impuestos Perú", transaccion: "OX02 / OBBG", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Asignar país a esquema de cálculo", tablaCampo: "T001-LAND1 / T005-KALSM", valorPropuesto: "LAND1 = PE; Esquema = TAXPE", notas: "Considerar libros electrónicos PLE/SIRE." } },
+        { id: "o_pais_cl", texto: "Chile", mapeo: { descripcionConfig: "Asignar país y esquema de impuestos Chile", transaccion: "OX02 / OBBG", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Asignar país a esquema de cálculo", tablaCampo: "T001-LAND1 / T005-KALSM", valorPropuesto: "LAND1 = CL; Esquema = TAXCL", notas: "Considerar DTE (documentos tributarios electrónicos)." } },
+        { id: "o_pais_us", texto: "Estados Unidos", mapeo: { descripcionConfig: "Asignar país y esquema de impuestos EE. UU.", transaccion: "OX02 / OBBG", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Asignar país a esquema de cálculo", tablaCampo: "T001-LAND1 / T005-KALSM", valorPropuesto: "LAND1 = US; Esquema = TAXUSJ (jurisdicciones)", notas: "Evaluar uso de motor externo de impuestos (Vertex/Sabrix)." } },
+        { id: "o_pais_otro", texto: "Otro país", mapeo: { descripcionConfig: "Asignar país y esquema de impuestos del país correspondiente", transaccion: "OX02 / OBBG", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Asignar país a esquema de cálculo", tablaCampo: "T001-LAND1 / T005-KALSM", valorPropuesto: "Según país (verificar esquema estándar TAXxx)", notas: "Revisar notas de localización SAP del país." } }
+      ]
+    },
+    {
+      id: "p_moneda", seccion: "general", orden: 4, tipo: "unica", obligatoria: true,
+      texto: "¿Cuál será la moneda local (moneda de sociedad)?",
+      ayuda: "Moneda en la que se lleva la contabilidad principal (moneda 10).",
+      dependeDe: null, mapeoDirecto: null,
+      opciones: [
+        { id: "o_mon_cop", texto: "COP - Peso colombiano", mapeo: { descripcionConfig: "Definir moneda local de la sociedad", transaccion: "OX02", rutaIMG: "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", tablaCampo: "T001-WAERS", valorPropuesto: "COP", notas: "" } },
+        { id: "o_mon_mxn", texto: "MXN - Peso mexicano", mapeo: { descripcionConfig: "Definir moneda local de la sociedad", transaccion: "OX02", rutaIMG: "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", tablaCampo: "T001-WAERS", valorPropuesto: "MXN", notas: "" } },
+        { id: "o_mon_pen", texto: "PEN - Sol peruano", mapeo: { descripcionConfig: "Definir moneda local de la sociedad", transaccion: "OX02", rutaIMG: "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", tablaCampo: "T001-WAERS", valorPropuesto: "PEN", notas: "" } },
+        { id: "o_mon_clp", texto: "CLP - Peso chileno", mapeo: { descripcionConfig: "Definir moneda local de la sociedad", transaccion: "OX02", rutaIMG: "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", tablaCampo: "T001-WAERS", valorPropuesto: "CLP", notas: "" } },
+        { id: "o_mon_usd", texto: "USD - Dólar estadounidense", mapeo: { descripcionConfig: "Definir moneda local de la sociedad", transaccion: "OX02", rutaIMG: "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", tablaCampo: "T001-WAERS", valorPropuesto: "USD", notas: "" } },
+        { id: "o_mon_eur", texto: "EUR - Euro", mapeo: { descripcionConfig: "Definir moneda local de la sociedad", transaccion: "OX02", rutaIMG: "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", tablaCampo: "T001-WAERS", valorPropuesto: "EUR", notas: "" } }
+      ]
+    },
+    {
+      id: "p_idioma", seccion: "general", orden: 5, tipo: "unica", obligatoria: true,
+      texto: "¿Cuál será el idioma de la sociedad?",
+      ayuda: "Idioma por defecto para textos y correspondencia.",
+      dependeDe: null, mapeoDirecto: null,
+      opciones: [
+        { id: "o_idi_es", texto: "Español", mapeo: { descripcionConfig: "Definir idioma de la sociedad", transaccion: "OX02", rutaIMG: "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", tablaCampo: "T001-SPRAS", valorPropuesto: "ES", notas: "" } },
+        { id: "o_idi_en", texto: "Inglés", mapeo: { descripcionConfig: "Definir idioma de la sociedad", transaccion: "OX02", rutaIMG: "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", tablaCampo: "T001-SPRAS", valorPropuesto: "EN", notas: "" } }
+      ]
+    },
+    {
+      id: "p_plan_cuentas", seccion: "contable", orden: 1, tipo: "unica", obligatoria: true,
+      texto: "¿La sociedad utilizará el plan de cuentas corporativo existente o requiere uno nuevo?",
+      ayuda: "El plan de cuentas operativo define las cuentas de mayor disponibles.",
+      dependeDe: null, mapeoDirecto: null,
+      opciones: [
+        { id: "o_pc_exist", texto: "Plan de cuentas corporativo existente", mapeo: { descripcionConfig: "Asignar sociedad al plan de cuentas existente", transaccion: "OB62", rutaIMG: "Gestión financiera > Contabilidad principal > Cuentas de mayor > Datos maestros > Preparativos > Asignar sociedad a plan de cuentas", tablaCampo: "T001-KTOPL", valorPropuesto: "Plan corporativo (ej. PCGC)", notas: "Crear los segmentos de sociedad de las cuentas con FS00/OB_GLACC11." } },
+        { id: "o_pc_nuevo", texto: "Plan de cuentas nuevo", mapeo: { descripcionConfig: "Definir plan de cuentas nuevo y asignarlo a la sociedad", transaccion: "OB13 + OB62", rutaIMG: "Gestión financiera > Contabilidad principal > Cuentas de mayor > Datos maestros > Preparativos > Tratar lista de planes de cuentas", tablaCampo: "T004 / T001-KTOPL", valorPropuesto: "Nuevo ID de plan de cuentas", notas: "Definir también grupos de cuentas (OBD4) y cuentas de retención de beneficios (OB53)." } },
+        { id: "o_pc_pais", texto: "Corporativo + plan de cuentas alternativo (de país)", mapeo: { descripcionConfig: "Asignar plan corporativo y plan alternativo de país", transaccion: "OB62", rutaIMG: "Gestión financiera > Contabilidad principal > Cuentas de mayor > Datos maestros > Preparativos > Asignar sociedad a plan de cuentas", tablaCampo: "T001-KTOPL / T001-KTOP2", valorPropuesto: "KTOPL = corporativo; KTOP2 = plan local", notas: "Mantener el número de cuenta alternativo en el dato maestro de cada cuenta (FS00)." } }
+      ]
+    },
+    {
+      id: "p_ejercicio", seccion: "contable", orden: 2, tipo: "unica", obligatoria: true,
+      texto: "¿Cómo es el ejercicio fiscal de la sociedad?",
+      ayuda: "Define la variante de ejercicio (períodos contables del año fiscal).",
+      dependeDe: null, mapeoDirecto: null,
+      opciones: [
+        { id: "o_ej_k4", texto: "Año calendario (enero a diciembre)", mapeo: { descripcionConfig: "Asignar variante de ejercicio K4 a la sociedad", transaccion: "OB37", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Ejercicio y períodos contables > Asignar sociedad a variante de ejercicio", tablaCampo: "T001-PERIV", valorPropuesto: "K4 (12 períodos + 4 especiales)", notas: "K4 es la variante estándar de año calendario." } },
+        { id: "o_ej_despl", texto: "Ejercicio desplazado (ej. abril a marzo)", mapeo: { descripcionConfig: "Crear variante de ejercicio desplazado y asignarla", transaccion: "OB29 + OB37", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Ejercicio y períodos contables > Actualizar variante de ejercicio", tablaCampo: "T009 / T001-PERIV", valorPropuesto: "Variante nueva o estándar (ej. V3 abril-marzo)", notas: "Verificar si existe variante estándar antes de crear una nueva." } }
+      ]
+    },
+    {
+      id: "p_periodos", seccion: "contable", orden: 3, tipo: "unica", obligatoria: true,
+      texto: "¿Cómo se gestionará la apertura y cierre de períodos contables?",
+      ayuda: "La variante de períodos contables controla qué períodos están abiertos para contabilizar.",
+      dependeDe: null, mapeoDirecto: null,
+      opciones: [
+        { id: "o_per_comp", texto: "Compartir variante de períodos con el grupo (cierre centralizado)", mapeo: { descripcionConfig: "Asignar variante de períodos contables existente", transaccion: "OBBP", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Documento > Períodos contables > Asignar variante a sociedad", tablaCampo: "T001-OPVAR", valorPropuesto: "Variante del grupo", notas: "La apertura/cierre (OB52) afectará a todas las sociedades de la variante." } },
+        { id: "o_per_propia", texto: "Variante de períodos propia (cierre independiente)", mapeo: { descripcionConfig: "Crear variante de períodos propia y asignarla", transaccion: "OBBO + OBBP + OB52", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Documento > Períodos contables > Definir variantes para períodos contables abiertos", tablaCampo: "T010O / T001-OPVAR", valorPropuesto: "Variante nueva = código de la sociedad", notas: "Mantener los períodos abiertos iniciales en OB52 para todas las clases de cuenta (+, A, D, K, M, S)." } }
+      ]
+    },
+    {
+      id: "p_moneda_paralela", seccion: "contable", orden: 4, tipo: "si_no", obligatoria: true,
+      texto: "¿La sociedad requiere monedas paralelas (moneda de grupo o moneda dura)?",
+      ayuda: "Ej.: reportar simultáneamente en moneda local y USD para consolidación.",
+      dependeDe: null, mapeoDirecto: null,
+      opciones: [
+        { id: "o_mp_si", texto: "Sí", mapeo: { descripcionConfig: "Definir monedas adicionales de la sociedad (ledger)", transaccion: "OB22 / FINSC_LEDGER", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Libros > Ledger > Definir parametrizaciones de moneda de la sociedad", tablaCampo: "T001A / FINSC_LD_CMP", valorPropuesto: "Moneda 30 = moneda de grupo (ej. USD)", notas: "En S/4HANA se define a nivel de ledger en FINSC_LEDGER. Definir antes de la primera contabilización." } },
+        { id: "o_mp_no", texto: "No", mapeo: { descripcionConfig: "Sin acción: solo moneda local", transaccion: "-", rutaIMG: "-", tablaCampo: "-", valorPropuesto: "Solo moneda 10 (local)", notas: "Las monedas paralelas no pueden activarse fácilmente después de contabilizar." } }
+      ]
+    },
+    {
+      id: "p_fsv", seccion: "contable", orden: 5, tipo: "unica", obligatoria: true,
+      texto: "¿Qué variante de status de campo utilizará la sociedad?",
+      ayuda: "Controla qué campos son obligatorios/opcionales al contabilizar en cada cuenta.",
+      dependeDe: null, mapeoDirecto: null,
+      opciones: [
+        { id: "o_fsv_std", texto: "Usar la variante corporativa existente", mapeo: { descripcionConfig: "Asignar variante de status de campo existente", transaccion: "OBC5", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Documento > Control de campos > Asignar sociedad a variante de status de campo", tablaCampo: "T001-FSTVA", valorPropuesto: "Variante corporativa (ej. 1000)", notas: "" } },
+        { id: "o_fsv_nueva", texto: "Crear variante propia (copiando la estándar)", mapeo: { descripcionConfig: "Copiar variante de status de campo y asignarla", transaccion: "OBC4 + OBC5", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Documento > Control de campos > Definir variantes de status de campo", tablaCampo: "T004F / T001-FSTVA", valorPropuesto: "Copia de 0001 con ID propio", notas: "Ajustar los grupos de status de campo según necesidades locales." } }
+      ]
+    },
+    {
+      id: "p_usa_co", seccion: "controlling", orden: 1, tipo: "si_no", obligatoria: true,
+      texto: "¿La sociedad utilizará Controlling (contabilidad de costos)?",
+      ayuda: "Centros de coste, órdenes internas, análisis de rentabilidad, etc.",
+      dependeDe: null, mapeoDirecto: null,
+      opciones: [
+        { id: "o_uco_si", texto: "Sí", mapeo: { descripcionConfig: "Activar componentes de Controlling para la sociedad", transaccion: "OKKP", rutaIMG: "Controlling > Controlling general > Organización > Actualizar sociedad CO", tablaCampo: "TKA00 / TKA01", valorPropuesto: "Activar contab. centros de coste y órdenes", notas: "" } },
+        { id: "o_uco_no", texto: "No", mapeo: { descripcionConfig: "Sin acción en CO", transaccion: "-", rutaIMG: "-", tablaCampo: "-", valorPropuesto: "-", notas: "Poco habitual en S/4HANA: el ledger universal integra CO. Confirmar con el equipo de finanzas." } }
+      ]
+    },
+    {
+      id: "p_area_co", seccion: "controlling", orden: 2, tipo: "unica", obligatoria: true,
+      texto: "¿La sociedad se asignará a una sociedad CO (área de controlling) existente o nueva?",
+      ayuda: "Una sociedad CO puede agrupar varias sociedades FI (controlling entre sociedades).",
+      dependeDe: { preguntaId: "p_usa_co", valores: ["Sí"] }, mapeoDirecto: null,
+      opciones: [
+        { id: "o_aco_exist", texto: "Asignar a sociedad CO existente", mapeo: { descripcionConfig: "Asignar sociedad a la sociedad CO existente", transaccion: "OX19", rutaIMG: "Estructura de la empresa > Asignación > Controlling > Asignar sociedad a sociedad CO", tablaCampo: "TKA02", valorPropuesto: "Sociedad CO corporativa", notas: "Requiere mismo plan de cuentas operativo y variante de ejercicio compatible." } },
+        { id: "o_aco_nueva", texto: "Crear sociedad CO nueva", mapeo: { descripcionConfig: "Crear sociedad CO y asignar la sociedad", transaccion: "OKKP + OX19", rutaIMG: "Controlling > Controlling general > Organización > Actualizar sociedad CO", tablaCampo: "TKA01 / TKA02", valorPropuesto: "Nueva sociedad CO", notas: "Definir también la jerarquía estándar de centros de coste (OKEON) y grupos." } }
+      ]
+    },
+    {
+      id: "p_centros_coste", seccion: "controlling", orden: 3, tipo: "si_no", obligatoria: false,
+      texto: "¿Se requiere crear estructura de centros de coste para la nueva sociedad?",
+      ayuda: "Jerarquía estándar y centros de coste iniciales.",
+      dependeDe: { preguntaId: "p_usa_co", valores: ["Sí"] }, mapeoDirecto: null,
+      opciones: [
+        { id: "o_cc_si", texto: "Sí", mapeo: { descripcionConfig: "Crear jerarquía estándar y centros de coste", transaccion: "OKEON / KS01", rutaIMG: "Controlling > Contabilidad de centros de coste > Datos maestros > Centros de coste", tablaCampo: "CSKS / SETNODE", valorPropuesto: "Jerarquía por área organizativa", notas: "Solicitar al negocio el listado de centros de coste con responsables." } },
+        { id: "o_cc_no", texto: "No", mapeo: { descripcionConfig: "Sin acción: se usarán centros existentes", transaccion: "-", rutaIMG: "-", tablaCampo: "-", valorPropuesto: "-", notas: "" } }
+      ]
+    },
+    {
+      id: "p_retenciones", seccion: "impuestos", orden: 1, tipo: "si_no", obligatoria: true,
+      texto: "¿La sociedad aplica retenciones en la fuente (withholding tax)?",
+      ayuda: "Retenciones de renta, IVA, ICA u otras según legislación local.",
+      dependeDe: null, mapeoDirecto: null,
+      opciones: [
+        { id: "o_ret_si", texto: "Sí", mapeo: { descripcionConfig: "Configurar retención ampliada (extended withholding tax)", transaccion: "SPRO (varias actividades)", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Retención de impuestos > Retención ampliada", tablaCampo: "T059P / T059Z / T001-WT_NEWWT", valorPropuesto: "Tipos e indicadores de retención por país + activación en sociedad", notas: "Definir tipos de retención, indicadores, cuentas asociadas (OB_WT) y activar en la sociedad." } },
+        { id: "o_ret_no", texto: "No", mapeo: { descripcionConfig: "Sin acción en retenciones", transaccion: "-", rutaIMG: "-", tablaCampo: "-", valorPropuesto: "-", notas: "" } }
+      ]
+    },
+    {
+      id: "p_iva_ind", seccion: "impuestos", orden: 2, tipo: "unica", obligatoria: true,
+      texto: "¿Qué indicadores de IVA/impuestos necesita la sociedad?",
+      ayuda: "Indicadores de impuesto soportado y repercutido.",
+      dependeDe: null, mapeoDirecto: null,
+      opciones: [
+        { id: "o_iva_std", texto: "Copiar indicadores estándar del país", mapeo: { descripcionConfig: "Verificar/copiar indicadores de IVA estándar", transaccion: "FTXP", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Cálculo > Definir indicadores de IVA", tablaCampo: "T007A / T007S", valorPropuesto: "Indicadores estándar del esquema del país", notas: "Verificar cuentas de impuestos en OB40." } },
+        { id: "o_iva_custom", texto: "Crear indicadores específicos (tarifas locales propias)", mapeo: { descripcionConfig: "Crear indicadores de IVA con tarifas locales", transaccion: "FTXP + OB40", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Cálculo > Definir indicadores de IVA", tablaCampo: "T007A / T030K", valorPropuesto: "Indicadores por tarifa (general, reducida, exenta, excluida)", notas: "Levantar matriz de impuestos con el área tributaria antes de configurar." } }
+      ]
+    },
+    {
+      id: "p_rangos", seccion: "documentos", orden: 1, tipo: "unica", obligatoria: true,
+      texto: "¿Cómo se crearán los rangos de números de documento contable?",
+      ayuda: "Cada clase de documento (KR, DR, SA…) necesita un rango de numeración por sociedad.",
+      dependeDe: null, mapeoDirecto: null,
+      opciones: [
+        { id: "o_rng_copia", texto: "Copiar rangos desde una sociedad de referencia", mapeo: { descripcionConfig: "Copiar rangos de números de documento", transaccion: "OBH1", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Documento > Rangos de números de documento > Copiar a sociedad", tablaCampo: "NRIV (objeto RF_BELEG)", valorPropuesto: "Copia desde sociedad de referencia", notas: "Copiar también a ejercicios futuros (OBH2) si los rangos son por ejercicio." } },
+        { id: "o_rng_manual", texto: "Crear rangos manualmente", mapeo: { descripcionConfig: "Crear rangos de números de documento", transaccion: "FBN1", rutaIMG: "Gestión financiera > Parametrizaciones básicas > Documento > Rangos de números de documento", tablaCampo: "NRIV (objeto RF_BELEG)", valorPropuesto: "Rangos por clase de documento y ejercicio", notas: "Los rangos no se transportan: crearlos directamente en cada ambiente." } }
+      ]
+    },
+    {
+      id: "p_credito", seccion: "documentos", orden: 2, tipo: "si_no", obligatoria: true,
+      texto: "¿La sociedad requiere gestión de crédito de clientes?",
+      ayuda: "Control de límites de crédito para clientes en ventas.",
+      dependeDe: null, mapeoDirecto: null,
+      opciones: [
+        { id: "o_cred_si", texto: "Sí", mapeo: { descripcionConfig: "Configurar gestión de crédito (FSCM Credit Management)", transaccion: "UKM_MY_DCDS / BP + OB38", rutaIMG: "Gestión financiera > Gestión de créditos (FSCM) / Asignar sociedad a área de control de créditos", tablaCampo: "T001-KKBER / UKMBP_CMS_SGM", valorPropuesto: "Área de control de crédito + segmento de crédito", notas: "En S/4HANA la gestión de crédito clásica fue sustituida por FSCM Credit Management." } },
+        { id: "o_cred_no", texto: "No", mapeo: { descripcionConfig: "Sin acción en gestión de crédito", transaccion: "-", rutaIMG: "-", tablaCampo: "-", valorPropuesto: "-", notas: "" } }
+      ]
+    }
+  ]
+};
+
+/* ============================================================
+   ESTADO Y PERSISTENCIA (localStorage)
+   ============================================================ */
+const LS_CONFIG = "sapSociedades.config";
+const LS_RESPUESTAS = "sapSociedades.respuestas";
+
+let config = cargarConfig();
+let respuestas = cargarRespuestas();
+
+function cargarConfig() {
+  try {
+    const raw = almacen.getItem(LS_CONFIG);
+    if (raw) return JSON.parse(raw);
+  } catch (e) { /* config corrupta: usar default */ }
+  return JSON.parse(JSON.stringify(CONFIG_DEFAULT));
+}
+function guardarConfig() {
+  almacen.setItem(LS_CONFIG, JSON.stringify(config));
+}
+function cargarRespuestas() {
+  try {
+    const raw = almacen.getItem(LS_RESPUESTAS);
+    if (raw) return JSON.parse(raw);
+  } catch (e) { /* sin respuestas previas */ }
+  return {};
+}
+function guardarRespuestas() {
+  almacen.setItem(LS_RESPUESTAS, JSON.stringify(respuestas));
+}
+
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function seccionesOrdenadas() {
+  return [...config.secciones].sort((a, b) => a.orden - b.orden);
+}
+function preguntasDeSeccion(secId) {
+  return config.preguntas.filter(p => p.seccion === secId).sort((a, b) => a.orden - b.orden);
+}
+function preguntaVisible(p) {
+  if (!p.dependeDe || !p.dependeDe.preguntaId) return true;
+  const r = respuestas[p.dependeDe.preguntaId];
+  if (r === undefined || r === null || r === "") return false;
+  return p.dependeDe.valores.includes(r);
+}
+function textoRespuesta(p) {
+  const r = respuestas[p.id];
+  if (r === undefined || r === "") return null;
+  return r;
+}
+function descargar(nombre, contenido, mime) {
+  try {
+    const blob = new Blob(["﻿" + contenido], { type: mime + ";charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = nombre;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  } catch (e) { /* descargas bloqueadas en sandbox */ }
+  mostrarExport(nombre, contenido);
+}
+function csvCelda(v) {
+  v = String(v ?? "");
+  if (/[",\n;]/.test(v)) v = '"' + v.replace(/"/g, '""') + '"';
+  return v;
+}
+function nuevoId(prefijo) {
+  return prefijo + "_" + Math.random().toString(36).slice(2, 8);
+}
+
+/* ============================================================
+   NAVEGACIÓN
+   ============================================================ */
+function cambiarVista(v) {
+  ["cuestionario", "plan", "admin"].forEach(x => {
+    document.getElementById("vista-" + x).style.display = (x === v) ? "" : "none";
+    document.getElementById("tab-" + x).classList.toggle("activo", x === v);
+  });
+  if (v === "cuestionario") renderCuestionario();
+  if (v === "plan") renderPlan();
+  if (v === "admin") renderAdmin();
+}
+
+/* ============================================================
+   VISTA 1: CUESTIONARIO
+   ============================================================ */
+function renderCuestionario() {
+  const cont = document.getElementById("vista-cuestionario");
+  const visibles = config.preguntas.filter(preguntaVisible);
+  const respondidas = visibles.filter(p => textoRespuesta(p) !== null).length;
+  const pct = visibles.length ? Math.round(respondidas / visibles.length * 100) : 0;
+
+  let html = `
+    <div class="tarjeta no-imprimir">
+      <h2>Cuestionario de levantamiento de datos</h2>
+      <p style="font-size:13px;margin:4px 0">Responda las preguntas para determinar la configuración de la nueva sociedad.
+      Progreso: <b>${respondidas}/${visibles.length}</b></p>
+      <div class="barra-progreso"><div style="width:${pct}%"></div></div>
+      <button class="principal" onclick="generarPlan()">📋 Generar plan de configuración</button>
+      <button class="peligro" onclick="limpiarRespuestas()">Limpiar respuestas</button>
+    </div>`;
+
+  for (const sec of seccionesOrdenadas()) {
+    const pregs = preguntasDeSeccion(sec.id).filter(preguntaVisible);
+    if (!pregs.length) continue;
+    html += `<div class="tarjeta"><h2>${esc(sec.nombre)}</h2>`;
+    for (const p of pregs) html += renderPregunta(p);
+    html += `</div>`;
+  }
+  cont.innerHTML = html;
+}
+
+function renderPregunta(p) {
+  const val = respuestas[p.id] ?? "";
+  let cuerpo = "";
+  if (p.tipo === "texto") {
+    cuerpo = `<input type="text" value="${esc(val)}" onchange="responder('${p.id}', this.value)">`;
+  } else {
+    const opciones = (p.tipo === "si_no" && !p.opciones.length)
+      ? [{ id: "si", texto: "Sí" }, { id: "no", texto: "No" }]
+      : p.opciones;
+    cuerpo = opciones.map(o => `
+      <label class="opcion-radio">
+        <input type="radio" name="rad_${p.id}" value="${esc(o.texto)}"
+          ${val === o.texto ? "checked" : ""} onchange="responder('${p.id}', this.value)">
+        ${esc(o.texto)}
+      </label>`).join("");
+  }
+  return `
+    <div class="pregunta" id="preg_${p.id}">
+      <label class="titulo">${esc(p.texto)} ${p.obligatoria ? '<span class="obligatoria">*</span>' : ""}</label>
+      ${p.ayuda ? `<div class="ayuda">${esc(p.ayuda)}</div>` : ""}
+      ${cuerpo}
+      <div class="error" id="err_${p.id}"></div>
+    </div>`;
+}
+
+function responder(pregId, valor) {
+  respuestas[pregId] = valor;
+  // Limpiar respuestas de preguntas que dejan de ser visibles
+  for (const p of config.preguntas) {
+    if (!preguntaVisible(p) && respuestas[p.id] !== undefined) delete respuestas[p.id];
+  }
+  guardarRespuestas();
+  renderCuestionario();
+}
+
+function limpiarRespuestas() {
+  if (!confirmar("¿Borrar todas las respuestas del cuestionario?")) return;
+  respuestas = {};
+  guardarRespuestas();
+  renderCuestionario();
+}
+
+function generarPlan() {
+  // Validar obligatorias visibles
+  let faltantes = [];
+  for (const p of config.preguntas) {
+    if (preguntaVisible(p) && p.obligatoria && textoRespuesta(p) === null) faltantes.push(p);
+  }
+  if (faltantes.length) {
+    renderCuestionario();
+    for (const p of faltantes) {
+      const el = document.getElementById("err_" + p.id);
+      if (el) el.textContent = "Esta pregunta es obligatoria.";
+    }
+    document.getElementById("preg_" + faltantes[0].id)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+  cambiarVista("plan");
+}
+
+/* ============================================================
+   VISTA 2: PLAN DE CONFIGURACIÓN
+   ============================================================ */
+function construirPlan() {
+  const filas = [];
+  for (const sec of seccionesOrdenadas()) {
+    for (const p of preguntasDeSeccion(sec.id)) {
+      if (!preguntaVisible(p)) continue;
+      const r = textoRespuesta(p);
+      if (r === null) continue;
+
+      let mapeo = null;
+      if (p.tipo === "texto") {
+        mapeo = p.mapeoDirecto;
+      } else {
+        const op = p.opciones.find(o => o.texto === r);
+        mapeo = op ? op.mapeo : null;
+      }
+      if (!mapeo || !mapeo.descripcionConfig) continue;
+
+      filas.push({
+        seccion: sec.nombre,
+        pregunta: p.texto,
+        respuesta: r,
+        descripcionConfig: mapeo.descripcionConfig,
+        transaccion: mapeo.transaccion || "-",
+        rutaIMG: mapeo.rutaIMG || "-",
+        tablaCampo: mapeo.tablaCampo || "-",
+        valorPropuesto: (mapeo.valorPropuesto || "").replace(/\{respuesta\}/g, r),
+        notas: mapeo.notas || ""
+      });
+    }
+  }
+  return filas;
+}
+
+function renderPlan() {
+  const cont = document.getElementById("vista-plan");
+  const filas = construirPlan();
+  if (!filas.length) {
+    cont.innerHTML = `<div class="tarjeta"><h2>Plan de configuración</h2>
+      <div class="aviso">Aún no hay respuestas registradas. Complete primero el cuestionario.</div></div>`;
+    return;
+  }
+  const accionesReales = filas.filter(f => f.transaccion !== "-").length;
+  let html = `
+    <div class="tarjeta">
+      <h2>📋 Plan de configuración SAP S/4HANA</h2>
+      <p style="font-size:13px">Generado el ${new Date().toLocaleString("es-CO")} ·
+      <b>${accionesReales}</b> actividades de configuración determinadas a partir de <b>${filas.length}</b> respuestas.</p>
+      <div class="no-imprimir">
+        <button class="principal" onclick="window.print()">🖨️ Imprimir / PDF</button>
+        <button class="secundario" onclick="exportarPlanCSV()">⬇️ Descargar CSV</button>
+        <button class="secundario" onclick="exportarPlanJSON()">⬇️ Descargar JSON</button>
+      </div>
+    </div>`;
+
+  let secActual = null;
+  for (const f of filas) {
+    if (f.seccion !== secActual) {
+      if (secActual !== null) html += `</table></div>`;
+      secActual = f.seccion;
+      html += `<div class="tarjeta"><h2>${esc(f.seccion)}</h2>
+        <table><tr>
+          <th style="width:18%">Pregunta / Respuesta</th>
+          <th style="width:18%">Actividad de configuración</th>
+          <th style="width:9%">Transacción</th>
+          <th style="width:22%">Ruta IMG (SPRO)</th>
+          <th style="width:10%">Tabla / Campo</th>
+          <th style="width:13%">Valor propuesto</th>
+          <th style="width:10%">Notas</th>
+        </tr>`;
+    }
+    html += `<tr>
+      <td><b>${esc(f.pregunta)}</b><br><span class="etiqueta">${esc(f.respuesta)}</span></td>
+      <td>${esc(f.descripcionConfig)}</td>
+      <td>${esc(f.transaccion)}</td>
+      <td>${esc(f.rutaIMG)}</td>
+      <td>${esc(f.tablaCampo)}</td>
+      <td>${esc(f.valorPropuesto)}</td>
+      <td>${esc(f.notas)}</td>
+    </tr>`;
+  }
+  if (secActual !== null) html += `</table></div>`;
+  cont.innerHTML = html;
+}
+
+function exportarPlanCSV() {
+  const filas = construirPlan();
+  const cab = ["Seccion", "Pregunta", "Respuesta", "ActividadConfiguracion", "Transaccion", "RutaIMG", "TablaCampo", "ValorPropuesto", "Notas"];
+  const lineas = [cab.join(",")];
+  for (const f of filas) {
+    lineas.push([f.seccion, f.pregunta, f.respuesta, f.descripcionConfig, f.transaccion, f.rutaIMG, f.tablaCampo, f.valorPropuesto, f.notas].map(csvCelda).join(","));
+  }
+  descargar("plan_configuracion_sap.csv", lineas.join("\n"), "text/csv");
+}
+function exportarPlanJSON() {
+  descargar("plan_configuracion_sap.json", JSON.stringify({ generado: new Date().toISOString(), respuestas, plan: construirPlan() }, null, 2), "application/json");
+}
+
+/* ============================================================
+   VISTA 3: ADMINISTRACIÓN
+   ============================================================ */
+let editandoId = null; // id de la pregunta en edición (null = ninguna)
+
+function renderAdmin() {
+  const cont = document.getElementById("vista-admin");
+  let html = `
+    <div class="tarjeta">
+      <h2>⚙️ Administración del cuestionario</h2>
+      <p style="font-size:13px">Configure las preguntas, sus posibles respuestas y cómo cada respuesta se traduce en configuración SAP.
+      Los cambios se guardan en este navegador.</p>
+      <button class="principal" onclick="nuevaPregunta()">➕ Nueva pregunta</button>
+      <button class="secundario" onclick="exportarConfig()">⬇️ Exportar configuración (JSON)</button>
+      <button class="secundario" onclick="document.getElementById('importar-archivo').click()">⬆️ Importar configuración</button>
+      <button class="secundario" onclick="exportarPowerApps()">📱 Exportar tablas para Power Apps (CSV)</button>
+      <button class="peligro" onclick="restaurarDefault()">Restaurar catálogo por defecto</button>
+      <input type="file" id="importar-archivo" accept=".json" style="display:none" onchange="importarConfig(this)">
+      <div id="msg-admin"></div>
+    </div>`;
+
+  for (const sec of seccionesOrdenadas()) {
+    html += `<div class="tarjeta"><h2>${esc(sec.nombre)}</h2>`;
+    const pregs = preguntasDeSeccion(sec.id);
+    if (!pregs.length) html += `<p style="font-size:13px;color:#888">Sin preguntas en esta sección.</p>`;
+    for (const p of pregs) {
+      if (editandoId === p.id) {
+        html += renderEditorPregunta(p);
+      } else {
+        html += `
+        <div class="fila-admin">
+          <span class="etiqueta">${esc(p.tipo)}</span>
+          <span class="texto-preg">${esc(p.texto)}
+            ${p.obligatoria ? '<span class="obligatoria">*</span>' : ""}
+            ${p.dependeDe && p.dependeDe.preguntaId ? '<span class="etiqueta" style="background:#fff3e0;color:#e9730c">condicional</span>' : ""}
+          </span>
+          <button class="mini" onclick="moverPregunta('${p.id}', -1)">▲</button>
+          <button class="mini" onclick="moverPregunta('${p.id}', 1)">▼</button>
+          <button class="mini" onclick="editarPregunta('${p.id}')">✏️ Editar</button>
+          <button class="mini" style="color:var(--rojo);border-color:#f3c0c0;background:#fdf2f2" onclick="eliminarPregunta('${p.id}')">🗑️</button>
+        </div>`;
+      }
+    }
+    html += `</div>`;
+  }
+  cont.innerHTML = html;
+}
+
+function camposMapeoHTML(prefijo, m) {
+  m = m || {};
+  return `
+    <div class="grid-2">
+      <div class="editor-campo"><label>Actividad de configuración SAP</label>
+        <input type="text" id="${prefijo}_desc" value="${esc(m.descripcionConfig || "")}" placeholder="Ej.: Asignar sociedad a plan de cuentas"></div>
+      <div class="editor-campo"><label>Transacción</label>
+        <input type="text" id="${prefijo}_tcode" value="${esc(m.transaccion || "")}" placeholder="Ej.: OB62"></div>
+    </div>
+    <div class="editor-campo"><label>Ruta IMG (SPRO)</label>
+      <input type="text" id="${prefijo}_img" style="max-width:100%" value="${esc(m.rutaIMG || "")}" placeholder="Ej.: Gestión financiera > Contabilidad principal > ..."></div>
+    <div class="grid-2">
+      <div class="editor-campo"><label>Tabla / Campo</label>
+        <input type="text" id="${prefijo}_tabla" value="${esc(m.tablaCampo || "")}" placeholder="Ej.: T001-KTOPL"></div>
+      <div class="editor-campo"><label>Valor propuesto (use {respuesta} para insertar la respuesta)</label>
+        <input type="text" id="${prefijo}_valor" value="${esc(m.valorPropuesto || "")}" placeholder="Ej.: {respuesta}"></div>
+    </div>
+    <div class="editor-campo"><label>Notas para el consultor</label>
+      <input type="text" id="${prefijo}_notas" style="max-width:100%" value="${esc(m.notas || "")}"></div>`;
+}
+
+function renderEditorPregunta(p) {
+  const otras = config.preguntas.filter(q => q.id !== p.id);
+  let html = `
+  <div class="tarjeta" style="background:#f8fbff;border-color:#9cc3e5">
+    <h3 style="margin-top:0">✏️ Editando pregunta</h3>
+    <div class="grid-2">
+      <div class="editor-campo"><label>Texto de la pregunta</label>
+        <input type="text" id="ed_texto" style="max-width:100%" value="${esc(p.texto)}"></div>
+      <div class="editor-campo"><label>Texto de ayuda</label>
+        <input type="text" id="ed_ayuda" style="max-width:100%" value="${esc(p.ayuda || "")}"></div>
+    </div>
+    <div class="grid-3">
+      <div class="editor-campo"><label>Sección</label>
+        <select id="ed_seccion">${seccionesOrdenadas().map(s =>
+          `<option value="${s.id}" ${s.id === p.seccion ? "selected" : ""}>${esc(s.nombre)}</option>`).join("")}</select></div>
+      <div class="editor-campo"><label>Tipo de respuesta</label>
+        <select id="ed_tipo" onchange="cambiarTipoEditor()">
+          <option value="texto" ${p.tipo === "texto" ? "selected" : ""}>Texto libre</option>
+          <option value="unica" ${p.tipo === "unica" ? "selected" : ""}>Selección única</option>
+          <option value="si_no" ${p.tipo === "si_no" ? "selected" : ""}>Sí / No</option>
+        </select></div>
+      <div class="editor-campo"><label>¿Obligatoria?</label>
+        <select id="ed_oblig">
+          <option value="si" ${p.obligatoria ? "selected" : ""}>Sí</option>
+          <option value="no" ${!p.obligatoria ? "selected" : ""}>No</option>
+        </select></div>
+    </div>
+    <div class="grid-2">
+      <div class="editor-campo"><label>Mostrar solo si la pregunta…</label>
+        <select id="ed_dep_preg">
+          <option value="">(siempre visible)</option>
+          ${otras.map(q => `<option value="${q.id}" ${p.dependeDe && p.dependeDe.preguntaId === q.id ? "selected" : ""}>${esc(q.texto)}</option>`).join("")}
+        </select></div>
+      <div class="editor-campo"><label>…tiene alguna de estas respuestas (separadas por |)</label>
+        <input type="text" id="ed_dep_val" value="${esc(p.dependeDe ? (p.dependeDe.valores || []).join("|") : "")}" placeholder="Ej.: Sí"></div>
+    </div>
+
+    <div id="ed_zona_mapeo_directo" style="display:${p.tipo === "texto" ? "" : "none"}">
+      <div class="caja-mapeo">
+        <h4>Traducción a configuración SAP (respuesta de texto)</h4>
+        ${camposMapeoHTML("ed_md", p.mapeoDirecto)}
+      </div>
+    </div>
+
+    <div id="ed_zona_opciones" style="display:${p.tipo === "texto" ? "none" : ""}">
+      <h3>Posibles respuestas y su traducción a configuración SAP</h3>
+      <div id="ed_lista_opciones">
+        ${p.opciones.map((o, i) => renderEditorOpcion(o, i)).join("")}
+      </div>
+      <button class="mini" onclick="agregarOpcionEditor()">➕ Agregar respuesta</button>
+    </div>
+
+    <div style="margin-top:14px">
+      <button class="principal" onclick="guardarPregunta('${p.id}')">💾 Guardar pregunta</button>
+      <button class="secundario" onclick="cancelarEdicion()">Cancelar</button>
+    </div>
+  </div>`;
+  return html;
+}
+
+function renderEditorOpcion(o, i) {
+  return `
+  <div class="caja-mapeo" data-opcion-idx="${i}">
+    <h4>Respuesta ${i + 1}
+      <button class="mini" style="float:right" onclick="quitarOpcionEditor(${i})">🗑️ Quitar</button></h4>
+    <div class="editor-campo"><label>Texto de la respuesta</label>
+      <input type="text" id="ed_op_${i}_texto" value="${esc(o.texto)}"></div>
+    ${camposMapeoHTML("ed_op_" + i, o.mapeo)}
+  </div>`;
+}
+
+// Opciones temporales mientras se edita (se leen del DOM al guardar)
+function leerOpcionesDelDOM() {
+  const cajas = document.querySelectorAll("#ed_lista_opciones .caja-mapeo");
+  const ops = [];
+  cajas.forEach((caja, idx) => {
+    const i = caja.getAttribute("data-opcion-idx");
+    const texto = document.getElementById(`ed_op_${i}_texto`).value.trim();
+    if (!texto) return;
+    ops.push({
+      id: nuevoId("o"),
+      texto,
+      mapeo: leerMapeoDelDOM("ed_op_" + i)
+    });
+  });
+  return ops;
+}
+function leerMapeoDelDOM(prefijo) {
+  return {
+    descripcionConfig: document.getElementById(prefijo + "_desc").value.trim(),
+    transaccion: document.getElementById(prefijo + "_tcode").value.trim(),
+    rutaIMG: document.getElementById(prefijo + "_img").value.trim(),
+    tablaCampo: document.getElementById(prefijo + "_tabla").value.trim(),
+    valorPropuesto: document.getElementById(prefijo + "_valor").value.trim(),
+    notas: document.getElementById(prefijo + "_notas").value.trim()
+  };
+}
+
+function cambiarTipoEditor() {
+  const tipo = document.getElementById("ed_tipo").value;
+  document.getElementById("ed_zona_mapeo_directo").style.display = (tipo === "texto") ? "" : "none";
+  document.getElementById("ed_zona_opciones").style.display = (tipo === "texto") ? "none" : "";
+}
+
+function agregarOpcionEditor() {
+  const lista = document.getElementById("ed_lista_opciones");
+  const idx = lista.querySelectorAll(".caja-mapeo").length;
+  const div = document.createElement("div");
+  div.innerHTML = renderEditorOpcion({ texto: "", mapeo: {} }, idx);
+  lista.appendChild(div.firstElementChild);
+}
+function quitarOpcionEditor(i) {
+  const caja = document.querySelector(`#ed_lista_opciones .caja-mapeo[data-opcion-idx="${i}"]`);
+  if (caja) caja.remove();
+}
+
+function editarPregunta(id) { editandoId = id; renderAdmin(); }
+function cancelarEdicion() { editandoId = null; renderAdmin(); }
+
+function nuevaPregunta() {
+  const sec = seccionesOrdenadas()[0];
+  const p = {
+    id: nuevoId("p"), seccion: sec.id,
+    orden: preguntasDeSeccion(sec.id).length + 1,
+    tipo: "unica", obligatoria: true,
+    texto: "Nueva pregunta", ayuda: "",
+    dependeDe: null, mapeoDirecto: null,
+    opciones: [{ id: nuevoId("o"), texto: "Opción 1", mapeo: {} }]
+  };
+  config.preguntas.push(p);
+  guardarConfig();
+  editandoId = p.id;
+  renderAdmin();
+}
+
+function guardarPregunta(id) {
+  const p = config.preguntas.find(x => x.id === id);
+  if (!p) return;
+  p.texto = document.getElementById("ed_texto").value.trim() || p.texto;
+  p.ayuda = document.getElementById("ed_ayuda").value.trim();
+  const nuevaSec = document.getElementById("ed_seccion").value;
+  if (nuevaSec !== p.seccion) {
+    p.seccion = nuevaSec;
+    p.orden = preguntasDeSeccion(nuevaSec).length + 1;
+  }
+  p.tipo = document.getElementById("ed_tipo").value;
+  p.obligatoria = document.getElementById("ed_oblig").value === "si";
+
+  const depPreg = document.getElementById("ed_dep_preg").value;
+  const depVals = document.getElementById("ed_dep_val").value.split("|").map(s => s.trim()).filter(Boolean);
+  p.dependeDe = (depPreg && depVals.length) ? { preguntaId: depPreg, valores: depVals } : null;
+
+  if (p.tipo === "texto") {
+    p.mapeoDirecto = leerMapeoDelDOM("ed_md");
+    p.opciones = [];
+  } else {
+    p.opciones = leerOpcionesDelDOM();
+    p.mapeoDirecto = null;
+  }
+  guardarConfig();
+  editandoId = null;
+  renderAdmin();
+  mostrarMsgAdmin("Pregunta guardada correctamente.", "exito");
+}
+
+function eliminarPregunta(id) {
+  const p = config.preguntas.find(x => x.id === id);
+  if (!p) return;
+  if (!confirmar(`¿Eliminar la pregunta "${p.texto}"?`)) return;
+  config.preguntas = config.preguntas.filter(x => x.id !== id);
+  delete respuestas[id];
+  guardarConfig();
+  guardarRespuestas();
+  renderAdmin();
+}
+
+function moverPregunta(id, dir) {
+  const p = config.preguntas.find(x => x.id === id);
+  if (!p) return;
+  const hermanas = preguntasDeSeccion(p.seccion);
+  const idx = hermanas.findIndex(x => x.id === id);
+  const destino = hermanas[idx + dir];
+  if (!destino) return;
+  const tmp = p.orden; p.orden = destino.orden; destino.orden = tmp;
+  guardarConfig();
+  renderAdmin();
+}
+
+function restaurarDefault() {
+  if (!confirmar("Esto reemplazará todas las preguntas configuradas por el catálogo por defecto. ¿Continuar?")) return;
+  config = JSON.parse(JSON.stringify(CONFIG_DEFAULT));
+  respuestas = {};
+  guardarConfig();
+  guardarRespuestas();
+  editandoId = null;
+  renderAdmin();
+  mostrarMsgAdmin("Catálogo por defecto restaurado.", "exito");
+}
+
+function exportarConfig() {
+  descargar("configuracion_cuestionario_sap.json", JSON.stringify(config, null, 2), "application/json");
+}
+
+function importarConfig(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data.preguntas) || !Array.isArray(data.secciones)) {
+        throw new Error("El archivo no tiene el formato esperado (secciones, preguntas).");
+      }
+      config = data;
+      guardarConfig();
+      editandoId = null;
+      renderAdmin();
+      mostrarMsgAdmin("Configuración importada correctamente.", "exito");
+    } catch (err) {
+      mostrarMsgAdmin("Error al importar: " + err.message, "aviso");
+    }
+  };
+  reader.readAsText(file);
+  input.value = "";
+}
+
+function mostrarMsgAdmin(msg, clase) {
+  const el = document.getElementById("msg-admin");
+  if (el) el.innerHTML = `<div class="${clase}" style="margin-top:10px">${esc(msg)}</div>`;
+}
+
+/* ============================================================
+   EXPORTACIÓN PARA MICROSOFT POWER APPS
+   Genera 3 tablas normalizadas (CSV) listas para cargar como
+   tablas de Excel/SharePoint y usarlas como origen de datos
+   de una Power App (ver powerapps/GUIA_POWERAPPS.md).
+   ============================================================ */
+function exportarPowerApps() {
+  // Tabla 1: Preguntas
+  const cabP = ["PreguntaID", "Seccion", "Orden", "Texto", "Ayuda", "Tipo", "Obligatoria", "DependeDePregunta", "DependeDeValores"];
+  const linP = [cabP.join(",")];
+  // Tabla 2: Opciones de respuesta
+  const cabO = ["OpcionID", "PreguntaID", "TextoRespuesta"];
+  const linO = [cabO.join(",")];
+  // Tabla 3: Mapeo SAP
+  const cabM = ["MapeoID", "PreguntaID", "OpcionID", "ActividadConfiguracion", "Transaccion", "RutaIMG", "TablaCampo", "ValorPropuesto", "Notas"];
+  const linM = [cabM.join(",")];
+
+  const nombreSec = {};
+  config.secciones.forEach(s => nombreSec[s.id] = s.nombre);
+  let nMapeo = 0;
+
+  for (const p of config.preguntas) {
+    linP.push([
+      p.id, nombreSec[p.seccion] || p.seccion, p.orden, p.texto, p.ayuda || "", p.tipo,
+      p.obligatoria ? "Si" : "No",
+      p.dependeDe ? p.dependeDe.preguntaId : "",
+      p.dependeDe ? p.dependeDe.valores.join("|") : ""
+    ].map(csvCelda).join(","));
+
+    if (p.tipo === "texto" && p.mapeoDirecto) {
+      const m = p.mapeoDirecto;
+      linM.push([("m" + (++nMapeo)), p.id, "", m.descripcionConfig, m.transaccion, m.rutaIMG, m.tablaCampo, m.valorPropuesto, m.notas].map(csvCelda).join(","));
+    }
+    for (const o of p.opciones) {
+      linO.push([o.id, p.id, o.texto].map(csvCelda).join(","));
+      if (o.mapeo && o.mapeo.descripcionConfig) {
+        const m = o.mapeo;
+        linM.push([("m" + (++nMapeo)), p.id, o.id, m.descripcionConfig, m.transaccion, m.rutaIMG, m.tablaCampo, m.valorPropuesto, m.notas].map(csvCelda).join(","));
+      }
+    }
+  }
+
+  descargar("Preguntas.csv", linP.join("\n"), "text/csv");
+  setTimeout(() => descargar("Opciones.csv", linO.join("\n"), "text/csv"), 300);
+  setTimeout(() => descargar("MapeoSAP.csv", linM.join("\n"), "text/csv"), 600);
+  mostrarMsgAdmin("Se descargaron Preguntas.csv, Opciones.csv y MapeoSAP.csv. Cárguelas como tablas de Excel (OneDrive) o listas de SharePoint y consulte la guía powerapps/GUIA_POWERAPPS.md.", "exito");
+}
+
+/* ============================================================
+   INICIO
+   ============================================================ */
+renderCuestionario();
+</script>
+</body>
+</html>
