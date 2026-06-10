@@ -1,0 +1,743 @@
+{
+  "version": 1,
+  "secciones": [
+    {
+      "id": "general",
+      "nombre": "1. Datos generales de la sociedad",
+      "orden": 1
+    },
+    {
+      "id": "contable",
+      "nombre": "2. Estructura contable (FI)",
+      "orden": 2
+    },
+    {
+      "id": "controlling",
+      "nombre": "3. Controlling (CO)",
+      "orden": 3
+    },
+    {
+      "id": "impuestos",
+      "nombre": "4. Impuestos",
+      "orden": 4
+    },
+    {
+      "id": "documentos",
+      "nombre": "5. Documentos y crédito",
+      "orden": 5
+    }
+  ],
+  "preguntas": [
+    {
+      "id": "p_bukrs",
+      "seccion": "general",
+      "orden": 1,
+      "tipo": "texto",
+      "obligatoria": true,
+      "texto": "¿Cuál será el código de la nueva sociedad?",
+      "ayuda": "Código alfanumérico de 4 posiciones (ej. CO01).",
+      "dependeDe": null,
+      "mapeoDirecto": {
+        "descripcionConfig": "Definir la sociedad (crear/copiar)",
+        "transaccion": "OX02 / EC01",
+        "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar, copiar, borrar, verificar sociedad",
+        "tablaCampo": "T001-BUKRS",
+        "valorPropuesto": "{respuesta}",
+        "notas": "Se recomienda copiar desde una sociedad de referencia para heredar parametrizaciones."
+      },
+      "opciones": []
+    },
+    {
+      "id": "p_nombre",
+      "seccion": "general",
+      "orden": 2,
+      "tipo": "texto",
+      "obligatoria": true,
+      "texto": "¿Cuál es la razón social de la sociedad?",
+      "ayuda": "Nombre legal completo de la compañía.",
+      "dependeDe": null,
+      "mapeoDirecto": {
+        "descripcionConfig": "Datos de la sociedad: razón social y dirección",
+        "transaccion": "OX02",
+        "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar, copiar, borrar, verificar sociedad",
+        "tablaCampo": "T001-BUTXT / ADRC",
+        "valorPropuesto": "{respuesta}",
+        "notas": "Completar también la dirección completa (botón Dirección en OX02)."
+      },
+      "opciones": []
+    },
+    {
+      "id": "p_pais",
+      "seccion": "general",
+      "orden": 3,
+      "tipo": "unica",
+      "obligatoria": true,
+      "texto": "¿En qué país operará la sociedad?",
+      "ayuda": "El país determina el esquema de cálculo de impuestos y las parametrizaciones legales.",
+      "dependeDe": null,
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_pais_co",
+          "texto": "Colombia",
+          "mapeo": {
+            "descripcionConfig": "Asignar país y esquema de impuestos Colombia",
+            "transaccion": "OX02 / OBBG",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Asignar país a esquema de cálculo",
+            "tablaCampo": "T001-LAND1 / T005-KALSM",
+            "valorPropuesto": "LAND1 = CO; Esquema = TAXCO",
+            "notas": "Verificar localización Colombia (medios magnéticos, facturación electrónica)."
+          }
+        },
+        {
+          "id": "o_pais_mx",
+          "texto": "México",
+          "mapeo": {
+            "descripcionConfig": "Asignar país y esquema de impuestos México",
+            "transaccion": "OX02 / OBBG",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Asignar país a esquema de cálculo",
+            "tablaCampo": "T001-LAND1 / T005-KALSM",
+            "valorPropuesto": "LAND1 = MX; Esquema = TAXMX",
+            "notas": "Considerar localización México (CFDI, complementos de pago)."
+          }
+        },
+        {
+          "id": "o_pais_pe",
+          "texto": "Perú",
+          "mapeo": {
+            "descripcionConfig": "Asignar país y esquema de impuestos Perú",
+            "transaccion": "OX02 / OBBG",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Asignar país a esquema de cálculo",
+            "tablaCampo": "T001-LAND1 / T005-KALSM",
+            "valorPropuesto": "LAND1 = PE; Esquema = TAXPE",
+            "notas": "Considerar libros electrónicos PLE/SIRE."
+          }
+        },
+        {
+          "id": "o_pais_cl",
+          "texto": "Chile",
+          "mapeo": {
+            "descripcionConfig": "Asignar país y esquema de impuestos Chile",
+            "transaccion": "OX02 / OBBG",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Asignar país a esquema de cálculo",
+            "tablaCampo": "T001-LAND1 / T005-KALSM",
+            "valorPropuesto": "LAND1 = CL; Esquema = TAXCL",
+            "notas": "Considerar DTE (documentos tributarios electrónicos)."
+          }
+        },
+        {
+          "id": "o_pais_us",
+          "texto": "Estados Unidos",
+          "mapeo": {
+            "descripcionConfig": "Asignar país y esquema de impuestos EE. UU.",
+            "transaccion": "OX02 / OBBG",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Asignar país a esquema de cálculo",
+            "tablaCampo": "T001-LAND1 / T005-KALSM",
+            "valorPropuesto": "LAND1 = US; Esquema = TAXUSJ (jurisdicciones)",
+            "notas": "Evaluar uso de motor externo de impuestos (Vertex/Sabrix)."
+          }
+        },
+        {
+          "id": "o_pais_otro",
+          "texto": "Otro país",
+          "mapeo": {
+            "descripcionConfig": "Asignar país y esquema de impuestos del país correspondiente",
+            "transaccion": "OX02 / OBBG",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Asignar país a esquema de cálculo",
+            "tablaCampo": "T001-LAND1 / T005-KALSM",
+            "valorPropuesto": "Según país (verificar esquema estándar TAXxx)",
+            "notas": "Revisar notas de localización SAP del país."
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_moneda",
+      "seccion": "general",
+      "orden": 4,
+      "tipo": "unica",
+      "obligatoria": true,
+      "texto": "¿Cuál será la moneda local (moneda de sociedad)?",
+      "ayuda": "Moneda en la que se lleva la contabilidad principal (moneda 10).",
+      "dependeDe": null,
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_mon_cop",
+          "texto": "COP - Peso colombiano",
+          "mapeo": {
+            "descripcionConfig": "Definir moneda local de la sociedad",
+            "transaccion": "OX02",
+            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
+            "tablaCampo": "T001-WAERS",
+            "valorPropuesto": "COP",
+            "notas": ""
+          }
+        },
+        {
+          "id": "o_mon_mxn",
+          "texto": "MXN - Peso mexicano",
+          "mapeo": {
+            "descripcionConfig": "Definir moneda local de la sociedad",
+            "transaccion": "OX02",
+            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
+            "tablaCampo": "T001-WAERS",
+            "valorPropuesto": "MXN",
+            "notas": ""
+          }
+        },
+        {
+          "id": "o_mon_pen",
+          "texto": "PEN - Sol peruano",
+          "mapeo": {
+            "descripcionConfig": "Definir moneda local de la sociedad",
+            "transaccion": "OX02",
+            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
+            "tablaCampo": "T001-WAERS",
+            "valorPropuesto": "PEN",
+            "notas": ""
+          }
+        },
+        {
+          "id": "o_mon_clp",
+          "texto": "CLP - Peso chileno",
+          "mapeo": {
+            "descripcionConfig": "Definir moneda local de la sociedad",
+            "transaccion": "OX02",
+            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
+            "tablaCampo": "T001-WAERS",
+            "valorPropuesto": "CLP",
+            "notas": ""
+          }
+        },
+        {
+          "id": "o_mon_usd",
+          "texto": "USD - Dólar estadounidense",
+          "mapeo": {
+            "descripcionConfig": "Definir moneda local de la sociedad",
+            "transaccion": "OX02",
+            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
+            "tablaCampo": "T001-WAERS",
+            "valorPropuesto": "USD",
+            "notas": ""
+          }
+        },
+        {
+          "id": "o_mon_eur",
+          "texto": "EUR - Euro",
+          "mapeo": {
+            "descripcionConfig": "Definir moneda local de la sociedad",
+            "transaccion": "OX02",
+            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
+            "tablaCampo": "T001-WAERS",
+            "valorPropuesto": "EUR",
+            "notas": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_idioma",
+      "seccion": "general",
+      "orden": 5,
+      "tipo": "unica",
+      "obligatoria": true,
+      "texto": "¿Cuál será el idioma de la sociedad?",
+      "ayuda": "Idioma por defecto para textos y correspondencia.",
+      "dependeDe": null,
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_idi_es",
+          "texto": "Español",
+          "mapeo": {
+            "descripcionConfig": "Definir idioma de la sociedad",
+            "transaccion": "OX02",
+            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
+            "tablaCampo": "T001-SPRAS",
+            "valorPropuesto": "ES",
+            "notas": ""
+          }
+        },
+        {
+          "id": "o_idi_en",
+          "texto": "Inglés",
+          "mapeo": {
+            "descripcionConfig": "Definir idioma de la sociedad",
+            "transaccion": "OX02",
+            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
+            "tablaCampo": "T001-SPRAS",
+            "valorPropuesto": "EN",
+            "notas": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_plan_cuentas",
+      "seccion": "contable",
+      "orden": 1,
+      "tipo": "unica",
+      "obligatoria": true,
+      "texto": "¿La sociedad utilizará el plan de cuentas corporativo existente o requiere uno nuevo?",
+      "ayuda": "El plan de cuentas operativo define las cuentas de mayor disponibles.",
+      "dependeDe": null,
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_pc_exist",
+          "texto": "Plan de cuentas corporativo existente",
+          "mapeo": {
+            "descripcionConfig": "Asignar sociedad al plan de cuentas existente",
+            "transaccion": "OB62",
+            "rutaIMG": "Gestión financiera > Contabilidad principal > Cuentas de mayor > Datos maestros > Preparativos > Asignar sociedad a plan de cuentas",
+            "tablaCampo": "T001-KTOPL",
+            "valorPropuesto": "Plan corporativo (ej. PCGC)",
+            "notas": "Crear los segmentos de sociedad de las cuentas con FS00/OB_GLACC11."
+          }
+        },
+        {
+          "id": "o_pc_nuevo",
+          "texto": "Plan de cuentas nuevo",
+          "mapeo": {
+            "descripcionConfig": "Definir plan de cuentas nuevo y asignarlo a la sociedad",
+            "transaccion": "OB13 + OB62",
+            "rutaIMG": "Gestión financiera > Contabilidad principal > Cuentas de mayor > Datos maestros > Preparativos > Tratar lista de planes de cuentas",
+            "tablaCampo": "T004 / T001-KTOPL",
+            "valorPropuesto": "Nuevo ID de plan de cuentas",
+            "notas": "Definir también grupos de cuentas (OBD4) y cuentas de retención de beneficios (OB53)."
+          }
+        },
+        {
+          "id": "o_pc_pais",
+          "texto": "Corporativo + plan de cuentas alternativo (de país)",
+          "mapeo": {
+            "descripcionConfig": "Asignar plan corporativo y plan alternativo de país",
+            "transaccion": "OB62",
+            "rutaIMG": "Gestión financiera > Contabilidad principal > Cuentas de mayor > Datos maestros > Preparativos > Asignar sociedad a plan de cuentas",
+            "tablaCampo": "T001-KTOPL / T001-KTOP2",
+            "valorPropuesto": "KTOPL = corporativo; KTOP2 = plan local",
+            "notas": "Mantener el número de cuenta alternativo en el dato maestro de cada cuenta (FS00)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_ejercicio",
+      "seccion": "contable",
+      "orden": 2,
+      "tipo": "unica",
+      "obligatoria": true,
+      "texto": "¿Cómo es el ejercicio fiscal de la sociedad?",
+      "ayuda": "Define la variante de ejercicio (períodos contables del año fiscal).",
+      "dependeDe": null,
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_ej_k4",
+          "texto": "Año calendario (enero a diciembre)",
+          "mapeo": {
+            "descripcionConfig": "Asignar variante de ejercicio K4 a la sociedad",
+            "transaccion": "OB37",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Ejercicio y períodos contables > Asignar sociedad a variante de ejercicio",
+            "tablaCampo": "T001-PERIV",
+            "valorPropuesto": "K4 (12 períodos + 4 especiales)",
+            "notas": "K4 es la variante estándar de año calendario."
+          }
+        },
+        {
+          "id": "o_ej_despl",
+          "texto": "Ejercicio desplazado (ej. abril a marzo)",
+          "mapeo": {
+            "descripcionConfig": "Crear variante de ejercicio desplazado y asignarla",
+            "transaccion": "OB29 + OB37",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Ejercicio y períodos contables > Actualizar variante de ejercicio",
+            "tablaCampo": "T009 / T001-PERIV",
+            "valorPropuesto": "Variante nueva o estándar (ej. V3 abril-marzo)",
+            "notas": "Verificar si existe variante estándar antes de crear una nueva."
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_periodos",
+      "seccion": "contable",
+      "orden": 3,
+      "tipo": "unica",
+      "obligatoria": true,
+      "texto": "¿Cómo se gestionará la apertura y cierre de períodos contables?",
+      "ayuda": "La variante de períodos contables controla qué períodos están abiertos para contabilizar.",
+      "dependeDe": null,
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_per_comp",
+          "texto": "Compartir variante de períodos con el grupo (cierre centralizado)",
+          "mapeo": {
+            "descripcionConfig": "Asignar variante de períodos contables existente",
+            "transaccion": "OBBP",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Documento > Períodos contables > Asignar variante a sociedad",
+            "tablaCampo": "T001-OPVAR",
+            "valorPropuesto": "Variante del grupo",
+            "notas": "La apertura/cierre (OB52) afectará a todas las sociedades de la variante."
+          }
+        },
+        {
+          "id": "o_per_propia",
+          "texto": "Variante de períodos propia (cierre independiente)",
+          "mapeo": {
+            "descripcionConfig": "Crear variante de períodos propia y asignarla",
+            "transaccion": "OBBO + OBBP + OB52",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Documento > Períodos contables > Definir variantes para períodos contables abiertos",
+            "tablaCampo": "T010O / T001-OPVAR",
+            "valorPropuesto": "Variante nueva = código de la sociedad",
+            "notas": "Mantener los períodos abiertos iniciales en OB52 para todas las clases de cuenta (+, A, D, K, M, S)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_moneda_paralela",
+      "seccion": "contable",
+      "orden": 4,
+      "tipo": "si_no",
+      "obligatoria": true,
+      "texto": "¿La sociedad requiere monedas paralelas (moneda de grupo o moneda dura)?",
+      "ayuda": "Ej.: reportar simultáneamente en moneda local y USD para consolidación.",
+      "dependeDe": null,
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_mp_si",
+          "texto": "Sí",
+          "mapeo": {
+            "descripcionConfig": "Definir monedas adicionales de la sociedad (ledger)",
+            "transaccion": "OB22 / FINSC_LEDGER",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Libros > Ledger > Definir parametrizaciones de moneda de la sociedad",
+            "tablaCampo": "T001A / FINSC_LD_CMP",
+            "valorPropuesto": "Moneda 30 = moneda de grupo (ej. USD)",
+            "notas": "En S/4HANA se define a nivel de ledger en FINSC_LEDGER. Definir antes de la primera contabilización."
+          }
+        },
+        {
+          "id": "o_mp_no",
+          "texto": "No",
+          "mapeo": {
+            "descripcionConfig": "Sin acción: solo moneda local",
+            "transaccion": "-",
+            "rutaIMG": "-",
+            "tablaCampo": "-",
+            "valorPropuesto": "Solo moneda 10 (local)",
+            "notas": "Las monedas paralelas no pueden activarse fácilmente después de contabilizar."
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_fsv",
+      "seccion": "contable",
+      "orden": 5,
+      "tipo": "unica",
+      "obligatoria": true,
+      "texto": "¿Qué variante de status de campo utilizará la sociedad?",
+      "ayuda": "Controla qué campos son obligatorios/opcionales al contabilizar en cada cuenta.",
+      "dependeDe": null,
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_fsv_std",
+          "texto": "Usar la variante corporativa existente",
+          "mapeo": {
+            "descripcionConfig": "Asignar variante de status de campo existente",
+            "transaccion": "OBC5",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Documento > Control de campos > Asignar sociedad a variante de status de campo",
+            "tablaCampo": "T001-FSTVA",
+            "valorPropuesto": "Variante corporativa (ej. 1000)",
+            "notas": ""
+          }
+        },
+        {
+          "id": "o_fsv_nueva",
+          "texto": "Crear variante propia (copiando la estándar)",
+          "mapeo": {
+            "descripcionConfig": "Copiar variante de status de campo y asignarla",
+            "transaccion": "OBC4 + OBC5",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Documento > Control de campos > Definir variantes de status de campo",
+            "tablaCampo": "T004F / T001-FSTVA",
+            "valorPropuesto": "Copia de 0001 con ID propio",
+            "notas": "Ajustar los grupos de status de campo según necesidades locales."
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_usa_co",
+      "seccion": "controlling",
+      "orden": 1,
+      "tipo": "si_no",
+      "obligatoria": true,
+      "texto": "¿La sociedad utilizará Controlling (contabilidad de costos)?",
+      "ayuda": "Centros de coste, órdenes internas, análisis de rentabilidad, etc.",
+      "dependeDe": null,
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_uco_si",
+          "texto": "Sí",
+          "mapeo": {
+            "descripcionConfig": "Activar componentes de Controlling para la sociedad",
+            "transaccion": "OKKP",
+            "rutaIMG": "Controlling > Controlling general > Organización > Actualizar sociedad CO",
+            "tablaCampo": "TKA00 / TKA01",
+            "valorPropuesto": "Activar contab. centros de coste y órdenes",
+            "notas": ""
+          }
+        },
+        {
+          "id": "o_uco_no",
+          "texto": "No",
+          "mapeo": {
+            "descripcionConfig": "Sin acción en CO",
+            "transaccion": "-",
+            "rutaIMG": "-",
+            "tablaCampo": "-",
+            "valorPropuesto": "-",
+            "notas": "Poco habitual en S/4HANA: el ledger universal integra CO. Confirmar con el equipo de finanzas."
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_area_co",
+      "seccion": "controlling",
+      "orden": 2,
+      "tipo": "unica",
+      "obligatoria": true,
+      "texto": "¿La sociedad se asignará a una sociedad CO (área de controlling) existente o nueva?",
+      "ayuda": "Una sociedad CO puede agrupar varias sociedades FI (controlling entre sociedades).",
+      "dependeDe": {
+        "preguntaId": "p_usa_co",
+        "valores": [
+          "Sí"
+        ]
+      },
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_aco_exist",
+          "texto": "Asignar a sociedad CO existente",
+          "mapeo": {
+            "descripcionConfig": "Asignar sociedad a la sociedad CO existente",
+            "transaccion": "OX19",
+            "rutaIMG": "Estructura de la empresa > Asignación > Controlling > Asignar sociedad a sociedad CO",
+            "tablaCampo": "TKA02",
+            "valorPropuesto": "Sociedad CO corporativa",
+            "notas": "Requiere mismo plan de cuentas operativo y variante de ejercicio compatible."
+          }
+        },
+        {
+          "id": "o_aco_nueva",
+          "texto": "Crear sociedad CO nueva",
+          "mapeo": {
+            "descripcionConfig": "Crear sociedad CO y asignar la sociedad",
+            "transaccion": "OKKP + OX19",
+            "rutaIMG": "Controlling > Controlling general > Organización > Actualizar sociedad CO",
+            "tablaCampo": "TKA01 / TKA02",
+            "valorPropuesto": "Nueva sociedad CO",
+            "notas": "Definir también la jerarquía estándar de centros de coste (OKEON) y grupos."
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_centros_coste",
+      "seccion": "controlling",
+      "orden": 3,
+      "tipo": "si_no",
+      "obligatoria": false,
+      "texto": "¿Se requiere crear estructura de centros de coste para la nueva sociedad?",
+      "ayuda": "Jerarquía estándar y centros de coste iniciales.",
+      "dependeDe": {
+        "preguntaId": "p_usa_co",
+        "valores": [
+          "Sí"
+        ]
+      },
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_cc_si",
+          "texto": "Sí",
+          "mapeo": {
+            "descripcionConfig": "Crear jerarquía estándar y centros de coste",
+            "transaccion": "OKEON / KS01",
+            "rutaIMG": "Controlling > Contabilidad de centros de coste > Datos maestros > Centros de coste",
+            "tablaCampo": "CSKS / SETNODE",
+            "valorPropuesto": "Jerarquía por área organizativa",
+            "notas": "Solicitar al negocio el listado de centros de coste con responsables."
+          }
+        },
+        {
+          "id": "o_cc_no",
+          "texto": "No",
+          "mapeo": {
+            "descripcionConfig": "Sin acción: se usarán centros existentes",
+            "transaccion": "-",
+            "rutaIMG": "-",
+            "tablaCampo": "-",
+            "valorPropuesto": "-",
+            "notas": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_retenciones",
+      "seccion": "impuestos",
+      "orden": 1,
+      "tipo": "si_no",
+      "obligatoria": true,
+      "texto": "¿La sociedad aplica retenciones en la fuente (withholding tax)?",
+      "ayuda": "Retenciones de renta, IVA, ICA u otras según legislación local.",
+      "dependeDe": null,
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_ret_si",
+          "texto": "Sí",
+          "mapeo": {
+            "descripcionConfig": "Configurar retención ampliada (extended withholding tax)",
+            "transaccion": "SPRO (varias actividades)",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Retención de impuestos > Retención ampliada",
+            "tablaCampo": "T059P / T059Z / T001-WT_NEWWT",
+            "valorPropuesto": "Tipos e indicadores de retención por país + activación en sociedad",
+            "notas": "Definir tipos de retención, indicadores, cuentas asociadas (OB_WT) y activar en la sociedad."
+          }
+        },
+        {
+          "id": "o_ret_no",
+          "texto": "No",
+          "mapeo": {
+            "descripcionConfig": "Sin acción en retenciones",
+            "transaccion": "-",
+            "rutaIMG": "-",
+            "tablaCampo": "-",
+            "valorPropuesto": "-",
+            "notas": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_iva_ind",
+      "seccion": "impuestos",
+      "orden": 2,
+      "tipo": "unica",
+      "obligatoria": true,
+      "texto": "¿Qué indicadores de IVA/impuestos necesita la sociedad?",
+      "ayuda": "Indicadores de impuesto soportado y repercutido.",
+      "dependeDe": null,
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_iva_std",
+          "texto": "Copiar indicadores estándar del país",
+          "mapeo": {
+            "descripcionConfig": "Verificar/copiar indicadores de IVA estándar",
+            "transaccion": "FTXP",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Cálculo > Definir indicadores de IVA",
+            "tablaCampo": "T007A / T007S",
+            "valorPropuesto": "Indicadores estándar del esquema del país",
+            "notas": "Verificar cuentas de impuestos en OB40."
+          }
+        },
+        {
+          "id": "o_iva_custom",
+          "texto": "Crear indicadores específicos (tarifas locales propias)",
+          "mapeo": {
+            "descripcionConfig": "Crear indicadores de IVA con tarifas locales",
+            "transaccion": "FTXP + OB40",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Impuesto sobre vol. de negocios > Cálculo > Definir indicadores de IVA",
+            "tablaCampo": "T007A / T030K",
+            "valorPropuesto": "Indicadores por tarifa (general, reducida, exenta, excluida)",
+            "notas": "Levantar matriz de impuestos con el área tributaria antes de configurar."
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_rangos",
+      "seccion": "documentos",
+      "orden": 1,
+      "tipo": "unica",
+      "obligatoria": true,
+      "texto": "¿Cómo se crearán los rangos de números de documento contable?",
+      "ayuda": "Cada clase de documento (KR, DR, SA…) necesita un rango de numeración por sociedad.",
+      "dependeDe": null,
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_rng_copia",
+          "texto": "Copiar rangos desde una sociedad de referencia",
+          "mapeo": {
+            "descripcionConfig": "Copiar rangos de números de documento",
+            "transaccion": "OBH1",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Documento > Rangos de números de documento > Copiar a sociedad",
+            "tablaCampo": "NRIV (objeto RF_BELEG)",
+            "valorPropuesto": "Copia desde sociedad de referencia",
+            "notas": "Copiar también a ejercicios futuros (OBH2) si los rangos son por ejercicio."
+          }
+        },
+        {
+          "id": "o_rng_manual",
+          "texto": "Crear rangos manualmente",
+          "mapeo": {
+            "descripcionConfig": "Crear rangos de números de documento",
+            "transaccion": "FBN1",
+            "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Documento > Rangos de números de documento",
+            "tablaCampo": "NRIV (objeto RF_BELEG)",
+            "valorPropuesto": "Rangos por clase de documento y ejercicio",
+            "notas": "Los rangos no se transportan: crearlos directamente en cada ambiente."
+          }
+        }
+      ]
+    },
+    {
+      "id": "p_credito",
+      "seccion": "documentos",
+      "orden": 2,
+      "tipo": "si_no",
+      "obligatoria": true,
+      "texto": "¿La sociedad requiere gestión de crédito de clientes?",
+      "ayuda": "Control de límites de crédito para clientes en ventas.",
+      "dependeDe": null,
+      "mapeoDirecto": null,
+      "opciones": [
+        {
+          "id": "o_cred_si",
+          "texto": "Sí",
+          "mapeo": {
+            "descripcionConfig": "Configurar gestión de crédito (FSCM Credit Management)",
+            "transaccion": "UKM_MY_DCDS / BP + OB38",
+            "rutaIMG": "Gestión financiera > Gestión de créditos (FSCM) / Asignar sociedad a área de control de créditos",
+            "tablaCampo": "T001-KKBER / UKMBP_CMS_SGM",
+            "valorPropuesto": "Área de control de crédito + segmento de crédito",
+            "notas": "En S/4HANA la gestión de crédito clásica fue sustituida por FSCM Credit Management."
+          }
+        },
+        {
+          "id": "o_cred_no",
+          "texto": "No",
+          "mapeo": {
+            "descripcionConfig": "Sin acción en gestión de crédito",
+            "transaccion": "-",
+            "rutaIMG": "-",
+            "tablaCampo": "-",
+            "valorPropuesto": "-",
+            "notas": ""
+          }
+        }
+      ]
+    }
+  ]
+}

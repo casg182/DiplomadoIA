@@ -1,0 +1,40 @@
+﻿OpcionID,PreguntaID,TextoRespuesta
+o_pais_co,p_pais,Colombia
+o_pais_mx,p_pais,México
+o_pais_pe,p_pais,Perú
+o_pais_cl,p_pais,Chile
+o_pais_us,p_pais,Estados Unidos
+o_pais_otro,p_pais,Otro país
+o_mon_cop,p_moneda,COP - Peso colombiano
+o_mon_mxn,p_moneda,MXN - Peso mexicano
+o_mon_pen,p_moneda,PEN - Sol peruano
+o_mon_clp,p_moneda,CLP - Peso chileno
+o_mon_usd,p_moneda,USD - Dólar estadounidense
+o_mon_eur,p_moneda,EUR - Euro
+o_idi_es,p_idioma,Español
+o_idi_en,p_idioma,Inglés
+o_pc_exist,p_plan_cuentas,Plan de cuentas corporativo existente
+o_pc_nuevo,p_plan_cuentas,Plan de cuentas nuevo
+o_pc_pais,p_plan_cuentas,Corporativo + plan de cuentas alternativo (de país)
+o_ej_k4,p_ejercicio,Año calendario (enero a diciembre)
+o_ej_despl,p_ejercicio,Ejercicio desplazado (ej. abril a marzo)
+o_per_comp,p_periodos,Compartir variante de períodos con el grupo (cierre centralizado)
+o_per_propia,p_periodos,Variante de períodos propia (cierre independiente)
+o_mp_si,p_moneda_paralela,Sí
+o_mp_no,p_moneda_paralela,No
+o_fsv_std,p_fsv,Usar la variante corporativa existente
+o_fsv_nueva,p_fsv,Crear variante propia (copiando la estándar)
+o_uco_si,p_usa_co,Sí
+o_uco_no,p_usa_co,No
+o_aco_exist,p_area_co,Asignar a sociedad CO existente
+o_aco_nueva,p_area_co,Crear sociedad CO nueva
+o_cc_si,p_centros_coste,Sí
+o_cc_no,p_centros_coste,No
+o_ret_si,p_retenciones,Sí
+o_ret_no,p_retenciones,No
+o_iva_std,p_iva_ind,Copiar indicadores estándar del país
+o_iva_custom,p_iva_ind,Crear indicadores específicos (tarifas locales propias)
+o_rng_copia,p_rangos,Copiar rangos desde una sociedad de referencia
+o_rng_manual,p_rangos,Crear rangos manualmente
+o_cred_si,p_credito,Sí
+o_cred_no,p_credito,No
