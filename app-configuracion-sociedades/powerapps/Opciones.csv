@@ -13,6 +13,10 @@ o_mon_usd,p_moneda,USD - Dólar estadounidense
 o_mon_eur,p_moneda,EUR - Euro
 o_idi_es,p_idioma,Español
 o_idi_en,p_idioma,Inglés
+o_mig_si,p_migracion,Sí
+o_mig_no,p_migracion,No
+o_mdg_si,p_mdg,Sí
+o_mdg_no,p_mdg,No
 o_pc_exist,p_plan_cuentas,Plan de cuentas corporativo existente
 o_pc_nuevo,p_plan_cuentas,Plan de cuentas nuevo
 o_pc_pais,p_plan_cuentas,Corporativo + plan de cuentas alternativo (de país)
@@ -24,17 +28,75 @@ o_mp_si,p_moneda_paralela,Sí
 o_mp_no,p_moneda_paralela,No
 o_fsv_std,p_fsv,Usar la variante corporativa existente
 o_fsv_nueva,p_fsv,Crear variante propia (copiando la estándar)
+o_val_si,p_validacion_gl,Sí
+o_val_no,p_validacion_gl,No
+o_rev_si,p_revaluacion,Sí
+o_rev_no,p_revaluacion,No
+o_eb_corp,p_estructura_balance,Estructura corporativa existente
+o_eb_local,p_estructura_balance,Estructura propia según normativa local
+o_ico_si,p_ico,Sí
+o_ico_no,p_ico,No
+o_lc_si,p_lugares,Sí
+o_lc_no,p_lugares,No
+o_ret_si,p_retenciones,Sí
+o_ret_no,p_retenciones,No
+o_iva_std,p_iva_ind,Copiar indicadores estándar del país
+o_iva_custom,p_iva_ind,Crear indicadores específicos (tarifas locales propias)
+o_ap_si,p_ap_usa,Sí
+o_ap_no,p_ap_usa,No
+o_app_si,p_ap_pagos,Sí
+o_app_no,p_ap_pagos,No
+o_apa_si,p_ap_anticipos,Sí
+o_apa_no,p_ap_anticipos,No
+o_ar_si,p_ar_usa,Sí
+o_ar_no,p_ar_usa,No
+o_ara_si,p_ar_anticipos,Sí
+o_ara_no,p_ar_anticipos,No
+o_dun_si,p_ar_dunning,Sí
+o_dun_no,p_ar_dunning,No
+o_cred_si,p_credito,Sí
+o_cred_no,p_credito,No
+o_aa_si,p_aa_usa,Sí
+o_aa_no,p_aa_usa,No
+o_aap_exist,p_aa_plan,Mismo plan de valoración de otra sociedad
+o_aap_nuevo,p_aa_plan,Plan de valoración nuevo (copiado de referencia)
+o_amo_corp,p_aa_amortizacion,Política corporativa existente
+o_amo_local,p_aa_amortizacion,Normativa local (claves propias)
 o_uco_si,p_usa_co,Sí
 o_uco_no,p_usa_co,No
 o_aco_exist,p_area_co,Asignar a sociedad CO existente
 o_aco_nueva,p_area_co,Crear sociedad CO nueva
 o_cc_si,p_centros_coste,Sí
 o_cc_no,p_centros_coste,No
-o_ret_si,p_retenciones,Sí
-o_ret_no,p_retenciones,No
-o_iva_std,p_iva_ind,Copiar indicadores estándar del país
-o_iva_custom,p_iva_ind,Crear indicadores específicos (tarifas locales propias)
+o_oi_si,p_co_ordenes,Sí
+o_oi_no,p_co_ordenes,No
+o_fm_si,p_fm_usa,Sí
+o_fm_no,p_fm_usa,No
+o_fmc_si,p_fm_capex,Sí
+o_fmc_no,p_fm_capex,No
+o_ps_si,p_ps_usa,Sí
+o_ps_no,p_ps_usa,No
+o_psc_si,p_ps_capex,Sí
+o_psc_no,p_ps_capex,No
+o_ext_si,p_tr_extractos,Sí
+o_ext_no,p_tr_extractos,No
+o_cash_si,p_tr_cash,Sí
+o_cash_no,p_tr_cash,No
+o_trm_si,p_trm_instrumentos,Sí
+o_trm_no,p_trm_instrumentos,No
+o_sd_si,p_sd_usa,Sí
+o_sd_no,p_sd_usa,No
+o_fe_si,p_sd_fe,Sí
+o_fe_no,p_sd_fe,No
+o_mm_si,p_mm_usa,Sí
+o_mm_no,p_mm_usa,No
+o_val_s,p_mm_valoracion,Precio estándar (S)
+o_val_v,p_mm_valoracion,Precio medio variable (V)
+o_ver_si,p_mm_verificacion,Sí
+o_ver_no,p_mm_verificacion,No
+o_pm_si,p_pm_usa,Sí
+o_pm_no,p_pm_usa,No
+o_pmo_si,p_pm_ordenes,Sí
+o_pmo_no,p_pm_ordenes,No
 o_rng_copia,p_rangos,Copiar rangos desde una sociedad de referencia
 o_rng_manual,p_rangos,Crear rangos manualmente
-o_cred_si,p_credito,Sí
-o_cred_no,p_credito,No

@@ -59,15 +59,24 @@ app-configuracion-sociedades/
 
 ## 📦 Catálogo por defecto incluido
 
-17 preguntas que cubren el alcance típico de la creación de una sociedad en S/4HANA:
+53 preguntas en 14 secciones que cubren el alcance multimódulo de la creación de una sociedad en S/4HANA:
 
-| Sección | Temas y transacciones cubiertas |
+| Sección / Módulo | Temas y transacciones cubiertas |
 |---|---|
-| Datos generales | Código y razón social (OX02/EC01), país y esquema de impuestos (OBBG), moneda local, idioma |
-| Estructura contable (FI) | Plan de cuentas (OB13/OB62), variante de ejercicio (OB29/OB37), períodos contables (OBBO/OBBP/OB52), monedas paralelas (OB22/FINSC_LEDGER), variante de status de campo (OBC4/OBC5) |
-| Controlling (CO) | Sociedad CO (OKKP/OX19), jerarquía y centros de coste (OKEON/KS01) |
-| Impuestos | Retención ampliada (extended withholding tax), indicadores de IVA (FTXP/OB40) |
-| Documentos y crédito | Rangos de números de documento (FBN1/OBH1), gestión de crédito FSCM (OB38/UKM) |
+| Datos generales y alcance | Código y razón social (OX02/EC01), número de sociedades, domicilios/sucursales, país y esquema de impuestos (OBBG), moneda, idioma, migración de datos (LTMC), datos maestros centralizados (MDG) |
+| Contabilidad principal (GL) | Plan de cuentas (OB13/OB62), variante de ejercicio (OB29/OB37), períodos (OBBO/OBBP/OB52), monedas paralelas (OB22/FINSC_LEDGER), status de campo (OBC4/OBC5), validaciones (OB28/GGB0), revaluación de monedas (FAGL_FCV/OBA1), estructura de balance (OB58), intercompany (OBYA), lugares comerciales |
+| Impuestos y retenciones | Retención ampliada (extended withholding tax), indicadores de IVA (FTXP/OB40) |
+| Cuentas por pagar (AP) | Grupos de BP proveedor (OBD3), programa de pagos (FBZP/F110), anticipos (OBYR) |
+| Cuentas por cobrar (AR) | Grupos de BP cliente (OBD2), anticipos (OBXR), reclamaciones (FBMP/F150), crédito FSCM (OB38/UKM) |
+| Activos fijos (AA) | Plan de valoración (OAOB/EC08/OADB), clases de activos (OAOA/AO90), claves de amortización (AFAMA) |
+| Controlling (CO) | Sociedad CO (OKKP/OX19), centros de coste (OKEON/KS01), órdenes internas (KOT2_OPA/OKO7) |
+| Control presupuestal (FM) | Entidad CP y BCS (OF18/FMUF), centros gestores/posiciones (FMSA/FMCIA), derivación CAPEX-OPEX y AVC (FMDERIVE/OF39) |
+| Proyectos (PS) | Perfil de proyecto y PEP (OPSA/OPSK), capitalización a activos (OITA/OKO7) |
+| Tesorería (TR/TRM) | Bancos propios y BAM (FI12), extracto electrónico (OT83/FF_5), Cash Management (FQM), instrumentos financieros TRM (FTR_CREATE) |
+| Ventas (SD) | Estructura de ventas (OVX5/OVX3, VKOA), facturación electrónica (EDOC_COCKPIT) |
+| Compras e inventarios (MM) | Centros y almacenes (OX10/OX18/OX09), valoración S/V (OMW0/OBYC), tolerancias de facturas (OMR6) |
+| Mantenimiento (PM) | Centros de planificación PM, tipos de orden e integración CO (OIOA/OKO7) |
+| Documentos contables | Rangos de números de documento (FBN1/OBH1) |
 
 Todo el catálogo es editable desde la pestaña **⚙️ Administración** sin tocar código.
 
