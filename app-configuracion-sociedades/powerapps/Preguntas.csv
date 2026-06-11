@@ -1,54 +1,55 @@
-﻿PreguntaID,Seccion,Orden,Texto,Ayuda,Tipo,Obligatoria,DependeDePregunta,DependeDeValores
-p_bukrs,1. Datos generales y alcance,1,¿Cuál será el código de la nueva sociedad?,Código alfanumérico de 4 posiciones (ej. CO01).,texto,Si,,
-p_nombre,1. Datos generales y alcance,2,¿Cuál es la razón social de la sociedad?,Nombre legal completo de la compañía.,texto,Si,,
-p_num_sociedades,1. Datos generales y alcance,3,¿Cuántas sociedades se crearán en total en este proyecto?,Define el alcance: este cuestionario se diligencia una vez por cada sociedad.,texto,Si,,
-p_pais,1. Datos generales y alcance,4,¿En qué país operará la sociedad?,El país determina el esquema de cálculo de impuestos y las parametrizaciones legales.,unica,Si,,
-p_domicilios,1. Datos generales y alcance,5,¿Dónde estarán domiciliadas la matriz y sus sucursales (ciudades)?,"Indique ciudad de la sede principal y de las sucursales, si existen.",texto,Si,,
-p_moneda,1. Datos generales y alcance,6,¿Cuál será la moneda local (moneda de sociedad)?,Moneda en la que se lleva la contabilidad principal (moneda 10).,unica,Si,,
-p_idioma,1. Datos generales y alcance,7,¿Cuál será el idioma de la sociedad?,Idioma por defecto para textos y correspondencia.,unica,Si,,
-p_migracion,1. Datos generales y alcance,8,¿La sociedad tendrá migración de datos (saldos iniciales y datos maestros)?,"Saldos GL, partidas abiertas AP/AR, activos fijos, materiales, business partners.",si_no,Si,,
-p_mdg,1. Datos generales y alcance,9,¿La sociedad se acoge al manejo de datos maestros centralizado del grupo?,"Gobierno central de business partners, cuentas, materiales (MDG o proceso corporativo).",si_no,Si,,
-p_plan_cuentas,2. Contabilidad principal (GL),1,¿La sociedad utilizará el plan de cuentas corporativo existente o requiere uno nuevo?,El plan de cuentas operativo define las cuentas de mayor disponibles.,unica,Si,,
-p_ejercicio,2. Contabilidad principal (GL),2,¿Cómo es el ejercicio fiscal de la sociedad?,Define la variante de ejercicio (períodos contables del año fiscal).,unica,Si,,
-p_periodos,2. Contabilidad principal (GL),3,¿Cómo se gestionará la apertura y cierre de períodos contables?,La variante de períodos contables controla qué períodos están abiertos para contabilizar.,unica,Si,,
-p_moneda_paralela,2. Contabilidad principal (GL),4,¿La sociedad requiere monedas paralelas (moneda de grupo o moneda dura)?,Ej.: reportar simultáneamente en moneda local y USD para consolidación.,si_no,Si,,
-p_fsv,2. Contabilidad principal (GL),5,¿Qué variante de status de campo utilizará la sociedad?,Controla qué campos son obligatorios/opcionales al contabilizar en cada cuenta.,unica,Si,,
-p_validacion_gl,2. Contabilidad principal (GL),6,¿Las contabilizaciones a nivel de GL deberán pasar por una validación preliminar?,Reglas que verifican o bloquean documentos antes de contabilizar (ej. combinaciones cuenta/centro de coste).,si_no,Si,,
-p_revaluacion,2. Contabilidad principal (GL),7,¿Se requiere revaluación/valoración de monedas extranjeras al cierre?,Valoración de partidas abiertas y saldos en moneda extranjera (diferencia en cambio).,si_no,Si,,
-p_estructura_balance,2. Contabilidad principal (GL),8,¿Qué estructura de balance y P&G usará la sociedad para reportes financieros?,La estructura de balance agrupa cuentas para los estados financieros (FSE).,unica,Si,,
-p_ico,2. Contabilidad principal (GL),9,¿La sociedad tendrá operaciones con otras sociedades del grupo (intercompany / ICO)?,"Compras, ventas, préstamos o cobros/pagos entre sociedades del mismo grupo.",si_no,Si,,
-p_lugares,2. Contabilidad principal (GL),10,¿La sociedad opera con matriz y sucursales que deban reportarse por separado (lugares comerciales)?,Sucursales con numeración fiscal o reportes tributarios propios.,si_no,Si,,
-p_retenciones,3. Impuestos y retenciones,1,¿La sociedad aplica retenciones en la fuente (withholding tax)?,"Retenciones de renta, IVA, ICA u otras según legislación local.",si_no,Si,,
-p_iva_ind,3. Impuestos y retenciones,2,¿Qué indicadores de IVA/impuestos necesita la sociedad?,Indicadores de impuesto soportado y repercutido.,unica,Si,,
-p_ap_usa,4. Cuentas por pagar (AP),1,¿La sociedad gestionará cuentas por pagar (proveedores)?,"Compras a crédito, facturas de proveedores y pagos.",si_no,Si,,
-p_ap_pagos,4. Cuentas por pagar (AP),2,¿Se usará el programa de pagos automáticos?,"Generación masiva de pagos (transferencias, cheques) con propuesta y ejecución.",si_no,No,p_ap_usa,Sí
-p_ap_anticipos,4. Cuentas por pagar (AP),3,¿Se pagarán anticipos a proveedores?,Pagos antes de recibir la factura (operaciones en cuenta de mayor especial).,si_no,No,p_ap_usa,Sí
-p_ar_usa,5. Cuentas por cobrar y crédito (AR),1,¿La sociedad gestionará cuentas por cobrar (clientes)?,"Ventas a crédito, facturas de clientes y cobranza.",si_no,Si,,
-p_ar_anticipos,5. Cuentas por cobrar y crédito (AR),2,¿Se recibirán anticipos de clientes?,Cobros antes de emitir la factura (operaciones en cuenta de mayor especial).,si_no,No,p_ar_usa,Sí
-p_ar_dunning,5. Cuentas por cobrar y crédito (AR),3,¿Se enviarán recordatorios o reclamaciones de cobro a clientes (dunning)?,Cartas/correos automáticos por niveles de mora.,si_no,No,p_ar_usa,Sí
-p_credito,5. Cuentas por cobrar y crédito (AR),4,¿La sociedad requiere gestión de crédito de clientes?,Control de límites de crédito para clientes en ventas.,si_no,No,p_ar_usa,Sí
-p_aa_usa,6. Activos fijos (AA),1,¿La sociedad gestionará activos fijos?,"Propiedad, planta y equipo; intangibles; activos en curso.",si_no,Si,,
-p_aa_plan,6. Activos fijos (AA),2,¿Se tendrá el mismo plan de valoración de alguna otra sociedad existente o uno nuevo?,"El plan de valoración define las áreas de valoración (local, NIIF, fiscal).",unica,No,p_aa_usa,Sí
-p_aa_clases,6. Activos fijos (AA),3,¿Qué clases de activos fijos se tendrán?,"Ej.: terrenos, edificios, maquinaria, vehículos, equipos de cómputo, intangibles, activos en curso.",texto,No,p_aa_usa,Sí
-p_aa_amortizacion,6. Activos fijos (AA),4,¿Las vidas útiles y métodos de amortización siguen la política corporativa o la normativa local?,Claves de amortización por área de valoración.,unica,No,p_aa_usa,Sí
-p_usa_co,7. Controlling (CO),1,¿La sociedad utilizará Controlling (contabilidad de costos)?,"Centros de coste, órdenes internas, análisis de rentabilidad, etc.",si_no,Si,,
-p_area_co,7. Controlling (CO),2,¿La sociedad se asignará a una sociedad CO (área de controlling) existente o nueva?,Una sociedad CO puede agrupar varias sociedades FI (controlling entre sociedades).,unica,Si,p_usa_co,Sí
-p_centros_coste,7. Controlling (CO),3,¿Se requiere crear estructura de centros de coste para la nueva sociedad?,Jerarquía estándar y centros de coste iniciales.,si_no,No,p_usa_co,Sí
-p_co_ordenes,7. Controlling (CO),4,¿Se usarán órdenes internas para control de gastos o proyectos menores?,"Colectores de costes temporales (campañas, eventos, reparaciones, CAPEX menor).",si_no,No,p_usa_co,Sí
-p_fm_usa,8. Control presupuestal (FM),1,¿Habrá control presupuestal (Funds Management)?,Control de ejecución del gasto contra presupuesto aprobado.,si_no,Si,,
-p_fm_estructura,8. Control presupuestal (FM),2,¿Cómo se estructurará el presupuesto (centros gestores y posiciones presupuestarias)?,Ej.: centros gestores por gerencia y posiciones por naturaleza del gasto.,texto,No,p_fm_usa,Sí
-p_fm_capex,8. Control presupuestal (FM),3,¿Se necesitará control de imputación para ejecuciones de proyectos (CAPEX / OPEX)?,Que el gasto de proyectos consuma presupuesto según su clasificación CAPEX u OPEX.,si_no,No,p_fm_usa,Sí
-p_ps_usa,9. Proyectos (PS),1,¿La sociedad ejecutará proyectos (inversión u obras) con el módulo PS?,"Proyectos con estructura PEP para planear, ejecutar y controlar costes.",si_no,Si,,
-p_ps_capex,9. Proyectos (PS),2,¿Los proyectos de inversión deben capitalizarse en activos fijos?,Liquidación del proyecto a activo en curso (AeC) y luego al activo final.,si_no,No,p_ps_usa,Sí
-p_tr_bancos,10. Tesorería (TR/TRM),1,¿Con qué bancos operará la sociedad (cuentas bancarias propias)?,Liste bancos y número aproximado de cuentas por banco.,texto,Si,,
-p_tr_extractos,10. Tesorería (TR/TRM),2,¿Se procesarán extractos bancarios electrónicos (conciliación automática)?,Carga de extractos MT940/CAMT.053 con compensación automática de partidas.,si_no,Si,,
-p_tr_cash,10. Tesorería (TR/TRM),3,¿Se requiere posición de caja y previsión de liquidez (Cash Management)?,Visibilidad diaria de saldos bancarios y proyección de flujos.,si_no,Si,,
-p_trm_instrumentos,10. Tesorería (TR/TRM),4,"¿La sociedad manejará instrumentos financieros (inversiones, deuda, derivados) con TRM?","CDT/depósitos, créditos, bonos, forwards de divisas, coberturas.",si_no,Si,,
-p_sd_usa,11. Ventas y facturación (SD),1,¿La sociedad facturará ventas (gestión de facturación SD)?,"Ventas de bienes o servicios con pedidos, entregas y facturas.",si_no,Si,,
-p_sd_fe,11. Ventas y facturación (SD),2,¿La facturación debe emitirse electrónicamente ante la autoridad fiscal?,"Facturación electrónica legal (DIAN, SAT, SUNAT, SII, etc.).",si_no,No,p_sd_usa,Sí
-p_mm_usa,12. Compras e inventarios (MM),1,¿La sociedad comprará materiales/servicios y manejará inventarios (MM)?,"Compras con pedido, entradas de mercancía y verificación de facturas.",si_no,Si,,
-p_mm_valoracion,12. Compras e inventarios (MM),2,¿Cómo se valorarán los inventarios?,Control de precio del material: estándar o media móvil.,unica,No,p_mm_usa,Sí
-p_mm_verificacion,12. Compras e inventarios (MM),3,¿La verificación de facturas de compras tendrá tolerancias y bloqueos de pago?,"Diferencias permitidas entre pedido, entrada de mercancía y factura (3-way match).",si_no,No,p_mm_usa,Sí
-p_pm_usa,13. Mantenimiento (PM),1,¿La sociedad gestionará mantenimiento de equipos y activos (PM)?,"Mantenimiento correctivo/preventivo de maquinaria, vehículos, instalaciones.",si_no,Si,,
-p_pm_ordenes,13. Mantenimiento (PM),2,¿Se usarán órdenes de mantenimiento con costes imputados a CO?,Órdenes correctivas/preventivas que recogen costes de repuestos y mano de obra.,si_no,No,p_pm_usa,Sí
-p_rangos,14. Documentos contables,1,¿Cómo se crearán los rangos de números de documento contable?,"Cada clase de documento (KR, DR, SA…) necesita un rango de numeración por sociedad.",unica,Si,,
+﻿PreguntaID,Seccion,Orden,Texto,Ayuda,Tipo,Obligatoria,DependeDePregunta,DependeDeValores,CatalogoID
+p_bukrs,1. Datos generales y alcance,1,¿Cuál será el código de la nueva sociedad?,Código alfanumérico de 4 posiciones (ej. CO01).,texto,Si,,,
+p_nombre,1. Datos generales y alcance,2,¿Cuál es la razón social de la sociedad?,Nombre legal completo de la compañía.,texto,Si,,,
+p_num_sociedades,1. Datos generales y alcance,3,¿Cuántas sociedades se crearán en total en este proyecto?,Define el alcance: este cuestionario se diligencia una vez por cada sociedad.,texto,Si,,,
+p_pais,1. Datos generales y alcance,4,¿En qué país operará la sociedad?,El país determina el esquema de cálculo de impuestos y las parametrizaciones legales.,unica,Si,,,
+p_domicilios,1. Datos generales y alcance,5,¿Dónde estarán domiciliadas la matriz y sus sucursales (ciudades)?,"Indique ciudad de la sede principal y de las sucursales, si existen.",texto,Si,,,
+p_moneda,1. Datos generales y alcance,6,¿Cuál será la moneda local (moneda de sociedad)?,Moneda en la que se lleva la contabilidad principal (moneda 10). Escriba el código o nombre para buscar en el catálogo.,catalogo,Si,,,monedas
+p_idioma,1. Datos generales y alcance,7,¿Cuál será el idioma de la sociedad?,Idioma por defecto para textos y correspondencia. Escriba el código o nombre para buscar en el catálogo.,catalogo,Si,,,idiomas
+p_migracion,1. Datos generales y alcance,8,¿La sociedad tendrá migración de datos (saldos iniciales y datos maestros)?,"Saldos GL, partidas abiertas AP/AR, activos fijos, materiales, business partners.",si_no,Si,,,
+p_mdg,1. Datos generales y alcance,9,¿La sociedad se acoge al manejo de datos maestros centralizado del grupo?,"Gobierno central de business partners, cuentas, materiales (MDG o proceso corporativo).",si_no,Si,,,
+p_plan_cuentas,2. Contabilidad principal (GL),1,¿La sociedad utilizará el plan de cuentas corporativo existente o requiere uno nuevo?,El plan de cuentas operativo define las cuentas de mayor disponibles.,unica,Si,,,
+p_ejercicio,2. Contabilidad principal (GL),2,¿Cómo es el ejercicio fiscal de la sociedad?,Define la variante de ejercicio (períodos contables del año fiscal).,unica,Si,,,
+p_periodos,2. Contabilidad principal (GL),3,¿Cómo se gestionará la apertura y cierre de períodos contables?,La variante de períodos contables controla qué períodos están abiertos para contabilizar.,unica,Si,,,
+p_moneda_paralela,2. Contabilidad principal (GL),4,¿La sociedad requiere monedas paralelas (moneda de grupo o moneda dura)?,Ej.: reportar simultáneamente en moneda local y USD para consolidación.,si_no,Si,,,
+p_monedas_operativas,2. Contabilidad principal (GL),5,¿Qué monedas adicionales manejará la sociedad (paralelas u operativas)?,"Agregue todas las monedas distintas de la local: moneda de grupo, moneda dura y monedas de operación frecuente.",catalogo_multiple,No,p_moneda_paralela,Sí,monedas
+p_fsv,2. Contabilidad principal (GL),6,¿Qué variante de status de campo utilizará la sociedad?,Controla qué campos son obligatorios/opcionales al contabilizar en cada cuenta.,unica,Si,,,
+p_validacion_gl,2. Contabilidad principal (GL),7,¿Las contabilizaciones a nivel de GL deberán pasar por una validación preliminar?,Reglas que verifican o bloquean documentos antes de contabilizar (ej. combinaciones cuenta/centro de coste).,si_no,Si,,,
+p_revaluacion,2. Contabilidad principal (GL),8,¿Se requiere revaluación/valoración de monedas extranjeras al cierre?,Valoración de partidas abiertas y saldos en moneda extranjera (diferencia en cambio).,si_no,Si,,,
+p_estructura_balance,2. Contabilidad principal (GL),9,¿Qué estructura de balance y P&G usará la sociedad para reportes financieros?,La estructura de balance agrupa cuentas para los estados financieros (FSE).,unica,Si,,,
+p_ico,2. Contabilidad principal (GL),10,¿La sociedad tendrá operaciones con otras sociedades del grupo (intercompany / ICO)?,"Compras, ventas, préstamos o cobros/pagos entre sociedades del mismo grupo.",si_no,Si,,,
+p_lugares,2. Contabilidad principal (GL),11,¿La sociedad opera con matriz y sucursales que deban reportarse por separado (lugares comerciales)?,Sucursales con numeración fiscal o reportes tributarios propios.,si_no,Si,,,
+p_retenciones,3. Impuestos y retenciones,1,¿La sociedad aplica retenciones en la fuente (withholding tax)?,"Retenciones de renta, IVA, ICA u otras según legislación local.",si_no,Si,,,
+p_iva_ind,3. Impuestos y retenciones,2,¿Qué indicadores de IVA/impuestos necesita la sociedad?,Indicadores de impuesto soportado y repercutido.,unica,Si,,,
+p_ap_usa,4. Cuentas por pagar (AP),1,¿La sociedad gestionará cuentas por pagar (proveedores)?,"Compras a crédito, facturas de proveedores y pagos.",si_no,Si,,,
+p_ap_pagos,4. Cuentas por pagar (AP),2,¿Se usará el programa de pagos automáticos?,"Generación masiva de pagos (transferencias, cheques) con propuesta y ejecución.",si_no,No,p_ap_usa,Sí,
+p_ap_anticipos,4. Cuentas por pagar (AP),3,¿Se pagarán anticipos a proveedores?,Pagos antes de recibir la factura (operaciones en cuenta de mayor especial).,si_no,No,p_ap_usa,Sí,
+p_ar_usa,5. Cuentas por cobrar y crédito (AR),1,¿La sociedad gestionará cuentas por cobrar (clientes)?,"Ventas a crédito, facturas de clientes y cobranza.",si_no,Si,,,
+p_ar_anticipos,5. Cuentas por cobrar y crédito (AR),2,¿Se recibirán anticipos de clientes?,Cobros antes de emitir la factura (operaciones en cuenta de mayor especial).,si_no,No,p_ar_usa,Sí,
+p_ar_dunning,5. Cuentas por cobrar y crédito (AR),3,¿Se enviarán recordatorios o reclamaciones de cobro a clientes (dunning)?,Cartas/correos automáticos por niveles de mora.,si_no,No,p_ar_usa,Sí,
+p_credito,5. Cuentas por cobrar y crédito (AR),4,¿La sociedad requiere gestión de crédito de clientes?,Control de límites de crédito para clientes en ventas.,si_no,No,p_ar_usa,Sí,
+p_aa_usa,6. Activos fijos (AA),1,¿La sociedad gestionará activos fijos?,"Propiedad, planta y equipo; intangibles; activos en curso.",si_no,Si,,,
+p_aa_plan,6. Activos fijos (AA),2,¿Se tendrá el mismo plan de valoración de alguna otra sociedad existente o uno nuevo?,"El plan de valoración define las áreas de valoración (local, NIIF, fiscal).",unica,No,p_aa_usa,Sí,
+p_aa_clases,6. Activos fijos (AA),3,¿Qué clases de activos fijos se tendrán?,"Agregue todas las clases que apliquen; puede ampliar el catálogo con las clases propias de su compañía.",catalogo_multiple,No,p_aa_usa,Sí,clases_activos
+p_aa_amortizacion,6. Activos fijos (AA),4,¿Las vidas útiles y métodos de amortización siguen la política corporativa o la normativa local?,Claves de amortización por área de valoración.,unica,No,p_aa_usa,Sí,
+p_usa_co,7. Controlling (CO),1,¿La sociedad utilizará Controlling (contabilidad de costos)?,"Centros de coste, órdenes internas, análisis de rentabilidad, etc.",si_no,Si,,,
+p_area_co,7. Controlling (CO),2,¿La sociedad se asignará a una sociedad CO (área de controlling) existente o nueva?,Una sociedad CO puede agrupar varias sociedades FI (controlling entre sociedades).,unica,Si,p_usa_co,Sí,
+p_centros_coste,7. Controlling (CO),3,¿Se requiere crear estructura de centros de coste para la nueva sociedad?,Jerarquía estándar y centros de coste iniciales.,si_no,No,p_usa_co,Sí,
+p_co_ordenes,7. Controlling (CO),4,¿Se usarán órdenes internas para control de gastos o proyectos menores?,"Colectores de costes temporales (campañas, eventos, reparaciones, CAPEX menor).",si_no,No,p_usa_co,Sí,
+p_fm_usa,8. Control presupuestal (FM),1,¿Habrá control presupuestal (Funds Management)?,Control de ejecución del gasto contra presupuesto aprobado.,si_no,Si,,,
+p_fm_estructura,8. Control presupuestal (FM),2,¿Cómo se estructurará el presupuesto (centros gestores y posiciones presupuestarias)?,Ej.: centros gestores por gerencia y posiciones por naturaleza del gasto.,texto,No,p_fm_usa,Sí,
+p_fm_capex,8. Control presupuestal (FM),3,¿Se necesitará control de imputación para ejecuciones de proyectos (CAPEX / OPEX)?,Que el gasto de proyectos consuma presupuesto según su clasificación CAPEX u OPEX.,si_no,No,p_fm_usa,Sí,
+p_ps_usa,9. Proyectos (PS),1,¿La sociedad ejecutará proyectos (inversión u obras) con el módulo PS?,"Proyectos con estructura PEP para planear, ejecutar y controlar costes.",si_no,Si,,,
+p_ps_capex,9. Proyectos (PS),2,¿Los proyectos de inversión deben capitalizarse en activos fijos?,Liquidación del proyecto a activo en curso (AeC) y luego al activo final.,si_no,No,p_ps_usa,Sí,
+p_tr_bancos,10. Tesorería (TR/TRM),1,¿Con qué bancos operará la sociedad (cuentas bancarias propias)?,Agregue cada banco desde el catálogo (puede cargar el listado de bancos de su país en Administración > Catálogos).,catalogo_multiple,Si,,,bancos
+p_tr_extractos,10. Tesorería (TR/TRM),2,¿Se procesarán extractos bancarios electrónicos (conciliación automática)?,Carga de extractos MT940/CAMT.053 con compensación automática de partidas.,si_no,Si,,,
+p_tr_cash,10. Tesorería (TR/TRM),3,¿Se requiere posición de caja y previsión de liquidez (Cash Management)?,Visibilidad diaria de saldos bancarios y proyección de flujos.,si_no,Si,,,
+p_trm_instrumentos,10. Tesorería (TR/TRM),4,"¿La sociedad manejará instrumentos financieros (inversiones, deuda, derivados) con TRM?","CDT/depósitos, créditos, bonos, forwards de divisas, coberturas.",si_no,Si,,,
+p_sd_usa,11. Ventas y facturación (SD),1,¿La sociedad facturará ventas (gestión de facturación SD)?,"Ventas de bienes o servicios con pedidos, entregas y facturas.",si_no,Si,,,
+p_sd_fe,11. Ventas y facturación (SD),2,¿La facturación debe emitirse electrónicamente ante la autoridad fiscal?,"Facturación electrónica legal (DIAN, SAT, SUNAT, SII, etc.).",si_no,No,p_sd_usa,Sí,
+p_mm_usa,12. Compras e inventarios (MM),1,¿La sociedad comprará materiales/servicios y manejará inventarios (MM)?,"Compras con pedido, entradas de mercancía y verificación de facturas.",si_no,Si,,,
+p_mm_valoracion,12. Compras e inventarios (MM),2,¿Cómo se valorarán los inventarios?,Control de precio del material: estándar o media móvil.,unica,No,p_mm_usa,Sí,
+p_mm_verificacion,12. Compras e inventarios (MM),3,¿La verificación de facturas de compras tendrá tolerancias y bloqueos de pago?,"Diferencias permitidas entre pedido, entrada de mercancía y factura (3-way match).",si_no,No,p_mm_usa,Sí,
+p_pm_usa,13. Mantenimiento (PM),1,¿La sociedad gestionará mantenimiento de equipos y activos (PM)?,"Mantenimiento correctivo/preventivo de maquinaria, vehículos, instalaciones.",si_no,Si,,,
+p_pm_ordenes,13. Mantenimiento (PM),2,¿Se usarán órdenes de mantenimiento con costes imputados a CO?,Órdenes correctivas/preventivas que recogen costes de repuestos y mano de obra.,si_no,No,p_pm_usa,Sí,
+p_rangos,14. Documentos contables,1,¿Cómo se crearán los rangos de números de documento contable?,"Cada clase de documento (KR, DR, SA…) necesita un rango de numeración por sociedad.",unica,Si,,,

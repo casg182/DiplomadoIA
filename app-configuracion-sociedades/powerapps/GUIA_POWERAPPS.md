@@ -15,6 +15,9 @@ La aplicación local exporta tres archivos CSV normalizados (también incluidos 
 | `Preguntas.csv` | Catálogo de preguntas | `PreguntaID`, `Seccion`, `Orden`, `Texto`, `Ayuda`, `Tipo` (texto / unica / si_no), `Obligatoria`, `DependeDePregunta`, `DependeDeValores` |
 | `Opciones.csv` | Posibles respuestas de cada pregunta | `OpcionID`, `PreguntaID`, `TextoRespuesta` |
 | `MapeoSAP.csv` | Traducción de cada respuesta a configuración SAP | `MapeoID`, `PreguntaID`, `OpcionID`, `ActividadConfiguracion`, `Transaccion`, `RutaIMG`, `TablaCampo`, `ValorPropuesto`, `Notas` |
+| `Catalogos.csv` | Bases de valores para preguntas tipo catálogo (monedas, bancos, etc.) | `CatalogoID`, `NombreCatalogo`, `Codigo`, `Texto` |
+
+Para las preguntas con `Tipo = catalogo` o `catalogo_multiple`, la columna `Preguntas.CatalogoID` indica qué subconjunto de `Catalogos.csv` usar como origen del control. En Power Apps use un **ComboBox** con `Items: Filter(colCatalogos, CatalogoID = ThisItem.CatalogoID)`, propiedad `SelectMultiple` según el tipo, y guarde en `colRespuestas` los códigos seleccionados unidos con `Concat(cmbValores.SelectedItems, Codigo, ", ")` — exactamente el mismo formato que usa la app local, de modo que el mapeo con `{respuesta}` funciona igual.
 
 **Relaciones:**
 - `Opciones.PreguntaID` → `Preguntas.PreguntaID` (1 pregunta : N opciones)

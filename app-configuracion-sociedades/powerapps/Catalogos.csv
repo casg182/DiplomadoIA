@@ -1,0 +1,125 @@
+﻿CatalogoID,NombreCatalogo,Codigo,Texto
+monedas,Monedas (ISO 4217),COP,Peso colombiano
+monedas,Monedas (ISO 4217),MXN,Peso mexicano
+monedas,Monedas (ISO 4217),PEN,Sol peruano
+monedas,Monedas (ISO 4217),CLP,Peso chileno
+monedas,Monedas (ISO 4217),ARS,Peso argentino
+monedas,Monedas (ISO 4217),BOB,Boliviano
+monedas,Monedas (ISO 4217),BRL,Real brasileño
+monedas,Monedas (ISO 4217),CRC,Colón costarricense
+monedas,Monedas (ISO 4217),DOP,Peso dominicano
+monedas,Monedas (ISO 4217),GTQ,Quetzal guatemalteco
+monedas,Monedas (ISO 4217),HNL,Lempira hondureño
+monedas,Monedas (ISO 4217),NIO,Córdoba nicaragüense
+monedas,Monedas (ISO 4217),PAB,Balboa panameño
+monedas,Monedas (ISO 4217),PYG,Guaraní paraguayo
+monedas,Monedas (ISO 4217),UYU,Peso uruguayo
+monedas,Monedas (ISO 4217),VES,Bolívar venezolano
+monedas,Monedas (ISO 4217),BZD,Dólar beliceño
+monedas,Monedas (ISO 4217),JMD,Dólar jamaiquino
+monedas,Monedas (ISO 4217),TTD,Dólar de Trinidad y Tobago
+monedas,Monedas (ISO 4217),HTG,Gourde haitiano
+monedas,Monedas (ISO 4217),CUP,Peso cubano
+monedas,Monedas (ISO 4217),USD,Dólar estadounidense
+monedas,Monedas (ISO 4217),CAD,Dólar canadiense
+monedas,Monedas (ISO 4217),EUR,Euro
+monedas,Monedas (ISO 4217),GBP,Libra esterlina
+monedas,Monedas (ISO 4217),CHF,Franco suizo
+monedas,Monedas (ISO 4217),SEK,Corona sueca
+monedas,Monedas (ISO 4217),NOK,Corona noruega
+monedas,Monedas (ISO 4217),DKK,Corona danesa
+monedas,Monedas (ISO 4217),JPY,Yen japonés
+monedas,Monedas (ISO 4217),CNY,Yuan chino
+monedas,Monedas (ISO 4217),KRW,Won surcoreano
+monedas,Monedas (ISO 4217),INR,Rupia india
+monedas,Monedas (ISO 4217),SGD,Dólar de Singapur
+monedas,Monedas (ISO 4217),HKD,Dólar de Hong Kong
+monedas,Monedas (ISO 4217),AUD,Dólar australiano
+monedas,Monedas (ISO 4217),NZD,Dólar neozelandés
+monedas,Monedas (ISO 4217),ZAR,Rand sudafricano
+monedas,Monedas (ISO 4217),TRY,Lira turca
+monedas,Monedas (ISO 4217),AED,Dírham de EAU
+monedas,Monedas (ISO 4217),SAR,Riyal saudí
+monedas,Monedas (ISO 4217),ILS,Nuevo séquel israelí
+monedas,Monedas (ISO 4217),EGP,Libra egipcia
+monedas,Monedas (ISO 4217),RUB,Rublo ruso
+paises,Países (ISO 3166),CO,Colombia
+paises,Países (ISO 3166),MX,México
+paises,Países (ISO 3166),PE,Perú
+paises,Países (ISO 3166),CL,Chile
+paises,Países (ISO 3166),AR,Argentina
+paises,Países (ISO 3166),BO,Bolivia
+paises,Países (ISO 3166),BR,Brasil
+paises,Países (ISO 3166),CR,Costa Rica
+paises,Países (ISO 3166),DO,República Dominicana
+paises,Países (ISO 3166),EC,Ecuador
+paises,Países (ISO 3166),SV,El Salvador
+paises,Países (ISO 3166),GT,Guatemala
+paises,Países (ISO 3166),HN,Honduras
+paises,Países (ISO 3166),NI,Nicaragua
+paises,Países (ISO 3166),PA,Panamá
+paises,Países (ISO 3166),PY,Paraguay
+paises,Países (ISO 3166),UY,Uruguay
+paises,Países (ISO 3166),VE,Venezuela
+paises,Países (ISO 3166),US,Estados Unidos
+paises,Países (ISO 3166),CA,Canadá
+paises,Países (ISO 3166),ES,España
+paises,Países (ISO 3166),PT,Portugal
+paises,Países (ISO 3166),FR,Francia
+paises,Países (ISO 3166),DE,Alemania
+paises,Países (ISO 3166),IT,Italia
+paises,Países (ISO 3166),GB,Reino Unido
+paises,Países (ISO 3166),NL,Países Bajos
+paises,Países (ISO 3166),CH,Suiza
+paises,Países (ISO 3166),CN,China
+paises,Países (ISO 3166),JP,Japón
+paises,Países (ISO 3166),KR,Corea del Sur
+paises,Países (ISO 3166),IN,India
+paises,Países (ISO 3166),AU,Australia
+idiomas,Idiomas SAP,ES,Español
+idiomas,Idiomas SAP,EN,Inglés
+idiomas,Idiomas SAP,PT,Portugués
+idiomas,Idiomas SAP,FR,Francés
+idiomas,Idiomas SAP,DE,Alemán
+idiomas,Idiomas SAP,IT,Italiano
+idiomas,Idiomas SAP,NL,Neerlandés
+idiomas,Idiomas SAP,SV,Sueco
+idiomas,Idiomas SAP,DA,Danés
+idiomas,Idiomas SAP,NO,Noruego
+idiomas,Idiomas SAP,FI,Finés
+idiomas,Idiomas SAP,PL,Polaco
+idiomas,Idiomas SAP,RU,Ruso
+idiomas,Idiomas SAP,TR,Turco
+idiomas,Idiomas SAP,JA,Japonés
+idiomas,Idiomas SAP,ZH,Chino
+idiomas,Idiomas SAP,KO,Coreano
+bancos,"Bancos (ejemplo, editable)",BANCOLOMBIA,Bancolombia
+bancos,"Bancos (ejemplo, editable)",BOGOTA,Banco de Bogotá
+bancos,"Bancos (ejemplo, editable)",DAVIVIENDA,Davivienda
+bancos,"Bancos (ejemplo, editable)",BBVA_CO,BBVA Colombia
+bancos,"Bancos (ejemplo, editable)",OCCIDENTE,Banco de Occidente
+bancos,"Bancos (ejemplo, editable)",POPULAR_CO,Banco Popular
+bancos,"Bancos (ejemplo, editable)",AGRARIO,Banco Agrario
+bancos,"Bancos (ejemplo, editable)",SCOTIA_CO,Scotiabank Colpatria
+bancos,"Bancos (ejemplo, editable)",ITAU,Itaú
+bancos,"Bancos (ejemplo, editable)",CITI,Citibank
+bancos,"Bancos (ejemplo, editable)",JPM,JPMorgan Chase
+bancos,"Bancos (ejemplo, editable)",BOFA,Bank of America
+bancos,"Bancos (ejemplo, editable)",SANTANDER,Santander
+bancos,"Bancos (ejemplo, editable)",BANORTE,Banorte (México)
+bancos,"Bancos (ejemplo, editable)",BANAMEX,Citibanamex (México)
+bancos,"Bancos (ejemplo, editable)",BBVA_MX,BBVA México
+bancos,"Bancos (ejemplo, editable)",BCP,BCP (Perú)
+bancos,"Bancos (ejemplo, editable)",INTERBANK,Interbank (Perú)
+bancos,"Bancos (ejemplo, editable)",BCHILE,Banco de Chile
+bancos,"Bancos (ejemplo, editable)",BESTADO,BancoEstado (Chile)
+clases_activos,Clases de activos fijos,1000,Terrenos
+clases_activos,Clases de activos fijos,1100,Edificios y construcciones
+clases_activos,Clases de activos fijos,2000,Maquinaria y equipo
+clases_activos,Clases de activos fijos,3000,Vehículos
+clases_activos,Clases de activos fijos,3100,Muebles y enseres
+clases_activos,Clases de activos fijos,3200,Equipos de cómputo y comunicación
+clases_activos,Clases de activos fijos,4000,Activos en leasing
+clases_activos,Clases de activos fijos,5000,Activos intangibles
+clases_activos,Clases de activos fijos,6000,Activos en curso (AeC)
+clases_activos,Clases de activos fijos,7000,Activos de menor cuantía

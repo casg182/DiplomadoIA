@@ -137,6 +137,9 @@
     margin: 8px 0;
   }
   .caja-mapeo h4 { margin: 0 0 8px; font-size: 12px; color: var(--naranja); text-transform: uppercase; letter-spacing: .5px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; background: #eef4fb; border: 1px solid #c3d8ef; color: var(--azul-oscuro); border-radius: 14px; padding: 3px 10px; font-size: 12px; margin: 2px 4px 2px 0; }
+  .chip button { border: none; background: none; color: var(--rojo); cursor: pointer; font-size: 12px; padding: 0; }
+  .chips { margin-bottom: 6px; }
   .pie { text-align: center; font-size: 12px; color: #888; padding: 16px; }
   @media print {
     nav, header p, .no-imprimir { display: none !important; }
@@ -176,7 +179,535 @@
    Tipos de pregunta: texto | unica | si_no
    ============================================================ */
 const CONFIG_DEFAULT = {
-  "version": 2,
+  "version": 3,
+  "catalogos": [
+    {
+      "id": "monedas",
+      "nombre": "Monedas (ISO 4217)",
+      "valores": [
+        {
+          "codigo": "COP",
+          "texto": "Peso colombiano"
+        },
+        {
+          "codigo": "MXN",
+          "texto": "Peso mexicano"
+        },
+        {
+          "codigo": "PEN",
+          "texto": "Sol peruano"
+        },
+        {
+          "codigo": "CLP",
+          "texto": "Peso chileno"
+        },
+        {
+          "codigo": "ARS",
+          "texto": "Peso argentino"
+        },
+        {
+          "codigo": "BOB",
+          "texto": "Boliviano"
+        },
+        {
+          "codigo": "BRL",
+          "texto": "Real brasileño"
+        },
+        {
+          "codigo": "CRC",
+          "texto": "Colón costarricense"
+        },
+        {
+          "codigo": "DOP",
+          "texto": "Peso dominicano"
+        },
+        {
+          "codigo": "GTQ",
+          "texto": "Quetzal guatemalteco"
+        },
+        {
+          "codigo": "HNL",
+          "texto": "Lempira hondureño"
+        },
+        {
+          "codigo": "NIO",
+          "texto": "Córdoba nicaragüense"
+        },
+        {
+          "codigo": "PAB",
+          "texto": "Balboa panameño"
+        },
+        {
+          "codigo": "PYG",
+          "texto": "Guaraní paraguayo"
+        },
+        {
+          "codigo": "UYU",
+          "texto": "Peso uruguayo"
+        },
+        {
+          "codigo": "VES",
+          "texto": "Bolívar venezolano"
+        },
+        {
+          "codigo": "BZD",
+          "texto": "Dólar beliceño"
+        },
+        {
+          "codigo": "JMD",
+          "texto": "Dólar jamaiquino"
+        },
+        {
+          "codigo": "TTD",
+          "texto": "Dólar de Trinidad y Tobago"
+        },
+        {
+          "codigo": "HTG",
+          "texto": "Gourde haitiano"
+        },
+        {
+          "codigo": "CUP",
+          "texto": "Peso cubano"
+        },
+        {
+          "codigo": "USD",
+          "texto": "Dólar estadounidense"
+        },
+        {
+          "codigo": "CAD",
+          "texto": "Dólar canadiense"
+        },
+        {
+          "codigo": "EUR",
+          "texto": "Euro"
+        },
+        {
+          "codigo": "GBP",
+          "texto": "Libra esterlina"
+        },
+        {
+          "codigo": "CHF",
+          "texto": "Franco suizo"
+        },
+        {
+          "codigo": "SEK",
+          "texto": "Corona sueca"
+        },
+        {
+          "codigo": "NOK",
+          "texto": "Corona noruega"
+        },
+        {
+          "codigo": "DKK",
+          "texto": "Corona danesa"
+        },
+        {
+          "codigo": "JPY",
+          "texto": "Yen japonés"
+        },
+        {
+          "codigo": "CNY",
+          "texto": "Yuan chino"
+        },
+        {
+          "codigo": "KRW",
+          "texto": "Won surcoreano"
+        },
+        {
+          "codigo": "INR",
+          "texto": "Rupia india"
+        },
+        {
+          "codigo": "SGD",
+          "texto": "Dólar de Singapur"
+        },
+        {
+          "codigo": "HKD",
+          "texto": "Dólar de Hong Kong"
+        },
+        {
+          "codigo": "AUD",
+          "texto": "Dólar australiano"
+        },
+        {
+          "codigo": "NZD",
+          "texto": "Dólar neozelandés"
+        },
+        {
+          "codigo": "ZAR",
+          "texto": "Rand sudafricano"
+        },
+        {
+          "codigo": "TRY",
+          "texto": "Lira turca"
+        },
+        {
+          "codigo": "AED",
+          "texto": "Dírham de EAU"
+        },
+        {
+          "codigo": "SAR",
+          "texto": "Riyal saudí"
+        },
+        {
+          "codigo": "ILS",
+          "texto": "Nuevo séquel israelí"
+        },
+        {
+          "codigo": "EGP",
+          "texto": "Libra egipcia"
+        },
+        {
+          "codigo": "RUB",
+          "texto": "Rublo ruso"
+        }
+      ]
+    },
+    {
+      "id": "paises",
+      "nombre": "Países (ISO 3166)",
+      "valores": [
+        {
+          "codigo": "CO",
+          "texto": "Colombia"
+        },
+        {
+          "codigo": "MX",
+          "texto": "México"
+        },
+        {
+          "codigo": "PE",
+          "texto": "Perú"
+        },
+        {
+          "codigo": "CL",
+          "texto": "Chile"
+        },
+        {
+          "codigo": "AR",
+          "texto": "Argentina"
+        },
+        {
+          "codigo": "BO",
+          "texto": "Bolivia"
+        },
+        {
+          "codigo": "BR",
+          "texto": "Brasil"
+        },
+        {
+          "codigo": "CR",
+          "texto": "Costa Rica"
+        },
+        {
+          "codigo": "DO",
+          "texto": "República Dominicana"
+        },
+        {
+          "codigo": "EC",
+          "texto": "Ecuador"
+        },
+        {
+          "codigo": "SV",
+          "texto": "El Salvador"
+        },
+        {
+          "codigo": "GT",
+          "texto": "Guatemala"
+        },
+        {
+          "codigo": "HN",
+          "texto": "Honduras"
+        },
+        {
+          "codigo": "NI",
+          "texto": "Nicaragua"
+        },
+        {
+          "codigo": "PA",
+          "texto": "Panamá"
+        },
+        {
+          "codigo": "PY",
+          "texto": "Paraguay"
+        },
+        {
+          "codigo": "UY",
+          "texto": "Uruguay"
+        },
+        {
+          "codigo": "VE",
+          "texto": "Venezuela"
+        },
+        {
+          "codigo": "US",
+          "texto": "Estados Unidos"
+        },
+        {
+          "codigo": "CA",
+          "texto": "Canadá"
+        },
+        {
+          "codigo": "ES",
+          "texto": "España"
+        },
+        {
+          "codigo": "PT",
+          "texto": "Portugal"
+        },
+        {
+          "codigo": "FR",
+          "texto": "Francia"
+        },
+        {
+          "codigo": "DE",
+          "texto": "Alemania"
+        },
+        {
+          "codigo": "IT",
+          "texto": "Italia"
+        },
+        {
+          "codigo": "GB",
+          "texto": "Reino Unido"
+        },
+        {
+          "codigo": "NL",
+          "texto": "Países Bajos"
+        },
+        {
+          "codigo": "CH",
+          "texto": "Suiza"
+        },
+        {
+          "codigo": "CN",
+          "texto": "China"
+        },
+        {
+          "codigo": "JP",
+          "texto": "Japón"
+        },
+        {
+          "codigo": "KR",
+          "texto": "Corea del Sur"
+        },
+        {
+          "codigo": "IN",
+          "texto": "India"
+        },
+        {
+          "codigo": "AU",
+          "texto": "Australia"
+        }
+      ]
+    },
+    {
+      "id": "idiomas",
+      "nombre": "Idiomas SAP",
+      "valores": [
+        {
+          "codigo": "ES",
+          "texto": "Español"
+        },
+        {
+          "codigo": "EN",
+          "texto": "Inglés"
+        },
+        {
+          "codigo": "PT",
+          "texto": "Portugués"
+        },
+        {
+          "codigo": "FR",
+          "texto": "Francés"
+        },
+        {
+          "codigo": "DE",
+          "texto": "Alemán"
+        },
+        {
+          "codigo": "IT",
+          "texto": "Italiano"
+        },
+        {
+          "codigo": "NL",
+          "texto": "Neerlandés"
+        },
+        {
+          "codigo": "SV",
+          "texto": "Sueco"
+        },
+        {
+          "codigo": "DA",
+          "texto": "Danés"
+        },
+        {
+          "codigo": "NO",
+          "texto": "Noruego"
+        },
+        {
+          "codigo": "FI",
+          "texto": "Finés"
+        },
+        {
+          "codigo": "PL",
+          "texto": "Polaco"
+        },
+        {
+          "codigo": "RU",
+          "texto": "Ruso"
+        },
+        {
+          "codigo": "TR",
+          "texto": "Turco"
+        },
+        {
+          "codigo": "JA",
+          "texto": "Japonés"
+        },
+        {
+          "codigo": "ZH",
+          "texto": "Chino"
+        },
+        {
+          "codigo": "KO",
+          "texto": "Coreano"
+        }
+      ]
+    },
+    {
+      "id": "bancos",
+      "nombre": "Bancos (ejemplo, editable)",
+      "valores": [
+        {
+          "codigo": "BANCOLOMBIA",
+          "texto": "Bancolombia"
+        },
+        {
+          "codigo": "BOGOTA",
+          "texto": "Banco de Bogotá"
+        },
+        {
+          "codigo": "DAVIVIENDA",
+          "texto": "Davivienda"
+        },
+        {
+          "codigo": "BBVA_CO",
+          "texto": "BBVA Colombia"
+        },
+        {
+          "codigo": "OCCIDENTE",
+          "texto": "Banco de Occidente"
+        },
+        {
+          "codigo": "POPULAR_CO",
+          "texto": "Banco Popular"
+        },
+        {
+          "codigo": "AGRARIO",
+          "texto": "Banco Agrario"
+        },
+        {
+          "codigo": "SCOTIA_CO",
+          "texto": "Scotiabank Colpatria"
+        },
+        {
+          "codigo": "ITAU",
+          "texto": "Itaú"
+        },
+        {
+          "codigo": "CITI",
+          "texto": "Citibank"
+        },
+        {
+          "codigo": "JPM",
+          "texto": "JPMorgan Chase"
+        },
+        {
+          "codigo": "BOFA",
+          "texto": "Bank of America"
+        },
+        {
+          "codigo": "SANTANDER",
+          "texto": "Santander"
+        },
+        {
+          "codigo": "BANORTE",
+          "texto": "Banorte (México)"
+        },
+        {
+          "codigo": "BANAMEX",
+          "texto": "Citibanamex (México)"
+        },
+        {
+          "codigo": "BBVA_MX",
+          "texto": "BBVA México"
+        },
+        {
+          "codigo": "BCP",
+          "texto": "BCP (Perú)"
+        },
+        {
+          "codigo": "INTERBANK",
+          "texto": "Interbank (Perú)"
+        },
+        {
+          "codigo": "BCHILE",
+          "texto": "Banco de Chile"
+        },
+        {
+          "codigo": "BESTADO",
+          "texto": "BancoEstado (Chile)"
+        }
+      ]
+    },
+    {
+      "id": "clases_activos",
+      "nombre": "Clases de activos fijos",
+      "valores": [
+        {
+          "codigo": "1000",
+          "texto": "Terrenos"
+        },
+        {
+          "codigo": "1100",
+          "texto": "Edificios y construcciones"
+        },
+        {
+          "codigo": "2000",
+          "texto": "Maquinaria y equipo"
+        },
+        {
+          "codigo": "3000",
+          "texto": "Vehículos"
+        },
+        {
+          "codigo": "3100",
+          "texto": "Muebles y enseres"
+        },
+        {
+          "codigo": "3200",
+          "texto": "Equipos de cómputo y comunicación"
+        },
+        {
+          "codigo": "4000",
+          "texto": "Activos en leasing"
+        },
+        {
+          "codigo": "5000",
+          "texto": "Activos intangibles"
+        },
+        {
+          "codigo": "6000",
+          "texto": "Activos en curso (AeC)"
+        },
+        {
+          "codigo": "7000",
+          "texto": "Activos de menor cuantía"
+        }
+      ]
+    }
+  ],
   "secciones": [
     {
       "id": "general",
@@ -415,123 +946,41 @@ const CONFIG_DEFAULT = {
       "id": "p_moneda",
       "seccion": "general",
       "orden": 6,
-      "tipo": "unica",
+      "tipo": "catalogo",
       "obligatoria": true,
+      "catalogoId": "monedas",
       "texto": "¿Cuál será la moneda local (moneda de sociedad)?",
-      "ayuda": "Moneda en la que se lleva la contabilidad principal (moneda 10).",
+      "ayuda": "Moneda en la que se lleva la contabilidad principal (moneda 10). Escriba el código o nombre para buscar en el catálogo.",
       "dependeDe": null,
-      "mapeoDirecto": null,
-      "opciones": [
-        {
-          "id": "o_mon_cop",
-          "texto": "COP - Peso colombiano",
-          "mapeo": {
-            "descripcionConfig": "Definir moneda local de la sociedad",
-            "transaccion": "OX02",
-            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
-            "tablaCampo": "T001-WAERS",
-            "valorPropuesto": "COP",
-            "notas": ""
-          }
-        },
-        {
-          "id": "o_mon_mxn",
-          "texto": "MXN - Peso mexicano",
-          "mapeo": {
-            "descripcionConfig": "Definir moneda local de la sociedad",
-            "transaccion": "OX02",
-            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
-            "tablaCampo": "T001-WAERS",
-            "valorPropuesto": "MXN",
-            "notas": ""
-          }
-        },
-        {
-          "id": "o_mon_pen",
-          "texto": "PEN - Sol peruano",
-          "mapeo": {
-            "descripcionConfig": "Definir moneda local de la sociedad",
-            "transaccion": "OX02",
-            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
-            "tablaCampo": "T001-WAERS",
-            "valorPropuesto": "PEN",
-            "notas": ""
-          }
-        },
-        {
-          "id": "o_mon_clp",
-          "texto": "CLP - Peso chileno",
-          "mapeo": {
-            "descripcionConfig": "Definir moneda local de la sociedad",
-            "transaccion": "OX02",
-            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
-            "tablaCampo": "T001-WAERS",
-            "valorPropuesto": "CLP",
-            "notas": ""
-          }
-        },
-        {
-          "id": "o_mon_usd",
-          "texto": "USD - Dólar estadounidense",
-          "mapeo": {
-            "descripcionConfig": "Definir moneda local de la sociedad",
-            "transaccion": "OX02",
-            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
-            "tablaCampo": "T001-WAERS",
-            "valorPropuesto": "USD",
-            "notas": ""
-          }
-        },
-        {
-          "id": "o_mon_eur",
-          "texto": "EUR - Euro",
-          "mapeo": {
-            "descripcionConfig": "Definir moneda local de la sociedad",
-            "transaccion": "OX02",
-            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
-            "tablaCampo": "T001-WAERS",
-            "valorPropuesto": "EUR",
-            "notas": ""
-          }
-        }
-      ]
+      "mapeoDirecto": {
+        "descripcionConfig": "Definir moneda local de la sociedad",
+        "transaccion": "OX02",
+        "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
+        "tablaCampo": "T001-WAERS",
+        "valorPropuesto": "{respuesta}",
+        "notas": "Verificar que la moneda exista en el sistema (OY03) y sus decimales."
+      },
+      "opciones": []
     },
     {
       "id": "p_idioma",
       "seccion": "general",
       "orden": 7,
-      "tipo": "unica",
+      "tipo": "catalogo",
       "obligatoria": true,
+      "catalogoId": "idiomas",
       "texto": "¿Cuál será el idioma de la sociedad?",
-      "ayuda": "Idioma por defecto para textos y correspondencia.",
+      "ayuda": "Idioma por defecto para textos y correspondencia. Escriba el código o nombre para buscar en el catálogo.",
       "dependeDe": null,
-      "mapeoDirecto": null,
-      "opciones": [
-        {
-          "id": "o_idi_es",
-          "texto": "Español",
-          "mapeo": {
-            "descripcionConfig": "Definir idioma de la sociedad",
-            "transaccion": "OX02",
-            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
-            "tablaCampo": "T001-SPRAS",
-            "valorPropuesto": "ES",
-            "notas": ""
-          }
-        },
-        {
-          "id": "o_idi_en",
-          "texto": "Inglés",
-          "mapeo": {
-            "descripcionConfig": "Definir idioma de la sociedad",
-            "transaccion": "OX02",
-            "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
-            "tablaCampo": "T001-SPRAS",
-            "valorPropuesto": "EN",
-            "notas": ""
-          }
-        }
-      ]
+      "mapeoDirecto": {
+        "descripcionConfig": "Definir idioma de la sociedad",
+        "transaccion": "OX02",
+        "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
+        "tablaCampo": "T001-SPRAS",
+        "valorPropuesto": "{respuesta}",
+        "notas": ""
+      },
+      "opciones": []
     },
     {
       "id": "p_migracion",
@@ -768,9 +1217,34 @@ const CONFIG_DEFAULT = {
       ]
     },
     {
-      "id": "p_fsv",
+      "id": "p_monedas_operativas",
       "seccion": "contable",
       "orden": 5,
+      "tipo": "catalogo_multiple",
+      "obligatoria": false,
+      "catalogoId": "monedas",
+      "texto": "¿Qué monedas adicionales manejará la sociedad (paralelas u operativas)?",
+      "ayuda": "Agregue todas las monedas distintas de la local: moneda de grupo, moneda dura y monedas de operación frecuente.",
+      "dependeDe": {
+        "preguntaId": "p_moneda_paralela",
+        "valores": [
+          "Sí"
+        ]
+      },
+      "mapeoDirecto": {
+        "descripcionConfig": "Definir monedas paralelas y asegurar tipos de cambio",
+        "transaccion": "FINSC_LEDGER / OB22 + OB08",
+        "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Libros > Ledger > Parametrizaciones de moneda + Tipos de cambio",
+        "tablaCampo": "FINSC_LD_CMP / TCURR",
+        "valorPropuesto": "{respuesta}",
+        "notas": "Asignar la moneda de grupo como moneda 30 del ledger; mantener cotizaciones periódicas en OB08 para todas las monedas listadas."
+      },
+      "opciones": []
+    },
+    {
+      "id": "p_fsv",
+      "seccion": "contable",
+      "orden": 6,
       "tipo": "unica",
       "obligatoria": true,
       "texto": "¿Qué variante de status de campo utilizará la sociedad?",
@@ -807,7 +1281,7 @@ const CONFIG_DEFAULT = {
     {
       "id": "p_validacion_gl",
       "seccion": "contable",
-      "orden": 6,
+      "orden": 7,
       "tipo": "si_no",
       "obligatoria": true,
       "texto": "¿Las contabilizaciones a nivel de GL deberán pasar por una validación preliminar?",
@@ -844,7 +1318,7 @@ const CONFIG_DEFAULT = {
     {
       "id": "p_revaluacion",
       "seccion": "contable",
-      "orden": 7,
+      "orden": 8,
       "tipo": "si_no",
       "obligatoria": true,
       "texto": "¿Se requiere revaluación/valoración de monedas extranjeras al cierre?",
@@ -881,7 +1355,7 @@ const CONFIG_DEFAULT = {
     {
       "id": "p_estructura_balance",
       "seccion": "contable",
-      "orden": 8,
+      "orden": 9,
       "tipo": "unica",
       "obligatoria": true,
       "texto": "¿Qué estructura de balance y P&G usará la sociedad para reportes financieros?",
@@ -918,7 +1392,7 @@ const CONFIG_DEFAULT = {
     {
       "id": "p_ico",
       "seccion": "contable",
-      "orden": 9,
+      "orden": 10,
       "tipo": "si_no",
       "obligatoria": true,
       "texto": "¿La sociedad tendrá operaciones con otras sociedades del grupo (intercompany / ICO)?",
@@ -955,7 +1429,7 @@ const CONFIG_DEFAULT = {
     {
       "id": "p_lugares",
       "seccion": "contable",
-      "orden": 10,
+      "orden": 11,
       "tipo": "si_no",
       "obligatoria": true,
       "texto": "¿La sociedad opera con matriz y sucursales que deban reportarse por separado (lugares comerciales)?",
@@ -1430,10 +1904,11 @@ const CONFIG_DEFAULT = {
       "id": "p_aa_clases",
       "seccion": "aa",
       "orden": 3,
-      "tipo": "texto",
+      "tipo": "catalogo_multiple",
       "obligatoria": false,
+      "catalogoId": "clases_activos",
       "texto": "¿Qué clases de activos fijos se tendrán?",
-      "ayuda": "Ej.: terrenos, edificios, maquinaria, vehículos, equipos de cómputo, intangibles, activos en curso.",
+      "ayuda": "Agregue todas las clases que apliquen; puede ampliar el catálogo con las clases propias de su compañía.",
       "dependeDe": {
         "preguntaId": "p_aa_usa",
         "valores": [
@@ -1841,10 +2316,11 @@ const CONFIG_DEFAULT = {
       "id": "p_tr_bancos",
       "seccion": "tr",
       "orden": 1,
-      "tipo": "texto",
+      "tipo": "catalogo_multiple",
       "obligatoria": true,
+      "catalogoId": "bancos",
       "texto": "¿Con qué bancos operará la sociedad (cuentas bancarias propias)?",
-      "ayuda": "Liste bancos y número aproximado de cuentas por banco.",
+      "ayuda": "Agregue cada banco desde el catálogo (puede cargar el listado de bancos de su país en Administración > Catálogos).",
       "dependeDe": null,
       "mapeoDirecto": {
         "descripcionConfig": "Definir bancos propios y cuentas bancarias",
@@ -2298,7 +2774,7 @@ let respuestas = cargarRespuestas();
 function cargarConfig() {
   try {
     const raw = localStorage.getItem(LS_CONFIG);
-    if (raw) return JSON.parse(raw);
+    if (raw) { const c = JSON.parse(raw); if (!c.catalogos) c.catalogos = []; return c; }
   } catch (e) { /* config corrupta: usar default */ }
   return JSON.parse(JSON.stringify(CONFIG_DEFAULT));
 }
@@ -2357,6 +2833,21 @@ function nuevoId(prefijo) {
   return prefijo + "_" + Math.random().toString(36).slice(2, 8);
 }
 
+function catalogoPorId(id) { return (config.catalogos || []).find(c => c.id === id); }
+function usaMapeoDirecto(tipo) { return tipo === "texto" || tipo === "catalogo" || tipo === "catalogo_multiple"; }
+function agregarValorCatalogo(pregId) {
+  const inp = document.getElementById("in_" + pregId);
+  const v = (inp && inp.value || "").trim();
+  if (!v) return;
+  const actual = (respuestas[pregId] || "").split(", ").filter(Boolean);
+  if (!actual.includes(v)) actual.push(v);
+  responder(pregId, actual.join(", "));
+}
+function quitarValorCatalogo(pregId, codigo) {
+  const actual = (respuestas[pregId] || "").split(", ").filter(c => c && c !== codigo);
+  responder(pregId, actual.join(", "));
+}
+
 /* ============================================================
    NAVEGACIÓN
    ============================================================ */
@@ -2404,6 +2895,26 @@ function renderPregunta(p) {
   let cuerpo = "";
   if (p.tipo === "texto") {
     cuerpo = `<input type="text" value="${esc(val)}" onchange="responder('${p.id}', this.value)">`;
+  } else if (p.tipo === "catalogo" || p.tipo === "catalogo_multiple") {
+    const cat = catalogoPorId(p.catalogoId);
+    const vals = cat ? cat.valores : [];
+    const datalist = `<datalist id="dl_${p.id}">${vals.map(v =>
+      `<option value="${esc(v.codigo)}">${esc(v.codigo)} — ${esc(v.texto)}</option>`).join("")}</datalist>`;
+    if (p.tipo === "catalogo") {
+      cuerpo = `<input type="text" list="dl_${p.id}" value="${esc(val)}" placeholder="Escriba para buscar..."
+        onchange="responder('${p.id}', this.value.trim())">${datalist}
+        <div class="ayuda">${vals.length} valores en el catálogo ${cat ? "«" + esc(cat.nombre) + "»" : "(no asignado)"}.</div>`;
+    } else {
+      const seleccionados = val ? val.split(", ").filter(Boolean) : [];
+      const chips = seleccionados.map(c => {
+        const v = vals.find(x => x.codigo === c);
+        return `<span class="chip">${esc(c)}${v ? " — " + esc(v.texto) : ""}<button onclick="quitarValorCatalogo('${p.id}','${esc(c)}')" title="Quitar">✕</button></span>`;
+      }).join("");
+      cuerpo = `<div class="chips">${chips || '<span style="font-size:12px;color:#6a6d70">Sin valores agregados aún.</span>'}</div>
+        <input type="text" list="dl_${p.id}" id="in_${p.id}" placeholder="Escriba para buscar...">
+        <button class="mini" onclick="agregarValorCatalogo('${p.id}')">➕ Agregar</button>${datalist}
+        <div class="ayuda">${vals.length} valores en el catálogo ${cat ? "«" + esc(cat.nombre) + "»" : "(no asignado)"}. Puede agregar varios.</div>`;
+    }
   } else {
     const opciones = (p.tipo === "si_no" && !p.opciones.length)
       ? [{ id: "si", texto: "Sí" }, { id: "no", texto: "No" }]
@@ -2471,7 +2982,7 @@ function construirPlan() {
       if (r === null) continue;
 
       let mapeo = null;
-      if (p.tipo === "texto") {
+      if (usaMapeoDirecto(p.tipo)) {
         mapeo = p.mapeoDirecto;
       } else {
         const op = p.opciones.find(o => o.texto === r);
@@ -2580,6 +3091,8 @@ function renderAdmin() {
       <div id="msg-admin"></div>
     </div>`;
 
+  html += renderCatalogosAdmin();
+
   for (const sec of seccionesOrdenadas()) {
     html += `<div class="tarjeta"><h2>${esc(sec.nombre)}</h2>`;
     const pregs = preguntasDeSeccion(sec.id);
@@ -2648,6 +3161,8 @@ function renderEditorPregunta(p) {
           <option value="texto" ${p.tipo === "texto" ? "selected" : ""}>Texto libre</option>
           <option value="unica" ${p.tipo === "unica" ? "selected" : ""}>Selección única</option>
           <option value="si_no" ${p.tipo === "si_no" ? "selected" : ""}>Sí / No</option>
+          <option value="catalogo" ${p.tipo === "catalogo" ? "selected" : ""}>Catálogo (1 valor)</option>
+          <option value="catalogo_multiple" ${p.tipo === "catalogo_multiple" ? "selected" : ""}>Catálogo (varios valores)</option>
         </select></div>
       <div class="editor-campo"><label>¿Obligatoria?</label>
         <select id="ed_oblig">
@@ -2665,14 +3180,21 @@ function renderEditorPregunta(p) {
         <input type="text" id="ed_dep_val" value="${esc(p.dependeDe ? (p.dependeDe.valores || []).join("|") : "")}" placeholder="Ej.: Sí"></div>
     </div>
 
-    <div id="ed_zona_mapeo_directo" style="display:${p.tipo === "texto" ? "" : "none"}">
+    <div id="ed_zona_catalogo" style="display:${(p.tipo === "catalogo" || p.tipo === "catalogo_multiple") ? "" : "none"}">
+      <div class="editor-campo"><label>Catálogo de valores (base de datos de la pregunta)</label>
+        <select id="ed_catalogo">${(config.catalogos || []).map(c =>
+          `<option value="${c.id}" ${p.catalogoId === c.id ? "selected" : ""}>${esc(c.nombre)} (${c.valores.length} valores)</option>`).join("")}</select>
+        <div class="ayuda" style="margin-top:4px">Los catálogos se administran en la tarjeta «Catálogos de datos».</div></div>
+    </div>
+
+    <div id="ed_zona_mapeo_directo" style="display:${usaMapeoDirecto(p.tipo) ? "" : "none"}">
       <div class="caja-mapeo">
-        <h4>Traducción a configuración SAP (respuesta de texto)</h4>
+        <h4>Traducción a configuración SAP (use {respuesta} para insertar lo seleccionado/digitado)</h4>
         ${camposMapeoHTML("ed_md", p.mapeoDirecto)}
       </div>
     </div>
 
-    <div id="ed_zona_opciones" style="display:${p.tipo === "texto" ? "none" : ""}">
+    <div id="ed_zona_opciones" style="display:${usaMapeoDirecto(p.tipo) ? "none" : ""}">
       <h3>Posibles respuestas y su traducción a configuración SAP</h3>
       <div id="ed_lista_opciones">
         ${p.opciones.map((o, i) => renderEditorOpcion(o, i)).join("")}
@@ -2728,8 +3250,9 @@ function leerMapeoDelDOM(prefijo) {
 
 function cambiarTipoEditor() {
   const tipo = document.getElementById("ed_tipo").value;
-  document.getElementById("ed_zona_mapeo_directo").style.display = (tipo === "texto") ? "" : "none";
-  document.getElementById("ed_zona_opciones").style.display = (tipo === "texto") ? "none" : "";
+  document.getElementById("ed_zona_mapeo_directo").style.display = usaMapeoDirecto(tipo) ? "" : "none";
+  document.getElementById("ed_zona_opciones").style.display = usaMapeoDirecto(tipo) ? "none" : "";
+  document.getElementById("ed_zona_catalogo").style.display = (tipo === "catalogo" || tipo === "catalogo_multiple") ? "" : "none";
 }
 
 function agregarOpcionEditor() {
@@ -2780,12 +3303,15 @@ function guardarPregunta(id) {
   const depVals = document.getElementById("ed_dep_val").value.split("|").map(s => s.trim()).filter(Boolean);
   p.dependeDe = (depPreg && depVals.length) ? { preguntaId: depPreg, valores: depVals } : null;
 
-  if (p.tipo === "texto") {
+  if (usaMapeoDirecto(p.tipo)) {
     p.mapeoDirecto = leerMapeoDelDOM("ed_md");
     p.opciones = [];
+    const selCat = document.getElementById("ed_catalogo");
+    p.catalogoId = (p.tipo === "texto") ? null : (selCat ? selCat.value : null);
   } else {
     p.opciones = leerOpcionesDelDOM();
     p.mapeoDirecto = null;
+    p.catalogoId = null;
   }
   guardarConfig();
   editandoId = null;
@@ -2860,6 +3386,108 @@ function mostrarMsgAdmin(msg, clase) {
 }
 
 /* ============================================================
+   ADMINISTRACIÓN DE CATÁLOGOS DE DATOS
+   Listas de valores (código + descripción) que sirven como
+   base de datos de las preguntas tipo "catalogo".
+   ============================================================ */
+let editandoCatalogoId = null;
+
+function renderCatalogosAdmin() {
+  let html = `<div class="tarjeta"><h2>🗃️ Catálogos de datos</h2>
+    <p style="font-size:13px">Cada catálogo es una base de valores (código + descripción) para preguntas de tipo «Catálogo».
+    Cargue valores masivamente desde un archivo CSV o pegándolos como texto (uno por línea: <b>CODIGO;Descripción</b>).</p>
+    <button class="mini" onclick="nuevoCatalogo()">➕ Nuevo catálogo</button>`;
+  for (const c of (config.catalogos || [])) {
+    const usos = config.preguntas.filter(p => p.catalogoId === c.id).length;
+    html += `<div class="fila-admin">
+      <span class="etiqueta">${c.valores.length} valores</span>
+      <span class="texto-preg"><b>${esc(c.nombre)}</b> · usado por ${usos} pregunta(s)</span>
+      <button class="mini" onclick="editarCatalogo('${c.id}')">✏️ Editar valores</button>
+      <button class="mini" onclick="exportarCatalogoCSV('${c.id}')">⬇️ CSV</button>
+      <button class="mini" style="color:var(--rojo);border-color:#f3c0c0;background:#fdf2f2" onclick="eliminarCatalogo('${c.id}')">🗑️</button>
+    </div>`;
+    if (editandoCatalogoId === c.id) {
+      html += `<div class="caja-mapeo">
+        <div class="editor-campo"><label>Nombre del catálogo</label>
+          <input type="text" id="cat_nombre" value="${esc(c.nombre)}"></div>
+        <div class="editor-campo"><label>Valores (uno por línea: CODIGO;Descripción)</label>
+          <textarea id="ta_catalogo" rows="10" style="font-family:monospace;font-size:12px">${esc(c.valores.map(v => v.codigo + ";" + v.texto).join("\n"))}</textarea></div>
+        <button class="principal" onclick="guardarCatalogo('${c.id}')">💾 Guardar valores</button>
+        <button class="secundario" onclick="document.getElementById('importar-catalogo').click()">⬆️ Cargar desde archivo CSV</button>
+        <button class="secundario" onclick="editandoCatalogoId=null;renderAdmin()">Cerrar</button>
+        <input type="file" id="importar-catalogo" accept=".csv,.txt" style="display:none" onchange="importarCatalogoCSV(this)">
+      </div>`;
+    }
+  }
+  html += `</div>`;
+  return html;
+}
+
+function parsearLineasCatalogo(texto) {
+  const valores = [];
+  for (let linea of texto.split(/\r?\n/)) {
+    linea = linea.trim();
+    if (!linea) continue;
+    if (/^"?c[oó]digo"?\s*[;,\t]/i.test(linea)) continue; // saltar encabezado
+    const sep = linea.includes(";") ? ";" : (linea.includes("\t") ? "\t" : ",");
+    const i = linea.indexOf(sep);
+    const codigo = (i >= 0 ? linea.slice(0, i) : linea).replace(/^"|"$/g, "").trim();
+    const txt = (i >= 0 ? linea.slice(i + 1) : "").replace(/^"|"$/g, "").trim();
+    if (codigo && !valores.some(v => v.codigo === codigo)) valores.push({ codigo, texto: txt });
+  }
+  return valores;
+}
+
+function nuevoCatalogo() {
+  const id = nuevoId("cat");
+  (config.catalogos = config.catalogos || []).push({ id, nombre: "Nuevo catálogo", valores: [] });
+  guardarConfig();
+  editandoCatalogoId = id;
+  renderAdmin();
+}
+function editarCatalogo(id) { editandoCatalogoId = id; renderAdmin(); }
+function guardarCatalogo(id) {
+  const c = catalogoPorId(id);
+  if (!c) return;
+  c.nombre = document.getElementById("cat_nombre").value.trim() || c.nombre;
+  c.valores = parsearLineasCatalogo(document.getElementById("ta_catalogo").value);
+  guardarConfig();
+  editandoCatalogoId = null;
+  renderAdmin();
+  mostrarMsgAdmin("Catálogo «" + c.nombre + "» guardado con " + c.valores.length + " valores.", "exito");
+}
+function eliminarCatalogo(id) {
+  const usos = config.preguntas.filter(p => p.catalogoId === id);
+  if (usos.length) {
+    mostrarMsgAdmin("No se puede eliminar: el catálogo está en uso por " + usos.length + " pregunta(s).", "aviso");
+    return;
+  }
+  config.catalogos = (config.catalogos || []).filter(c => c.id !== id);
+  guardarConfig();
+  renderAdmin();
+  mostrarMsgAdmin("Catálogo eliminado.", "exito");
+}
+function importarCatalogoCSV(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const valores = parsearLineasCatalogo(e.target.result);
+    const ta = document.getElementById("ta_catalogo");
+    if (ta) ta.value = valores.map(v => v.codigo + ";" + v.texto).join("\n");
+    mostrarMsgAdmin(valores.length + " valores cargados desde el archivo. Revise y pulse «Guardar valores».", "exito");
+  };
+  reader.readAsText(file);
+  input.value = "";
+}
+function exportarCatalogoCSV(id) {
+  const c = catalogoPorId(id);
+  if (!c) return;
+  const lineas = ["Codigo,Texto"].concat(c.valores.map(v => [v.codigo, v.texto].map(csvCelda).join(",")));
+  descargar("Catalogo_" + c.nombre.replace(/[^\w]+/g, "_") + ".csv", lineas.join("\n"), "text/csv");
+}
+
+/* ============================================================
    EXPORTACIÓN PARA MICROSOFT POWER APPS
    Genera 3 tablas normalizadas (CSV) listas para cargar como
    tablas de Excel/SharePoint y usarlas como origen de datos
@@ -2867,7 +3495,7 @@ function mostrarMsgAdmin(msg, clase) {
    ============================================================ */
 function exportarPowerApps() {
   // Tabla 1: Preguntas
-  const cabP = ["PreguntaID", "Seccion", "Orden", "Texto", "Ayuda", "Tipo", "Obligatoria", "DependeDePregunta", "DependeDeValores"];
+  const cabP = ["PreguntaID", "Seccion", "Orden", "Texto", "Ayuda", "Tipo", "Obligatoria", "DependeDePregunta", "DependeDeValores", "CatalogoID"];
   const linP = [cabP.join(",")];
   // Tabla 2: Opciones de respuesta
   const cabO = ["OpcionID", "PreguntaID", "TextoRespuesta"];
@@ -2885,10 +3513,11 @@ function exportarPowerApps() {
       p.id, nombreSec[p.seccion] || p.seccion, p.orden, p.texto, p.ayuda || "", p.tipo,
       p.obligatoria ? "Si" : "No",
       p.dependeDe ? p.dependeDe.preguntaId : "",
-      p.dependeDe ? p.dependeDe.valores.join("|") : ""
+      p.dependeDe ? p.dependeDe.valores.join("|") : "",
+      p.catalogoId || ""
     ].map(csvCelda).join(","));
 
-    if (p.tipo === "texto" && p.mapeoDirecto) {
+    if (usaMapeoDirecto(p.tipo) && p.mapeoDirecto) {
       const m = p.mapeoDirecto;
       linM.push([("m" + (++nMapeo)), p.id, "", m.descripcionConfig, m.transaccion, m.rutaIMG, m.tablaCampo, m.valorPropuesto, m.notas].map(csvCelda).join(","));
     }
@@ -2901,10 +3530,17 @@ function exportarPowerApps() {
     }
   }
 
+  const cabC = ["CatalogoID", "NombreCatalogo", "Codigo", "Texto"];
+  const linC = [cabC.join(",")];
+  for (const c of (config.catalogos || [])) {
+    for (const v of c.valores) linC.push([c.id, c.nombre, v.codigo, v.texto].map(csvCelda).join(","));
+  }
+
   descargar("Preguntas.csv", linP.join("\n"), "text/csv");
   setTimeout(() => descargar("Opciones.csv", linO.join("\n"), "text/csv"), 300);
   setTimeout(() => descargar("MapeoSAP.csv", linM.join("\n"), "text/csv"), 600);
-  mostrarMsgAdmin("Se descargaron Preguntas.csv, Opciones.csv y MapeoSAP.csv. Cárguelas como tablas de Excel (OneDrive) o listas de SharePoint y consulte la guía powerapps/GUIA_POWERAPPS.md.", "exito");
+  setTimeout(() => descargar("Catalogos.csv", linC.join("\n"), "text/csv"), 900);
+  mostrarMsgAdmin("Se descargaron Preguntas.csv, Opciones.csv, MapeoSAP.csv y Catalogos.csv. Cárguelas como tablas de Excel (OneDrive) o listas de SharePoint y consulte la guía powerapps/GUIA_POWERAPPS.md.", "exito");
 }
 
 /* ============================================================

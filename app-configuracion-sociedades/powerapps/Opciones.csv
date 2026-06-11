@@ -5,14 +5,6 @@ o_pais_pe,p_pais,Perú
 o_pais_cl,p_pais,Chile
 o_pais_us,p_pais,Estados Unidos
 o_pais_otro,p_pais,Otro país
-o_mon_cop,p_moneda,COP - Peso colombiano
-o_mon_mxn,p_moneda,MXN - Peso mexicano
-o_mon_pen,p_moneda,PEN - Sol peruano
-o_mon_clp,p_moneda,CLP - Peso chileno
-o_mon_usd,p_moneda,USD - Dólar estadounidense
-o_mon_eur,p_moneda,EUR - Euro
-o_idi_es,p_idioma,Español
-o_idi_en,p_idioma,Inglés
 o_mig_si,p_migracion,Sí
 o_mig_no,p_migracion,No
 o_mdg_si,p_mdg,Sí

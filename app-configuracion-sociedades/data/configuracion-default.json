@@ -1,5 +1,95 @@
 {
-  "version": 2,
+  "version": 3,
+  "catalogos": [
+    {
+      "id": "monedas", "nombre": "Monedas (ISO 4217)",
+      "valores": [
+        { "codigo": "COP", "texto": "Peso colombiano" }, { "codigo": "MXN", "texto": "Peso mexicano" },
+        { "codigo": "PEN", "texto": "Sol peruano" }, { "codigo": "CLP", "texto": "Peso chileno" },
+        { "codigo": "ARS", "texto": "Peso argentino" }, { "codigo": "BOB", "texto": "Boliviano" },
+        { "codigo": "BRL", "texto": "Real brasileño" }, { "codigo": "CRC", "texto": "Colón costarricense" },
+        { "codigo": "DOP", "texto": "Peso dominicano" }, { "codigo": "GTQ", "texto": "Quetzal guatemalteco" },
+        { "codigo": "HNL", "texto": "Lempira hondureño" }, { "codigo": "NIO", "texto": "Córdoba nicaragüense" },
+        { "codigo": "PAB", "texto": "Balboa panameño" }, { "codigo": "PYG", "texto": "Guaraní paraguayo" },
+        { "codigo": "UYU", "texto": "Peso uruguayo" }, { "codigo": "VES", "texto": "Bolívar venezolano" },
+        { "codigo": "BZD", "texto": "Dólar beliceño" }, { "codigo": "JMD", "texto": "Dólar jamaiquino" },
+        { "codigo": "TTD", "texto": "Dólar de Trinidad y Tobago" }, { "codigo": "HTG", "texto": "Gourde haitiano" },
+        { "codigo": "CUP", "texto": "Peso cubano" }, { "codigo": "USD", "texto": "Dólar estadounidense" },
+        { "codigo": "CAD", "texto": "Dólar canadiense" }, { "codigo": "EUR", "texto": "Euro" },
+        { "codigo": "GBP", "texto": "Libra esterlina" }, { "codigo": "CHF", "texto": "Franco suizo" },
+        { "codigo": "SEK", "texto": "Corona sueca" }, { "codigo": "NOK", "texto": "Corona noruega" },
+        { "codigo": "DKK", "texto": "Corona danesa" }, { "codigo": "JPY", "texto": "Yen japonés" },
+        { "codigo": "CNY", "texto": "Yuan chino" }, { "codigo": "KRW", "texto": "Won surcoreano" },
+        { "codigo": "INR", "texto": "Rupia india" }, { "codigo": "SGD", "texto": "Dólar de Singapur" },
+        { "codigo": "HKD", "texto": "Dólar de Hong Kong" }, { "codigo": "AUD", "texto": "Dólar australiano" },
+        { "codigo": "NZD", "texto": "Dólar neozelandés" }, { "codigo": "ZAR", "texto": "Rand sudafricano" },
+        { "codigo": "TRY", "texto": "Lira turca" }, { "codigo": "AED", "texto": "Dírham de EAU" },
+        { "codigo": "SAR", "texto": "Riyal saudí" }, { "codigo": "ILS", "texto": "Nuevo séquel israelí" },
+        { "codigo": "EGP", "texto": "Libra egipcia" }, { "codigo": "RUB", "texto": "Rublo ruso" }
+      ]
+    },
+    {
+      "id": "paises", "nombre": "Países (ISO 3166)",
+      "valores": [
+        { "codigo": "CO", "texto": "Colombia" }, { "codigo": "MX", "texto": "México" },
+        { "codigo": "PE", "texto": "Perú" }, { "codigo": "CL", "texto": "Chile" },
+        { "codigo": "AR", "texto": "Argentina" }, { "codigo": "BO", "texto": "Bolivia" },
+        { "codigo": "BR", "texto": "Brasil" }, { "codigo": "CR", "texto": "Costa Rica" },
+        { "codigo": "DO", "texto": "República Dominicana" }, { "codigo": "EC", "texto": "Ecuador" },
+        { "codigo": "SV", "texto": "El Salvador" }, { "codigo": "GT", "texto": "Guatemala" },
+        { "codigo": "HN", "texto": "Honduras" }, { "codigo": "NI", "texto": "Nicaragua" },
+        { "codigo": "PA", "texto": "Panamá" }, { "codigo": "PY", "texto": "Paraguay" },
+        { "codigo": "UY", "texto": "Uruguay" }, { "codigo": "VE", "texto": "Venezuela" },
+        { "codigo": "US", "texto": "Estados Unidos" }, { "codigo": "CA", "texto": "Canadá" },
+        { "codigo": "ES", "texto": "España" }, { "codigo": "PT", "texto": "Portugal" },
+        { "codigo": "FR", "texto": "Francia" }, { "codigo": "DE", "texto": "Alemania" },
+        { "codigo": "IT", "texto": "Italia" }, { "codigo": "GB", "texto": "Reino Unido" },
+        { "codigo": "NL", "texto": "Países Bajos" }, { "codigo": "CH", "texto": "Suiza" },
+        { "codigo": "CN", "texto": "China" }, { "codigo": "JP", "texto": "Japón" },
+        { "codigo": "KR", "texto": "Corea del Sur" }, { "codigo": "IN", "texto": "India" },
+        { "codigo": "AU", "texto": "Australia" }
+      ]
+    },
+    {
+      "id": "idiomas", "nombre": "Idiomas SAP",
+      "valores": [
+        { "codigo": "ES", "texto": "Español" }, { "codigo": "EN", "texto": "Inglés" },
+        { "codigo": "PT", "texto": "Portugués" }, { "codigo": "FR", "texto": "Francés" },
+        { "codigo": "DE", "texto": "Alemán" }, { "codigo": "IT", "texto": "Italiano" },
+        { "codigo": "NL", "texto": "Neerlandés" }, { "codigo": "SV", "texto": "Sueco" },
+        { "codigo": "DA", "texto": "Danés" }, { "codigo": "NO", "texto": "Noruego" },
+        { "codigo": "FI", "texto": "Finés" }, { "codigo": "PL", "texto": "Polaco" },
+        { "codigo": "RU", "texto": "Ruso" }, { "codigo": "TR", "texto": "Turco" },
+        { "codigo": "JA", "texto": "Japonés" }, { "codigo": "ZH", "texto": "Chino" },
+        { "codigo": "KO", "texto": "Coreano" }
+      ]
+    },
+    {
+      "id": "bancos", "nombre": "Bancos (ejemplo, editable)",
+      "valores": [
+        { "codigo": "BANCOLOMBIA", "texto": "Bancolombia" }, { "codigo": "BOGOTA", "texto": "Banco de Bogotá" },
+        { "codigo": "DAVIVIENDA", "texto": "Davivienda" }, { "codigo": "BBVA_CO", "texto": "BBVA Colombia" },
+        { "codigo": "OCCIDENTE", "texto": "Banco de Occidente" }, { "codigo": "POPULAR_CO", "texto": "Banco Popular" },
+        { "codigo": "AGRARIO", "texto": "Banco Agrario" }, { "codigo": "SCOTIA_CO", "texto": "Scotiabank Colpatria" },
+        { "codigo": "ITAU", "texto": "Itaú" }, { "codigo": "CITI", "texto": "Citibank" },
+        { "codigo": "JPM", "texto": "JPMorgan Chase" }, { "codigo": "BOFA", "texto": "Bank of America" },
+        { "codigo": "SANTANDER", "texto": "Santander" }, { "codigo": "BANORTE", "texto": "Banorte (México)" },
+        { "codigo": "BANAMEX", "texto": "Citibanamex (México)" }, { "codigo": "BBVA_MX", "texto": "BBVA México" },
+        { "codigo": "BCP", "texto": "BCP (Perú)" }, { "codigo": "INTERBANK", "texto": "Interbank (Perú)" },
+        { "codigo": "BCHILE", "texto": "Banco de Chile" }, { "codigo": "BESTADO", "texto": "BancoEstado (Chile)" }
+      ]
+    },
+    {
+      "id": "clases_activos", "nombre": "Clases de activos fijos",
+      "valores": [
+        { "codigo": "1000", "texto": "Terrenos" }, { "codigo": "1100", "texto": "Edificios y construcciones" },
+        { "codigo": "2000", "texto": "Maquinaria y equipo" }, { "codigo": "3000", "texto": "Vehículos" },
+        { "codigo": "3100", "texto": "Muebles y enseres" }, { "codigo": "3200", "texto": "Equipos de cómputo y comunicación" },
+        { "codigo": "4000", "texto": "Activos en leasing" }, { "codigo": "5000", "texto": "Activos intangibles" },
+        { "codigo": "6000", "texto": "Activos en curso (AeC)" }, { "codigo": "7000", "texto": "Activos de menor cuantía" }
+      ]
+    }
+  ],
   "secciones": [
     { "id": "general", "nombre": "1. Datos generales y alcance", "orden": 1 },
     { "id": "contable", "nombre": "2. Contabilidad principal (GL)", "orden": 2 },
@@ -92,28 +182,34 @@
       "opciones": []
     },
     {
-      "id": "p_moneda", "seccion": "general", "orden": 6, "tipo": "unica", "obligatoria": true,
+      "id": "p_moneda", "seccion": "general", "orden": 6, "tipo": "catalogo", "obligatoria": true, "catalogoId": "monedas",
       "texto": "¿Cuál será la moneda local (moneda de sociedad)?",
-      "ayuda": "Moneda en la que se lleva la contabilidad principal (moneda 10).",
-      "dependeDe": null, "mapeoDirecto": null,
-      "opciones": [
-        { "id": "o_mon_cop", "texto": "COP - Peso colombiano", "mapeo": { "descripcionConfig": "Definir moneda local de la sociedad", "transaccion": "OX02", "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", "tablaCampo": "T001-WAERS", "valorPropuesto": "COP", "notas": "" } },
-        { "id": "o_mon_mxn", "texto": "MXN - Peso mexicano", "mapeo": { "descripcionConfig": "Definir moneda local de la sociedad", "transaccion": "OX02", "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", "tablaCampo": "T001-WAERS", "valorPropuesto": "MXN", "notas": "" } },
-        { "id": "o_mon_pen", "texto": "PEN - Sol peruano", "mapeo": { "descripcionConfig": "Definir moneda local de la sociedad", "transaccion": "OX02", "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", "tablaCampo": "T001-WAERS", "valorPropuesto": "PEN", "notas": "" } },
-        { "id": "o_mon_clp", "texto": "CLP - Peso chileno", "mapeo": { "descripcionConfig": "Definir moneda local de la sociedad", "transaccion": "OX02", "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", "tablaCampo": "T001-WAERS", "valorPropuesto": "CLP", "notas": "" } },
-        { "id": "o_mon_usd", "texto": "USD - Dólar estadounidense", "mapeo": { "descripcionConfig": "Definir moneda local de la sociedad", "transaccion": "OX02", "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", "tablaCampo": "T001-WAERS", "valorPropuesto": "USD", "notas": "" } },
-        { "id": "o_mon_eur", "texto": "EUR - Euro", "mapeo": { "descripcionConfig": "Definir moneda local de la sociedad", "transaccion": "OX02", "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", "tablaCampo": "T001-WAERS", "valorPropuesto": "EUR", "notas": "" } }
-      ]
+      "ayuda": "Moneda en la que se lleva la contabilidad principal (moneda 10). Escriba el código o nombre para buscar en el catálogo.",
+      "dependeDe": null,
+      "mapeoDirecto": {
+        "descripcionConfig": "Definir moneda local de la sociedad",
+        "transaccion": "OX02",
+        "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
+        "tablaCampo": "T001-WAERS",
+        "valorPropuesto": "{respuesta}",
+        "notas": "Verificar que la moneda exista en el sistema (OY03) y sus decimales."
+      },
+      "opciones": []
     },
     {
-      "id": "p_idioma", "seccion": "general", "orden": 7, "tipo": "unica", "obligatoria": true,
+      "id": "p_idioma", "seccion": "general", "orden": 7, "tipo": "catalogo", "obligatoria": true, "catalogoId": "idiomas",
       "texto": "¿Cuál será el idioma de la sociedad?",
-      "ayuda": "Idioma por defecto para textos y correspondencia.",
-      "dependeDe": null, "mapeoDirecto": null,
-      "opciones": [
-        { "id": "o_idi_es", "texto": "Español", "mapeo": { "descripcionConfig": "Definir idioma de la sociedad", "transaccion": "OX02", "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", "tablaCampo": "T001-SPRAS", "valorPropuesto": "ES", "notas": "" } },
-        { "id": "o_idi_en", "texto": "Inglés", "mapeo": { "descripcionConfig": "Definir idioma de la sociedad", "transaccion": "OX02", "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad", "tablaCampo": "T001-SPRAS", "valorPropuesto": "EN", "notas": "" } }
-      ]
+      "ayuda": "Idioma por defecto para textos y correspondencia. Escriba el código o nombre para buscar en el catálogo.",
+      "dependeDe": null,
+      "mapeoDirecto": {
+        "descripcionConfig": "Definir idioma de la sociedad",
+        "transaccion": "OX02",
+        "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Tratar sociedad",
+        "tablaCampo": "T001-SPRAS",
+        "valorPropuesto": "{respuesta}",
+        "notas": ""
+      },
+      "opciones": []
     },
     {
       "id": "p_migracion", "seccion": "general", "orden": 8, "tipo": "si_no", "obligatoria": true,
@@ -177,7 +273,22 @@
       ]
     },
     {
-      "id": "p_fsv", "seccion": "contable", "orden": 5, "tipo": "unica", "obligatoria": true,
+      "id": "p_monedas_operativas", "seccion": "contable", "orden": 5, "tipo": "catalogo_multiple", "obligatoria": false, "catalogoId": "monedas",
+      "texto": "¿Qué monedas adicionales manejará la sociedad (paralelas u operativas)?",
+      "ayuda": "Agregue todas las monedas distintas de la local: moneda de grupo, moneda dura y monedas de operación frecuente.",
+      "dependeDe": { "preguntaId": "p_moneda_paralela", "valores": ["Sí"] },
+      "mapeoDirecto": {
+        "descripcionConfig": "Definir monedas paralelas y asegurar tipos de cambio",
+        "transaccion": "FINSC_LEDGER / OB22 + OB08",
+        "rutaIMG": "Gestión financiera > Parametrizaciones básicas > Libros > Ledger > Parametrizaciones de moneda + Tipos de cambio",
+        "tablaCampo": "FINSC_LD_CMP / TCURR",
+        "valorPropuesto": "{respuesta}",
+        "notas": "Asignar la moneda de grupo como moneda 30 del ledger; mantener cotizaciones periódicas en OB08 para todas las monedas listadas."
+      },
+      "opciones": []
+    },
+    {
+      "id": "p_fsv", "seccion": "contable", "orden": 6, "tipo": "unica", "obligatoria": true,
       "texto": "¿Qué variante de status de campo utilizará la sociedad?",
       "ayuda": "Controla qué campos son obligatorios/opcionales al contabilizar en cada cuenta.",
       "dependeDe": null, "mapeoDirecto": null,
@@ -187,7 +298,7 @@
       ]
     },
     {
-      "id": "p_validacion_gl", "seccion": "contable", "orden": 6, "tipo": "si_no", "obligatoria": true,
+      "id": "p_validacion_gl", "seccion": "contable", "orden": 7, "tipo": "si_no", "obligatoria": true,
       "texto": "¿Las contabilizaciones a nivel de GL deberán pasar por una validación preliminar?",
       "ayuda": "Reglas que verifican o bloquean documentos antes de contabilizar (ej. combinaciones cuenta/centro de coste).",
       "dependeDe": null, "mapeoDirecto": null,
@@ -197,7 +308,7 @@
       ]
     },
     {
-      "id": "p_revaluacion", "seccion": "contable", "orden": 7, "tipo": "si_no", "obligatoria": true,
+      "id": "p_revaluacion", "seccion": "contable", "orden": 8, "tipo": "si_no", "obligatoria": true,
       "texto": "¿Se requiere revaluación/valoración de monedas extranjeras al cierre?",
       "ayuda": "Valoración de partidas abiertas y saldos en moneda extranjera (diferencia en cambio).",
       "dependeDe": null, "mapeoDirecto": null,
@@ -207,7 +318,7 @@
       ]
     },
     {
-      "id": "p_estructura_balance", "seccion": "contable", "orden": 8, "tipo": "unica", "obligatoria": true,
+      "id": "p_estructura_balance", "seccion": "contable", "orden": 9, "tipo": "unica", "obligatoria": true,
       "texto": "¿Qué estructura de balance y P&G usará la sociedad para reportes financieros?",
       "ayuda": "La estructura de balance agrupa cuentas para los estados financieros (FSE).",
       "dependeDe": null, "mapeoDirecto": null,
@@ -217,7 +328,7 @@
       ]
     },
     {
-      "id": "p_ico", "seccion": "contable", "orden": 9, "tipo": "si_no", "obligatoria": true,
+      "id": "p_ico", "seccion": "contable", "orden": 10, "tipo": "si_no", "obligatoria": true,
       "texto": "¿La sociedad tendrá operaciones con otras sociedades del grupo (intercompany / ICO)?",
       "ayuda": "Compras, ventas, préstamos o cobros/pagos entre sociedades del mismo grupo.",
       "dependeDe": null, "mapeoDirecto": null,
@@ -227,7 +338,7 @@
       ]
     },
     {
-      "id": "p_lugares", "seccion": "contable", "orden": 10, "tipo": "si_no", "obligatoria": true,
+      "id": "p_lugares", "seccion": "contable", "orden": 11, "tipo": "si_no", "obligatoria": true,
       "texto": "¿La sociedad opera con matriz y sucursales que deban reportarse por separado (lugares comerciales)?",
       "ayuda": "Sucursales con numeración fiscal o reportes tributarios propios.",
       "dependeDe": null, "mapeoDirecto": null,
@@ -347,9 +458,9 @@
       ]
     },
     {
-      "id": "p_aa_clases", "seccion": "aa", "orden": 3, "tipo": "texto", "obligatoria": false,
+      "id": "p_aa_clases", "seccion": "aa", "orden": 3, "tipo": "catalogo_multiple", "obligatoria": false, "catalogoId": "clases_activos",
       "texto": "¿Qué clases de activos fijos se tendrán?",
-      "ayuda": "Ej.: terrenos, edificios, maquinaria, vehículos, equipos de cómputo, intangibles, activos en curso.",
+      "ayuda": "Agregue todas las clases que apliquen; puede ampliar el catálogo con las clases propias de su compañía.",
       "dependeDe": { "preguntaId": "p_aa_usa", "valores": ["Sí"] },
       "mapeoDirecto": {
         "descripcionConfig": "Definir clases de activos y determinación de cuentas",
@@ -467,9 +578,9 @@
       ]
     },
     {
-      "id": "p_tr_bancos", "seccion": "tr", "orden": 1, "tipo": "texto", "obligatoria": true,
+      "id": "p_tr_bancos", "seccion": "tr", "orden": 1, "tipo": "catalogo_multiple", "obligatoria": true, "catalogoId": "bancos",
       "texto": "¿Con qué bancos operará la sociedad (cuentas bancarias propias)?",
-      "ayuda": "Liste bancos y número aproximado de cuentas por banco.",
+      "ayuda": "Agregue cada banco desde el catálogo (puede cargar el listado de bancos de su país en Administración > Catálogos).",
       "dependeDe": null,
       "mapeoDirecto": {
         "descripcionConfig": "Definir bancos propios y cuentas bancarias",
