@@ -284,6 +284,10 @@
     <div class="kpi"><div class="etiqueta">ROI a <span class="refAnios">3</span> años</div><div class="valor" id="kpiROI5">—</div></div>
     <div class="kpi"><div class="etiqueta">Período de recuperación</div><div class="valor" id="kpiPayback5">—</div></div>
   </div>
+  <h3>Cálculo del ROI <span class="tip" data-tip="Desglose de la fórmula ROI = (Beneficios Totales − Costo Total) ÷ Costo Total × 100, aplicada sobre el TCO del horizonte de proyección.">?</span></h3>
+  <div id="calculoROI" class="nota"></div>
+  <h3>Análisis del resultado</h3>
+  <div id="analisisROI" class="nota"></div>
   <h3>Costos vs beneficios acumulados</h3>
   <div class="lienzo"><canvas id="chartBeneficios"></canvas></div>
 
@@ -1079,6 +1083,7 @@ function recalcular() {
   /* KPIs del paso 5 */
   document.getElementById("kpiROI5").textContent = c.roi.toFixed(1) + "%";
   document.getElementById("kpiPayback5").textContent = c.payback ? "Mes " + c.payback : "—";
+  renderAnalisisROI(c);
 
   /* Tabla TCO */
   document.getElementById("tablaTCOwrap").innerHTML = `
@@ -1127,6 +1132,43 @@ function renderAnalisisInversion(c) {
     lineas.push(`<b>Conclusión:</b> la pendiente fuerte de la curva concentra el flujo de caja requerido en la implementación; después el gasto recurrente es ${e === "saas" ? "el costo de licencias" : "solo el mantenimiento"}, que define el costo total de largo plazo.`);
   }
   document.getElementById("analisisInversion").innerHTML =
+    lineas.map(l => `<div style="margin:4px 0">• ${l}</div>`).join("");
+}
+
+/* Desglose del cálculo del ROI (Paso 5) con las cifras reales del formulario
+   y un breve análisis interpretativo. Se actualiza en cada recálculo. */
+function renderAnalisisROI(c) {
+  const mesesBenef = c.anios * 12;                               // meses generando beneficios
+  const tco = c.esSaaS ? c.tcoSaaS[c.anios] : c.tcoInterno[c.anios];
+  const recurrente = c.esSaaS ? "licencias SaaS" : "mantenimiento";
+  const recurrenteAnual = c.esSaaS ? c.saasAnual : c.mantAnual;
+
+  /* --- Cálculo paso a paso --- */
+  document.getElementById("calculoROI").innerHTML = `
+    <div style="margin:4px 0">① <b>Beneficios Totales</b> = beneficio mensual × meses del horizonte = ${fmt(c.beneficioMensual)}/mes × ${mesesBenef} meses (${c.anios} años post-implementación) = <b>${fmt(c.beneficiosTotales)}</b></div>
+    <div style="margin:4px 0">② <b>Costo Total (TCO a ${c.anios} años)</b> = inversión inicial + ${recurrente} = ${fmt(c.inversionInicial)} + ${fmt(recurrenteAnual)}/año × ${c.anios} años${c.esSaaS ? " (incluye licencias durante la implementación)" : ""} = <b>${fmt(tco)}</b></div>
+    <div style="margin:4px 0">③ <b>ROI</b> = (① − ②) ÷ ② × 100 = (${fmt(c.beneficiosTotales)} − ${fmt(tco)}) ÷ ${fmt(tco)} × 100 = <b style="color:${c.roi < 0 ? "var(--rojo)" : "var(--verde)"}">${c.roi.toFixed(1)}%</b></div>
+    <div style="margin:4px 0">④ <b>Período de recuperación</b> = primer mes en que los beneficios acumulados igualan la inversión acumulada → <b>${c.payback ? "mes " + c.payback + " (" + (c.payback - c.dur) + " meses después del go-live)" : "no se alcanza en el horizonte"}</b></div>`;
+
+  /* --- Breve análisis (se adapta al resultado y al escenario) --- */
+  const lineas = [];
+  if (c.roi >= 0) {
+    lineas.push(`Por cada $1 invertido en el horizonte de ${c.anios} años, el proyecto devuelve el $1 más <b>$${(c.roi / 100).toFixed(2)}</b> adicionales de beneficio neto (${fmt(c.beneficiosTotales - tco)} en total).`);
+  } else {
+    lineas.push(`El proyecto <b>destruye valor</b> en el horizonte analizado: los beneficios (${fmt(c.beneficiosTotales)}) no alcanzan a cubrir el costo total (${fmt(tco)}); faltan ${fmt(tco - c.beneficiosTotales)}.`);
+  }
+  lineas.push(c.payback
+    ? `La inversión se recupera en el mes ${c.payback}, es decir ${c.payback <= c.dur + 12 ? "dentro del primer año tras el go-live, un plazo atractivo para proyectos de este tipo" : "a los " + Math.ceil((c.payback - c.dur) / 12) + " años del go-live"}; a partir de allí cada mes genera ~${fmt(c.beneficioMensual - recurrenteAnual / 12)} netos.`
+    : `Con los beneficios actuales no hay recuperación dentro del horizonte: revise si hay beneficios sin cuantificar o costos sobreestimados.`);
+  if (state.escenario === "comparativa") {
+    const mejor = c.roiInterno >= c.roiSaaS ? "el desarrollo interno" : "la alternativa SaaS";
+    lineas.push(`Comparando alternativas con los mismos beneficios, ${mejor} ofrece mejor retorno: ROI interno <b>${c.roiInterno.toFixed(1)}%</b> vs ROI SaaS <b>${c.roiSaaS.toFixed(1)}%</b>, porque su costo total a ${c.anios} años es menor.`);
+  }
+  const roiEstres = calcular({ factorCosto: 1.3 }).roi;
+  lineas.push(roiEstres >= 0
+    ? `El resultado es robusto: incluso con un sobrecosto del 30% el ROI se mantiene positivo (${roiEstres.toFixed(1)}%, ver Paso 6).`
+    : `Atención: un sobrecosto del 30% vuelve el ROI negativo (${roiEstres.toFixed(1)}%), por lo que el control presupuestal es crítico (ver Paso 6).`);
+  document.getElementById("analisisROI").innerHTML =
     lineas.map(l => `<div style="margin:4px 0">• ${l}</div>`).join("");
 }
 
