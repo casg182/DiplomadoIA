@@ -220,6 +220,8 @@
   <h3 class="solo-interno solo-saas">Curva de inversión acumulada</h3>
   <div class="lienzo"><canvas id="chartInversion"></canvas></div>
   <div id="textoBreakEven" class="nota"></div>
+  <h3>Análisis de la gráfica</h3>
+  <div id="analisisInversion" class="nota"></div>
 </section>
 
 <!-- ============ PASO 4: CICLO DE VIDA Y TCO ============ -->
@@ -964,6 +966,8 @@ function recalcular() {
       : `<b>Recuperación de la inversión:</b> no se alcanza dentro del horizonte de ${c.horizonte} meses.`;
   }
 
+  renderAnalisisInversion(c);
+
   /* KPIs del paso 5 */
   document.getElementById("kpiROI5").textContent = c.roi.toFixed(1) + "%";
   document.getElementById("kpiPayback5").textContent = c.payback ? "Mes " + c.payback : "—";
@@ -981,6 +985,40 @@ function recalcular() {
   renderGraficas(c);
   renderDashboard(c);
   guardar();
+}
+
+/* Resumen analítico (5 renglones) de la curva de inversión del Paso 3.
+   Es importante recordar que la gráfica es ACUMULADA: cada punto es el total
+   gastado desde el inicio hasta ese mes, no el desembolso de ese mes. */
+function renderAnalisisInversion(c) {
+  const e = state.escenario;
+  const devMes = c.dur > 0 ? c.totalInterno / c.dur : 0;        // promedio mensual en implementación
+  const mantMes = c.mantAnual / 12;                              // mantenimiento mensual post go-live
+  const licMes = c.saasAnual / 12;                               // licencias SaaS mensuales
+  const finI = c.cumInterno[c.horizonte - 1] || 0;
+  const finS = c.cumSaaS[c.horizonte - 1] || 0;
+  const lineas = [];
+  if (e !== "saas") {
+    lineas.push(`<b>Desarrollo Interno:</b> durante los ${c.dur} meses de implementación se invierte en promedio ${fmt(devMes)}/mes (según la distribución por fases), acumulando ${fmt(c.totalInterno)} a la puesta en producción.`);
+    lineas.push(`Tras el go-live la curva se aplana: solo se paga mantenimiento (~${fmt(mantMes)}/mes), llegando a ${fmt(finI)} acumulados al final del horizonte de ${c.horizonte} meses.`);
+  }
+  if (e !== "interno") {
+    lineas.push(`<b>SaaS:</b> exige un desembolso inicial de ${fmt(c.saasUnico)} en el mes 1 (setup, personalización y capacitación) y luego licencias constantes de ~${fmt(licMes)}/mes de forma indefinida, acumulando ${fmt(finS)} al final del horizonte.`);
+  }
+  if (e === "comparativa") {
+    lineas.push(c.breakEven
+      ? `<b>Punto de equilibrio:</b> las curvas se cruzan en el mes ${c.breakEven}; a partir de allí el desarrollo interno pasa a ser la alternativa más económica en costo acumulado.`
+      : `<b>Punto de equilibrio:</b> dentro del horizonte analizado las curvas no se cruzan: la alternativa SaaS se mantiene más económica en costo acumulado.`);
+    const dif = finS - finI;
+    lineas.push(`<b>Conclusión:</b> al mes ${c.horizonte} la diferencia acumulada es de ${fmt(Math.abs(dif))} a favor ${dif > 0 ? "del desarrollo interno" : "de la alternativa SaaS"}; cuanto más largo sea el horizonte de uso, más peso gana la opción con menor costo recurrente.`);
+  } else {
+    lineas.push(c.payback
+      ? `<b>Recuperación:</b> considerando los beneficios del Paso 5, la inversión acumulada se recupera en el mes ${c.payback}.`
+      : `<b>Recuperación:</b> con los beneficios actuales la inversión no se recupera dentro del horizonte de ${c.horizonte} meses.`);
+    lineas.push(`<b>Conclusión:</b> la pendiente fuerte de la curva concentra el flujo de caja requerido en la implementación; después el gasto recurrente es ${e === "saas" ? "el costo de licencias" : "solo el mantenimiento"}, que define el costo total de largo plazo.`);
+  }
+  document.getElementById("analisisInversion").innerHTML =
+    lineas.map(l => `<div style="margin:4px 0">• ${l}</div>`).join("");
 }
 
 /* ============================================================================
