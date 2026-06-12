@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Case Tecnológico — Generador Interactivo</title>
+<!--
+  ============================================================================
+  BUSINESS CASE TECNOLÓGICO — ARCHIVO AUTOCONTENIDO
+  ----------------------------------------------------------------------------
+  - HTML5 + CSS3 + JavaScript vanilla en un solo archivo. Sin backend.
+  - Única dependencia externa: Chart.js vía CDN (solo para gráficas).
+  - Persistencia: localStorage + exportar/importar JSON como respaldo.
+  - Ejecución 100% local: abrir el archivo en el navegador. No requiere
+    servidores, API keys ni conexión a repositorios.
+  - La documentación de mantenimiento está en el PASO 8 dentro de la página.
+  ============================================================================
+-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  /* ===================== PALETA Y BASE ===================== */
+  :root{
+    --azul-900:#0d2440; --azul-700:#16395f; --azul-500:#2563a8; --azul-300:#7da7d9;
+    --azul-100:#e8f0fa; --gris-900:#2b2f36; --gris-600:#5a6472; --gris-300:#c9d1dc;
+    --gris-100:#f4f6f9; --rojo:#c62828; --rojo-suave:#fdecea; --verde:#2e7d32;
+    --ambar:#ef6c00; --blanco:#ffffff; --sombra:0 2px 8px rgba(13,36,64,.12);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--gris-100);color:var(--gris-900);font-size:15px;line-height:1.5}
+  h1,h2,h3,h4{color:var(--azul-900);margin:.4em 0}
+  h1{font-size:1.5rem} h2{font-size:1.25rem;border-bottom:2px solid var(--azul-300);padding-bottom:4px}
+  h3{font-size:1.05rem;color:var(--azul-700)}
+  /* ===================== ENCABEZADO Y BARRA ===================== */
+  header{background:linear-gradient(90deg,var(--azul-900),var(--azul-700));color:#fff;padding:14px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+  header h1{color:#fff;margin:0;flex:1;min-width:260px}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap}
+  .toolbar button{background:var(--azul-500);border:none;color:#fff;padding:8px 12px;border-radius:6px;cursor:pointer;font-size:.85rem}
+  .toolbar button:hover{background:var(--azul-300);color:var(--azul-900)}
+  .toolbar button.peligro{background:var(--rojo)}
+  /* ===================== NAVEGACIÓN DE PASOS ===================== */
+  nav.pasos{display:flex;flex-wrap:wrap;gap:6px;padding:12px 24px;background:#fff;box-shadow:var(--sombra);position:sticky;top:0;z-index:50}
+  nav.pasos button{border:1px solid var(--gris-300);background:#fff;color:var(--azul-700);padding:7px 11px;border-radius:20px;cursor:pointer;font-size:.82rem}
+  nav.pasos button.activo{background:var(--azul-700);color:#fff;border-color:var(--azul-700)}
+  main{max-width:1280px;margin:0 auto;padding:18px 24px 80px}
+  section.paso{display:none;background:#fff;border-radius:10px;box-shadow:var(--sombra);padding:20px 24px;margin-bottom:18px}
+  section.paso.visible{display:block}
+  .nav-inferior{display:flex;justify-content:space-between;margin-top:18px}
+  .nav-inferior button{background:var(--azul-700);color:#fff;border:none;padding:10px 18px;border-radius:6px;cursor:pointer}
+  /* ===================== FORMULARIOS Y TABLAS ===================== */
+  label{font-weight:600;color:var(--azul-700);display:block;margin:10px 0 4px;font-size:.88rem}
+  input,select,textarea{width:100%;padding:8px;border:1px solid var(--gris-300);border-radius:6px;font-size:.9rem;font-family:inherit;background:#fff}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--azul-300)}
+  .fila{display:flex;gap:16px;flex-wrap:wrap}
+  .fila>div{flex:1;min-width:200px}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.87rem}
+  th{background:var(--azul-700);color:#fff;padding:8px;text-align:left;font-weight:600}
+  td{padding:6px 8px;border-bottom:1px solid var(--gris-300);vertical-align:middle}
+  tr:nth-child(even) td{background:var(--azul-100)}
+  td input,td select{padding:6px;font-size:.85rem}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  tfoot td{font-weight:700;background:var(--gris-100);border-top:2px solid var(--azul-700)}
+  .btn-mini{background:var(--azul-500);color:#fff;border:none;border-radius:5px;padding:5px 10px;cursor:pointer;font-size:.8rem;margin:4px 4px 4px 0}
+  .btn-mini.rojo{background:var(--rojo)}
+  .btn-mini.gris{background:var(--gris-600)}
+  /* ===================== TOOLTIPS ===================== */
+  .tip{display:inline-block;width:16px;height:16px;line-height:16px;text-align:center;background:var(--azul-300);color:var(--azul-900);border-radius:50%;font-size:11px;font-weight:700;cursor:help;margin-left:5px;position:relative}
+  .tip:hover::after{content:attr(data-tip);position:absolute;left:50%;transform:translateX(-50%);bottom:135%;background:var(--gris-900);color:#fff;padding:8px 10px;border-radius:6px;font-size:.78rem;font-weight:400;width:230px;z-index:99;line-height:1.4;text-align:left}
+  /* ===================== TARJETAS KPI ===================== */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin:14px 0}
+  .kpi{background:linear-gradient(135deg,var(--azul-700),var(--azul-500));color:#fff;border-radius:10px;padding:14px;text-align:center}
+  .kpi .valor{font-size:1.5rem;font-weight:700;margin:4px 0}
+  .kpi .etiqueta{font-size:.78rem;opacity:.9;text-transform:uppercase;letter-spacing:.5px}
+  .kpi.alerta{background:linear-gradient(135deg,var(--rojo),#e57373)}
+  .kpi.ok{background:linear-gradient(135deg,#1b5e20,var(--verde))}
+  .kpi.medio{background:linear-gradient(135deg,#e65100,var(--ambar))}
+  /* ===================== GRÁFICAS Y MATRIZ ===================== */
+  .lienzo{position:relative;height:340px;margin:14px 0;background:#fff;border:1px solid var(--gris-300);border-radius:8px;padding:10px}
+  .matriz{display:grid;grid-template-columns:90px repeat(3,1fr);gap:4px;max-width:640px;margin:14px 0}
+  .matriz .celda{min-height:74px;border-radius:6px;padding:6px;font-size:.75rem;color:#fff;display:flex;flex-direction:column;gap:2px}
+  .matriz .eje{display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--azul-900);background:var(--azul-100);border-radius:6px;font-size:.8rem;text-align:center}
+  .riesgo-tag{background:rgba(0,0,0,.25);border-radius:4px;padding:2px 5px}
+  .nota{background:var(--azul-100);border-left:4px solid var(--azul-500);padding:10px 14px;border-radius:0 8px 8px 0;font-size:.86rem;margin:10px 0}
+  .alerta-roja{background:var(--rojo-suave);border-left:4px solid var(--rojo);padding:10px 14px;border-radius:0 8px 8px 0;font-size:.86rem;margin:10px 0;color:var(--rojo)}
+  .pildora{display:inline-block;padding:3px 12px;border-radius:14px;color:#fff;font-weight:700;font-size:.82rem}
+  /* ===================== RESUMEN EJECUTIVO / IMPRESIÓN ===================== */
+  #resumenEjecutivo{background:#fff;border:1px solid var(--gris-300);border-radius:8px;padding:24px;margin-top:14px}
+  #resumenEjecutivo table{font-size:.85rem}
+  details{margin:10px 0;background:var(--gris-100);border-radius:8px;padding:10px 14px}
+  summary{cursor:pointer;font-weight:700;color:var(--azul-700)}
+  @media print{
+    body *{visibility:hidden}
+    #resumenEjecutivo,#resumenEjecutivo *{visibility:visible}
+    #resumenEjecutivo{position:absolute;left:0;top:0;width:100%;border:none;padding:10mm}
+    @page{size:letter;margin:12mm}
+  }
+  /* ===================== RESPONSIVO ===================== */
+  @media (max-width:760px){
+    main{padding:10px}
+    section.paso{padding:14px}
+    .lienzo{height:260px}
+    table{display:block;overflow-x:auto}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📊 Business Case Tecnológico</h1>
+  <div class="toolbar">
+    <button onclick="guardarManual()" title="Guarda el estado en el navegador (localStorage)">💾 Guardar</button>
+    <button onclick="exportarJSON()" title="Descarga un respaldo .json de todos los datos">⬇ Exportar JSON</button>
+    <button onclick="document.getElementById('archivoImportar').click()" title="Restaura un respaldo .json">⬆ Importar JSON</button>
+    <button onclick="window.print()" title="Exporta el resumen ejecutivo a PDF mediante la impresión del navegador">🖨 Exportar PDF</button>
+    <button class="peligro" onclick="reiniciar()" title="Borra todos los datos y restaura el ejemplo">↺ Reiniciar</button>
+    <input type="file" id="archivoImportar" accept=".json" style="display:none" onchange="importarJSON(this)">
+  </div>
+</header>
+
+<nav class="pasos" id="navPasos"></nav>
+
+<main>
+
+<!-- ============ PASO 1: ESCENARIO Y EQUIPO ============ -->
+<section class="paso" data-paso="1">
+  <h2>Paso 1 · Escenario y Definición de Equipo</h2>
+  <div class="fila">
+    <div>
+      <label>Escenario de evaluación <span class="tip" data-tip="Define qué alternativas se comparan. El formulario y las gráficas se adaptan automáticamente a la opción elegida.">?</span></label>
+      <select id="inEscenario">
+        <option value="comparativa">Comparativa: SaaS vs Desarrollo Interno</option>
+        <option value="interno">Solo Desarrollo Interno</option>
+        <option value="saas">Solo Implementación SaaS</option>
+      </select>
+    </div>
+    <div>
+      <label>Nombre del proyecto <span class="tip" data-tip="Nombre corto e identificable del proyecto que se evaluará.">?</span></label>
+      <input id="inNombre" type="text" placeholder="Ej.: Plataforma de Gestión Documental">
+    </div>
+  </div>
+  <label>Descripción breve <span class="tip" data-tip="Resumen en 1-3 líneas del alcance y objetivo del proyecto.">?</span></label>
+  <textarea id="inDescripcion" rows="2" placeholder="¿Qué problema resuelve y para quién?"></textarea>
+  <div class="fila">
+    <div>
+      <label>Duración estimada (meses) <span class="tip" data-tip="Meses de implementación hasta la puesta en producción. Determina el inicio de los beneficios.">?</span></label>
+      <input id="inDuracion" type="number" min="1" max="60" value="6">
+    </div>
+    <div>
+      <label>Número de fases <span class="tip" data-tip="Fases en que se divide el proyecto (ej.: análisis, desarrollo, pruebas, despliegue). Sobre ellas se distribuyen los costos.">?</span></label>
+      <input id="inFases" type="number" min="1" max="12" value="3">
+    </div>
+    <div>
+      <label>Años de proyección post-implementación <span class="tip" data-tip="Horizonte para TCO, ROI y beneficios (3 o 5 años).">?</span></label>
+      <select id="inAnios"><option value="3">3 años</option><option value="5">5 años</option></select>
+    </div>
+  </div>
+
+  <h3>Equipo involucrado <span class="tip" data-tip="Equipo de referencia y tarifas. El costo por hora de cada rol sirve como referencia para estimar los requerimientos del Paso 2.">?</span></h3>
+  <table id="tablaEquipo">
+    <thead><tr><th>Rol</th><th>Personas</th><th>% Dedicación</th><th>Costo/Hora ($)</th><th class="num">Costo mensual estimado</th><th></th></tr></thead>
+    <tbody></tbody>
+    <tfoot><tr><td colspan="4">Costo mensual total del equipo</td><td class="num" id="totEquipo">—</td><td></td></tr></tfoot>
+  </table>
+  <button class="btn-mini" onclick="agregarFila('equipo')">＋ Agregar rol</button>
+  <button class="btn-mini gris" onclick="copiarTabla('tablaEquipo')">⧉ Copiar tabla</button>
+  <div class="nota">El costo mensual estimado por rol = Personas × %Dedicación × Costo/Hora × 160 h/mes. Es informativo: el costo del proyecto se calcula con las horas-hombre de los requerimientos (Paso 2).</div>
+</section>
+
+<!-- ============ PASO 2: REQUERIMIENTOS ============ -->
+<section class="paso" data-paso="2">
+  <h2>Paso 2 · Requerimientos Funcionales y Consideraciones Técnicas</h2>
+
+  <div class="solo-interno solo-comparativa">
+    <h3>Requerimientos funcionales (Desarrollo Interno) <span class="tip" data-tip="Funcionalidades que el sistema debe cumplir. Subtotal = Horas-hombre × Costo/Hora.">?</span></h3>
+    <table id="tablaReqFunc">
+      <thead><tr><th style="width:45%">Descripción</th><th>Horas-Hombre</th><th>Costo/Hora ($)</th><th class="num">Subtotal ($)</th><th></th></tr></thead>
+      <tbody></tbody>
+      <tfoot><tr><td colspan="3">Total requerimientos funcionales</td><td class="num" id="totReqFunc">—</td><td></td></tr></tfoot>
+    </table>
+    <button class="btn-mini" onclick="agregarFila('reqFunc')">＋ Agregar requerimiento</button>
+    <button class="btn-mini gris" onclick="copiarTabla('tablaReqFunc')">⧉ Copiar tabla</button>
+
+    <h3>Consideraciones técnicas (Desarrollo Interno) <span class="tip" data-tip="Integraciones, seguridad, performance, migraciones de datos, APIs e infraestructura.">?</span></h3>
+    <table id="tablaReqTec">
+      <thead><tr><th style="width:45%">Descripción</th><th>Horas-Hombre</th><th>Costo/Hora ($)</th><th class="num">Subtotal ($)</th><th></th></tr></thead>
+      <tbody></tbody>
+      <tfoot><tr><td colspan="3">Total consideraciones técnicas</td><td class="num" id="totReqTec">—</td><td></td></tr></tfoot>
+    </table>
+    <button class="btn-mini" onclick="agregarFila('reqTec')">＋ Agregar consideración</button>
+    <button class="btn-mini gris" onclick="copiarTabla('tablaReqTec')">⧉ Copiar tabla</button>
+    <div class="nota"><b>Total Desarrollo Interno (inversión inicial): <span id="totInterno">—</span></b> = Funcionales + Técnicas.</div>
+  </div>
+
+  <div class="solo-saas solo-comparativa">
+    <h3>Costos de la alternativa SaaS <span class="tip" data-tip="Costos de adquirir e implementar una solución de mercado: setup, personalización, capacitación (únicos) y licencias (anuales recurrentes).">?</span></h3>
+    <table id="tablaSaas">
+      <thead><tr><th style="width:45%">Concepto</th><th>Tipo</th><th>Valor ($)</th><th class="num">Anualizado ($)</th><th></th></tr></thead>
+      <tbody></tbody>
+      <tfoot><tr><td colspan="2">Costo único total / Costo anual recurrente</td><td class="num" id="totSaasUnico">—</td><td class="num" id="totSaasAnual">—</td><td></td></tr></tfoot>
+    </table>
+    <button class="btn-mini" onclick="agregarFila('saas')">＋ Agregar concepto SaaS</button>
+    <button class="btn-mini gris" onclick="copiarTabla('tablaSaas')">⧉ Copiar tabla</button>
+  </div>
+</section>
+
+<!-- ============ PASO 3: TIMELINE Y DISTRIBUCIÓN ============ -->
+<section class="paso" data-paso="3">
+  <h2>Paso 3 · Timeline y Distribución de Costos en Fases</h2>
+  <div class="fila">
+    <div>
+      <label>Método de distribución <span class="tip" data-tip="Proporcional reparte el costo en partes iguales entre fases. Manual permite asignar un % de la inversión a cada fase (debe sumar 100%).">?</span></label>
+      <select id="inDistribucion">
+        <option value="proporcional">Proporcional entre fases</option>
+        <option value="manual">Porcentaje manual por fase</option>
+      </select>
+    </div>
+  </div>
+  <div id="zonaFases"></div>
+  <div id="avisoFases"></div>
+  <h3 class="solo-comparativa">Curva de inversión acumulada — SaaS vs Desarrollo Interno</h3>
+  <h3 class="solo-interno solo-saas">Curva de inversión acumulada</h3>
+  <div class="lienzo"><canvas id="chartInversion"></canvas></div>
+  <div id="textoBreakEven" class="nota"></div>
+</section>
+
+<!-- ============ PASO 4: CICLO DE VIDA Y TCO ============ -->
+<section class="paso" data-paso="4">
+  <h2>Paso 4 · Ciclo de Vida y Mantenimiento Post-Implementación</h2>
+  <div class="fila solo-interno solo-comparativa">
+    <div>
+      <label>Mantenimiento anual (Desarrollo Interno) <span class="tip" data-tip="Costo anual de soporte y mantenimiento: como % de la inversión inicial o como valor fijo anual.">?</span></label>
+      <select id="inMantModo">
+        <option value="porcentaje">% del costo total del proyecto</option>
+        <option value="fijo">Valor fijo anual ($)</option>
+      </select>
+    </div>
+    <div>
+      <label>Valor (<span id="lblMantUnidad">%</span>)</label>
+      <input id="inMantValor" type="number" min="0" step="0.1" value="15">
+    </div>
+    <div>
+      <label>Costo anual de mantenimiento resultante</label>
+      <input id="outMantAnual" type="text" readonly style="background:var(--gris-100);font-weight:700">
+    </div>
+  </div>
+  <div class="nota solo-saas solo-comparativa">El costo anual recurrente de la alternativa SaaS (licencias) se toma de la tabla de costos SaaS del Paso 2: <b id="refSaasAnual">—</b>.</div>
+  <h3>Costo Total de Propiedad (TCO) — proyección a <span class="refAnios">3</span> años</h3>
+  <div class="lienzo"><canvas id="chartTCO"></canvas></div>
+  <div id="tablaTCOwrap"></div>
+</section>
+
+<!-- ============ PASO 5: BENEFICIOS Y ROI ============ -->
+<section class="paso" data-paso="5">
+  <h2>Paso 5 · Beneficios, Métricas y Criterios de Éxito</h2>
+  <h3>Beneficios esperados <span class="tip" data-tip="Cuantifica cada beneficio en valor monetario mensual. Ej.: 40 h/mes ahorradas × $25/h = $1.000/mes.">?</span></h3>
+  <table id="tablaBeneficios">
+    <thead><tr><th style="width:38%">Beneficio</th><th>Categoría</th><th>Valor mensual ($)</th><th class="num">Valor anual ($)</th><th></th></tr></thead>
+    <tbody></tbody>
+    <tfoot><tr><td colspan="2">Total beneficios</td><td class="num" id="totBenefMes">—</td><td class="num" id="totBenefAnio">—</td><td></td></tr></tfoot>
+  </table>
+  <button class="btn-mini" onclick="agregarFila('beneficios')">＋ Agregar beneficio</button>
+  <button class="btn-mini gris" onclick="copiarTabla('tablaBeneficios')">⧉ Copiar tabla</button>
+
+  <div class="kpis">
+    <div class="kpi"><div class="etiqueta">ROI a <span class="refAnios">3</span> años</div><div class="valor" id="kpiROI5">—</div></div>
+    <div class="kpi"><div class="etiqueta">Período de recuperación</div><div class="valor" id="kpiPayback5">—</div></div>
+  </div>
+  <h3>Costos vs beneficios acumulados</h3>
+  <div class="lienzo"><canvas id="chartBeneficios"></canvas></div>
+
+  <h3>Criterios de éxito <span class="tip" data-tip="Criterios cuantitativos (KPIs medibles) y cualitativos (adopción, satisfacción) que definirán si el proyecto fue exitoso.">?</span></h3>
+  <div class="fila">
+    <div><label>Cuantitativos</label><textarea id="inExitoCuant" rows="3" placeholder="Ej.: Reducir tiempo de proceso 30%; disponibilidad ≥ 99,5%"></textarea></div>
+    <div><label>Cualitativos</label><textarea id="inExitoCual" rows="3" placeholder="Ej.: Adopción por el 90% de usuarios; satisfacción ≥ 4/5"></textarea></div>
+  </div>
+</section>
+
+<!-- ============ PASO 6: RIESGOS Y SENSIBILIDAD ============ -->
+<section class="paso" data-paso="6">
+  <h2>Paso 6 · Análisis de Riesgos y Sensibilidad</h2>
+  <h3>Tabla de riesgos</h3>
+  <table id="tablaRiesgos">
+    <thead><tr><th style="width:34%">Descripción</th><th>Probabilidad</th><th>Impacto</th><th style="width:30%">Mitigación</th><th class="num">Severidad</th><th></th></tr></thead>
+    <tbody></tbody>
+  </table>
+  <button class="btn-mini" onclick="agregarFila('riesgos')">＋ Agregar riesgo</button>
+  <button class="btn-mini gris" onclick="copiarTabla('tablaRiesgos')">⧉ Copiar tabla</button>
+
+  <h3>Matriz de riesgos (Probabilidad × Impacto)</h3>
+  <div class="matriz" id="matrizRiesgos"></div>
+
+  <h3>Análisis de sensibilidad <span class="tip" data-tip="Simula sobrecostos (+10/20/30%) y extensiones de cronograma (+1/2/3 meses) y recalcula ROI y recuperación.">?</span></h3>
+  <div class="lienzo"><canvas id="chartSensibilidad"></canvas></div>
+  <div id="tablaSensibilidadWrap"></div>
+</section>
+
+<!-- ============ PASO 7: DASHBOARD EJECUTIVO ============ -->
+<section class="paso" data-paso="7">
+  <h2>Paso 7 · Dashboard Ejecutivo y Resultados</h2>
+  <div class="kpis" id="kpisDashboard"></div>
+  <div class="fila">
+    <div class="solo-comparativa" style="flex:1;min-width:300px">
+      <h3>Comparativa de escenarios</h3>
+      <div class="lienzo"><canvas id="chartComparativa"></canvas></div>
+    </div>
+    <div style="flex:1;min-width:300px">
+      <h3>Timeline del proyecto</h3>
+      <div class="lienzo"><canvas id="chartTimeline"></canvas></div>
+    </div>
+  </div>
+  <h3>Impacto organizacional <span class="tip" data-tip="Resumen del efecto del proyecto sobre las personas, los procesos y la tecnología de la organización.">?</span></h3>
+  <textarea id="inImpacto" rows="3" placeholder="Ej.: Libera 2 FTE de tareas manuales; estandariza el proceso de aprobaciones; requiere capacitación de 50 usuarios."></textarea>
+  <h3>Recomendación</h3>
+  <div id="recomendacion"></div>
+  <h3>Resumen ejecutivo (1 página — use «Exportar PDF» para imprimirlo)</h3>
+  <div id="resumenEjecutivo"></div>
+</section>
+
+<!-- ============ PASO 8: ESCALABILIDAD ============ -->
+<section class="paso" data-paso="8">
+  <h2>Paso 8 · Escalabilidad y Extensión Futura</h2>
+  <h3>Módulos opcionales / futuros <span class="tip" data-tip="Funcionalidades fuera del alcance inicial. No afectan los cálculos del business case actual; son visibilidad de inversión futura.">?</span></h3>
+  <table id="tablaModulos">
+    <thead><tr><th style="width:30%">Módulo</th><th style="width:40%">Descripción</th><th>Costo estimado ($)</th><th>Horizonte sugerido</th><th></th></tr></thead>
+    <tbody></tbody>
+    <tfoot><tr><td colspan="2">Inversión futura potencial</td><td class="num" id="totModulos">—</td><td></td><td></td></tr></tfoot>
+  </table>
+  <button class="btn-mini" onclick="agregarFila('modulos')">＋ Agregar módulo</button>
+  <button class="btn-mini gris" onclick="copiarTabla('tablaModulos')">⧉ Copiar tabla</button>
+
+  <h3>Documentación de mantenimiento y extensión</h3>
+  <details open>
+    <summary>Cómo usar y mantener este archivo</summary>
+    <ul>
+      <li><b>Ejecución local:</b> guarde el archivo .html y ábralo con doble clic en cualquier navegador moderno. No necesita servidor, instalación ni API keys. La única conexión externa es la CDN de Chart.js para las gráficas.</li>
+      <li><b>Persistencia:</b> los datos se guardan automáticamente en el <code>localStorage</code> del navegador. Use <b>Exportar JSON</b> para respaldos portables e <b>Importar JSON</b> para restaurarlos (recomendado si abre el archivo en otro equipo o navegador).</li>
+      <li><b>Agregar requerimientos/fases/módulos:</b> use los botones «＋ Agregar». Todos los totales, gráficas, ROI y sensibilidad se recalculan automáticamente sin afectar los datos previos.</li>
+      <li><b>Exportar a PDF:</b> el botón «Exportar PDF» imprime únicamente el resumen ejecutivo con estilos de impresión (<code>@media print</code>).</li>
+      <li><b>Compatibilidad PowerPoint (PowerUp/Add-in):</b> al ser un HTML simple sin frameworks ni backend, puede incrustarse en un Add-in web de Office o mostrarse vía control WebView. Las tablas pueden copiarse al portapapeles («⧉ Copiar tabla») y pegarse directamente en diapositivas.</li>
+    </ul>
+  </details>
+  <details>
+    <summary>Cómo extender el código (para desarrolladores)</summary>
+    <ul>
+      <li>El estado completo vive en el objeto global <code>state</code> (ver <code>ESTADO_DEFECTO</code> en el script). Para agregar un campo nuevo: añádalo al estado por defecto, cree el input con un <code>id</code>, regístrelo en <code>CAMPOS_SIMPLES</code> y úselo dentro de <code>calcular()</code>.</li>
+      <li>Las tablas dinámicas se definen en <code>TABLAS</code>: cada entrada declara sus columnas y la función de render. Agregar una columna = modificar la plantilla de fila y el estado por defecto.</li>
+      <li>Toda la lógica financiera está centralizada en <code>calcular()</code>, que devuelve un único objeto con series mensuales, TCO, ROI, payback y break-even. Las gráficas solo leen ese objeto, de modo que cualquier cambio de fórmula se propaga a todas las vistas.</li>
+      <li>Convenciones: nombres en español descriptivos, sin dependencias adicionales, funciones puras para cálculo y funciones <code>render*</code> para DOM.</li>
+    </ul>
+  </details>
+</section>
+
+<div class="nav-inferior">
+  <button onclick="moverPaso(-1)">← Anterior</button>
+  <button onclick="moverPaso(1)">Siguiente →</button>
+</div>
+
+</main>
+
+<script>
+"use strict";
+/* ============================================================================
+   1. ESTADO Y PERSISTENCIA
+   ========================================================================== */
+const CLAVE_LS = "businessCaseTec_v1";
+
+/* Estado por defecto con datos de ejemplo editables */
+const ESTADO_DEFECTO = {
+  escenario: "comparativa",
+  nombre: "Plataforma de Gestión de Solicitudes",
+  descripcion: "Automatización del flujo de solicitudes internas para reducir tiempos de respuesta y errores manuales.",
+  duracion: 6, fases: 3, anios: 3,
+  distribucion: "proporcional",
+  porcentajesFases: [34, 33, 33],
+  mantModo: "porcentaje", mantValor: 15,
+  exitoCuant: "Reducir el tiempo promedio de atención de solicitudes en 30%. Disponibilidad ≥ 99,5%.",
+  exitoCual: "Adopción por el 90% de los usuarios en 3 meses. Satisfacción ≥ 4/5 en encuesta interna.",
+  impacto: "Libera ~2 FTE de tareas operativas, estandariza el proceso de aprobaciones y mejora la trazabilidad para auditoría.",
+  equipo: [
+    { rol: "Developer", personas: 2, dedicacion: 100, costoHora: 30 },
+    { rol: "Architect", personas: 1, dedicacion: 30, costoHora: 45 },
+    { rol: "QA", personas: 1, dedicacion: 50, costoHora: 22 },
+    { rol: "Project Manager", personas: 1, dedicacion: 40, costoHora: 38 },
+    { rol: "Analyst", personas: 1, dedicacion: 60, costoHora: 25 }
+  ],
+  reqFunc: [
+    { desc: "Módulo de registro y autenticación de usuarios", horas: 120, costoHora: 30 },
+    { desc: "Flujo de creación y aprobación de solicitudes", horas: 300, costoHora: 30 },
+    { desc: "Panel de reportes y tableros de seguimiento", horas: 180, costoHora: 30 },
+    { desc: "Notificaciones por correo y recordatorios", horas: 80, costoHora: 28 }
+  ],
+  reqTec: [
+    { desc: "Integración con ERP / sistema contable (API)", horas: 160, costoHora: 38 },
+    { desc: "Seguridad: SSO, cifrado y control de accesos", horas: 100, costoHora: 40 },
+    { desc: "Migración de datos históricos", horas: 90, costoHora: 32 },
+    { desc: "Infraestructura, despliegue y ambientes", horas: 70, costoHora: 35 }
+  ],
+  saas: [
+    { desc: "Setup e implementación inicial", tipo: "unico", valor: 12000 },
+    { desc: "Personalización y configuración", tipo: "unico", valor: 8000 },
+    { desc: "Capacitación de usuarios", tipo: "unico", valor: 3000 },
+    { desc: "Licencias (50 usuarios)", tipo: "anual", valor: 21000 }
+  ],
+  beneficios: [
+    { desc: "Ahorro de tiempo operativo (120 h/mes × $25)", cat: "Ahorro de tiempo", valorMes: 3000 },
+    { desc: "Reducción de errores y reprocesos", cat: "Reducción de errores", valorMes: 1200 },
+    { desc: "Mejora de eficiencia en aprobaciones", cat: "Eficiencia", valorMes: 900 }
+  ],
+  riesgos: [
+    { desc: "Retraso en la integración con el ERP", prob: "Media", imp: "Alto", mit: "Pruebas tempranas de API y plan de contingencia con carga manual." },
+    { desc: "Baja adopción de los usuarios", prob: "Media", imp: "Medio", mit: "Plan de gestión del cambio y capacitación por áreas." },
+    { desc: "Rotación de personal clave del equipo", prob: "Baja", imp: "Alto", mit: "Documentación continua y pares por rol crítico." }
+  ],
+  modulos: [
+    { nombre: "App móvil", desc: "Aprobaciones desde dispositivos móviles", costo: 25000, horizonte: "Año 2" },
+    { nombre: "Analítica avanzada", desc: "Predicción de demanda de solicitudes", costo: 18000, horizonte: "Año 3" }
+  ],
+  pasoActual: 1
+};
+
+let lsDisponible = true;       // bandera de disponibilidad de localStorage
+let state = cargarEstado();
+let charts = {};               // instancias Chart.js reutilizables
+
+function cargarEstado() {
+  try {
+    const crudo = localStorage.getItem(CLAVE_LS);
+    if (crudo) return Object.assign(estructuradoClon(ESTADO_DEFECTO), JSON.parse(crudo));
+  } catch (e) { lsDisponible = false; }
+  return estructuradoClon(ESTADO_DEFECTO);
+}
+function estructuradoClon(o) { return JSON.parse(JSON.stringify(o)); }
+
+let temporizadorGuardado = null;
+function guardar() {                                  /* guardado automático con debounce */
+  if (!lsDisponible) return;
+  clearTimeout(temporizadorGuardado);
+  temporizadorGuardado = setTimeout(() => {
+    try { localStorage.setItem(CLAVE_LS, JSON.stringify(state)); } catch (e) { lsDisponible = false; }
+  }, 300);
+}
+function guardarManual() {
+  try { localStorage.setItem(CLAVE_LS, JSON.stringify(state)); alert("✔ Datos guardados en este navegador."); }
+  catch (e) { alert("localStorage no disponible. Use «Exportar JSON» como respaldo."); }
+}
+function exportarJSON() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = (state.nombre || "business_case").replace(/\s+/g, "_") + "_datos.json";
+  a.click(); URL.revokeObjectURL(a.href);
+}
+function importarJSON(input) {
+  const f = input.files[0]; if (!f) return;
+  const lector = new FileReader();
+  lector.onload = e => {
+    try {
+      state = Object.assign(estructuradoClon(ESTADO_DEFECTO), JSON.parse(e.target.result));
+      guardar(); renderTodo();
+      alert("✔ Datos importados correctamente.");
+    } catch (err) { alert("Archivo JSON inválido: " + err.message); }
+  };
+  lector.readAsText(f); input.value = "";
+}
+function reiniciar() {
+  if (!confirm("¿Borrar todos los datos y restaurar el ejemplo inicial?")) return;
+  state = estructuradoClon(ESTADO_DEFECTO);
+  try { localStorage.removeItem(CLAVE_LS); } catch (e) {}
+  renderTodo();
+}
+
+/* ============================================================================
+   2. UTILIDADES
+   ========================================================================== */
+const fmt = v => "$" + Math.round(v).toLocaleString("es-CO");
+const num = v => { const n = parseFloat(v); return isFinite(n) ? n : 0; };
+const PESOS = { "Baja": 1, "Media": 2, "Alta": 3, "Bajo": 1, "Medio": 2, "Alto": 3 };
+const HORAS_MES = 160; /* horas laborales de referencia por mes */
+
+function copiarTabla(idTabla) {
+  /* Copia la tabla como texto tabulado: pegable en PowerPoint/Excel */
+  const filas = [...document.getElementById(idTabla).querySelectorAll("tr")].map(tr =>
+    [...tr.querySelectorAll("th,td")].map(c => {
+      const campo = c.querySelector("input,select,textarea");
+      return (campo ? campo.value : c.innerText).replace(/\s+/g, " ").trim();
+    }).join("\t")
+  ).join("\n");
+  (navigator.clipboard ? navigator.clipboard.writeText(filas) : Promise.reject())
+    .then(() => alert("✔ Tabla copiada al portapapeles."))
+    .catch(() => prompt("Copie manualmente (Ctrl+C):", filas));
+}
+
+/* ============================================================================
+   3. MOTOR DE CÁLCULO — toda la lógica financiera centralizada
+   ========================================================================== */
+function calcular(opciones = {}) {
+  const factorCosto = opciones.factorCosto || 1;     // sensibilidad: 1.1, 1.2, 1.3
+  const mesesExtra = opciones.mesesExtra || 0;       // sensibilidad: +1, +2, +3
+  const dur = Math.max(1, Math.round(num(state.duracion))) + mesesExtra;
+  const anios = num(state.anios) || 3;
+  const horizonte = dur + anios * 12;                // meses totales analizados
+
+  /* --- Costos base --- */
+  const totFunc = state.reqFunc.reduce((s, r) => s + num(r.horas) * num(r.costoHora), 0);
+  const totTec  = state.reqTec.reduce((s, r) => s + num(r.horas) * num(r.costoHora), 0);
+  const totalInterno = (totFunc + totTec) * factorCosto;
+  const saasUnico = state.saas.filter(i => i.tipo === "unico").reduce((s, i) => s + num(i.valor), 0) * factorCosto;
+  const saasAnual = state.saas.filter(i => i.tipo === "anual").reduce((s, i) => s + num(i.valor), 0);
+
+  /* --- Mantenimiento anual interno (% del total o valor fijo) --- */
+  const mantAnual = state.mantModo === "porcentaje"
+    ? totalInterno * num(state.mantValor) / 100
+    : num(state.mantValor);
+
+  /* --- Distribución por fases --- */
+  const nFases = Math.max(1, Math.round(num(state.fases)));
+  let pct = [];
+  if (state.distribucion === "manual" && state.porcentajesFases.length) {
+    for (let i = 0; i < nFases; i++) pct.push(num(state.porcentajesFases[i] || 0));
+  } else {
+    for (let i = 0; i < nFases; i++) pct.push(100 / nFases);
+  }
+  const sumaPct = pct.reduce((a, b) => a + b, 0) || 1;
+  /* Meses por fase: reparto equitativo, el resto a las primeras fases */
+  const mesesFase = Array.from({ length: nFases }, (_, i) =>
+    Math.floor(dur / nFases) + (i < dur % nFases ? 1 : 0));
+
+  /* --- Series mensuales acumuladas --- */
+  const cumInterno = [], cumSaaS = [], cumBenef = [], etiquetas = [];
+  let accI = 0, accS = 0, accB = 0, mesGlobal = 0;
+  const costoMesFase = [];
+  mesesFase.forEach((m, f) => {
+    const costoFase = totalInterno * pct[f] / sumaPct;
+    for (let k = 0; k < m; k++) costoMesFase.push(m > 0 ? costoFase / m : 0);
+  });
+  for (let m = 1; m <= horizonte; m++) {
+    mesGlobal = m;
+    accI += m <= dur ? (costoMesFase[m - 1] || 0) : mantAnual / 12;          // interno: dev + mantenimiento
+    accS += (m === 1 ? saasUnico : 0) + saasAnual / 12 * factorCosto;        // saas: setup + licencias
+    accB += m > dur ? benefMes() : 0;                                        // beneficios tras go-live
+    cumInterno.push(accI); cumSaaS.push(accS); cumBenef.push(accB);
+    etiquetas.push("M" + m);
+  }
+  function benefMes() { return state.beneficios.reduce((s, b) => s + num(b.valorMes), 0); }
+  const beneficioMensual = benefMes();
+  const beneficiosTotales = beneficioMensual * anios * 12;
+
+  /* --- Serie del escenario principal (para ROI y payback) --- */
+  const esSaaS = state.escenario === "saas";
+  const cumPrincipal = esSaaS ? cumSaaS : cumInterno;
+
+  /* --- TCO por año (año 0 = inversión inicial) --- */
+  const tcoInterno = [], tcoSaaS = [];
+  for (let y = 0; y <= anios; y++) {
+    tcoInterno.push(totalInterno + mantAnual * y);
+    tcoSaaS.push(saasUnico + saasAnual * factorCosto * (y + dur / 12)); // licencias también durante implementación
+  }
+  const tcoPrincipal = esSaaS ? tcoSaaS[anios] : tcoInterno[anios];
+
+  /* --- ROI = (Beneficios − Costo Total) / Costo Total × 100, sobre el TCO del horizonte --- */
+  const roi = tcoPrincipal > 0 ? (beneficiosTotales - tcoPrincipal) / tcoPrincipal * 100 : 0;
+  const roiInterno = tcoInterno[anios] > 0 ? (beneficiosTotales - tcoInterno[anios]) / tcoInterno[anios] * 100 : 0;
+  const roiSaaS = tcoSaaS[anios] > 0 ? (beneficiosTotales - tcoSaaS[anios]) / tcoSaaS[anios] * 100 : 0;
+
+  /* --- Payback: primer mes con beneficios acumulados ≥ inversión acumulada --- */
+  let payback = null;
+  for (let m = 0; m < horizonte; m++) {
+    if (cumBenef[m] >= cumPrincipal[m] && cumBenef[m] > 0) { payback = m + 1; break; }
+  }
+
+  /* --- Break-even SaaS vs Interno: mes donde el interno se vuelve más barato --- */
+  let breakEven = null;
+  for (let m = 0; m < horizonte; m++) {
+    if (cumInterno[m] <= cumSaaS[m]) { breakEven = m + 1; break; }
+  }
+
+  /* --- Riesgo general: promedio de Probabilidad × Impacto (1-9) --- */
+  const sev = state.riesgos.map(r => (PESOS[r.prob] || 1) * (PESOS[r.imp] || 1));
+  const sevProm = sev.length ? sev.reduce((a, b) => a + b, 0) / sev.length : 0;
+  const nivelRiesgo = sevProm >= 6 ? "Alto" : sevProm >= 3 ? "Medio" : "Bajo";
+
+  const inversionInicial = esSaaS ? saasUnico : totalInterno;
+  const mantPrincipal = esSaaS ? saasAnual : mantAnual;
+
+  return { dur, anios, horizonte, totFunc, totTec, totalInterno, saasUnico, saasAnual,
+    mantAnual, pct, sumaPct, mesesFase, etiquetas, cumInterno, cumSaaS, cumBenef,
+    beneficioMensual, beneficiosTotales, tcoInterno, tcoSaaS, roi, roiInterno, roiSaaS,
+    payback, breakEven, sevProm, nivelRiesgo, inversionInicial, mantPrincipal, esSaaS };
+}
+
+/* ============================================================================
+   4. TABLAS DINÁMICAS — definición declarativa
+   ========================================================================== */
+const TABLAS = {
+  equipo: {
+    idTabla: "tablaEquipo",
+    nuevo: () => ({ rol: "Nuevo rol", personas: 1, dedicacion: 100, costoHora: 25 }),
+    fila: (r, i) => `
+      <td><input value="${esc(r.rol)}" oninput="setCampoFila('equipo',${i},'rol',this.value)"></td>
+      <td><input type="number" min="0" value="${r.personas}" oninput="setCampoFila('equipo',${i},'personas',this.value)"></td>
+      <td><input type="number" min="0" max="100" value="${r.dedicacion}" oninput="setCampoFila('equipo',${i},'dedicacion',this.value)"></td>
+      <td><input type="number" min="0" value="${r.costoHora}" oninput="setCampoFila('equipo',${i},'costoHora',this.value)"></td>
+      <td class="num celda-calc">${fmt(num(r.personas) * num(r.dedicacion) / 100 * num(r.costoHora) * HORAS_MES)}</td>
+      <td><button class="btn-mini rojo" onclick="quitarFila('equipo',${i})">✕</button></td>`
+  },
+  reqFunc: {
+    idTabla: "tablaReqFunc",
+    nuevo: () => ({ desc: "Nuevo requerimiento", horas: 40, costoHora: 30 }),
+    fila: (r, i) => filaRequerimiento("reqFunc", r, i)
+  },
+  reqTec: {
+    idTabla: "tablaReqTec",
+    nuevo: () => ({ desc: "Nueva consideración técnica", horas: 40, costoHora: 35 }),
+    fila: (r, i) => filaRequerimiento("reqTec", r, i)
+  },
+  saas: {
+    idTabla: "tablaSaas",
+    nuevo: () => ({ desc: "Nuevo concepto", tipo: "anual", valor: 1000 }),
+    fila: (r, i) => `
+      <td><input value="${esc(r.desc)}" oninput="setCampoFila('saas',${i},'desc',this.value)"></td>
+      <td><select onchange="setCampoFila('saas',${i},'tipo',this.value)">
+        <option value="unico" ${r.tipo === "unico" ? "selected" : ""}>Único</option>
+        <option value="anual" ${r.tipo === "anual" ? "selected" : ""}>Anual recurrente</option></select></td>
+      <td><input type="number" min="0" value="${r.valor}" oninput="setCampoFila('saas',${i},'valor',this.value)"></td>
+      <td class="num celda-calc">${r.tipo === "anual" ? fmt(num(r.valor)) : "—"}</td>
+      <td><button class="btn-mini rojo" onclick="quitarFila('saas',${i})">✕</button></td>`
+  },
+  beneficios: {
+    idTabla: "tablaBeneficios",
+    nuevo: () => ({ desc: "Nuevo beneficio", cat: "Otro", valorMes: 500 }),
+    fila: (r, i) => `
+      <td><input value="${esc(r.desc)}" oninput="setCampoFila('beneficios',${i},'desc',this.value)"></td>
+      <td><select onchange="setCampoFila('beneficios',${i},'cat',this.value)">
+        ${["Ahorro de tiempo","Reducción de errores","Ingresos adicionales","Eficiencia","Otro"]
+          .map(c => `<option ${c === r.cat ? "selected" : ""}>${c}</option>`).join("")}</select></td>
+      <td><input type="number" min="0" value="${r.valorMes}" oninput="setCampoFila('beneficios',${i},'valorMes',this.value)"></td>
+      <td class="num celda-calc">${fmt(num(r.valorMes) * 12)}</td>
+      <td><button class="btn-mini rojo" onclick="quitarFila('beneficios',${i})">✕</button></td>`
+  },
+  riesgos: {
+    idTabla: "tablaRiesgos",
+    nuevo: () => ({ desc: "Nuevo riesgo", prob: "Media", imp: "Medio", mit: "" }),
+    fila: (r, i) => {
+      const s = (PESOS[r.prob] || 1) * (PESOS[r.imp] || 1);
+      const color = s >= 6 ? "var(--rojo)" : s >= 3 ? "var(--ambar)" : "var(--verde)";
+      return `
+      <td><input value="${esc(r.desc)}" oninput="setCampoFila('riesgos',${i},'desc',this.value)"></td>
+      <td><select onchange="setCampoFila('riesgos',${i},'prob',this.value)">
+        ${["Alta","Media","Baja"].map(p => `<option ${p === r.prob ? "selected" : ""}>${p}</option>`).join("")}</select></td>
+      <td><select onchange="setCampoFila('riesgos',${i},'imp',this.value)">
+        ${["Alto","Medio","Bajo"].map(p => `<option ${p === r.imp ? "selected" : ""}>${p}</option>`).join("")}</select></td>
+      <td><input value="${esc(r.mit)}" oninput="setCampoFila('riesgos',${i},'mit',this.value)"></td>
+      <td class="num"><span class="pildora" style="background:${color}">${s}</span></td>
+      <td><button class="btn-mini rojo" onclick="quitarFila('riesgos',${i})">✕</button></td>`;
+    }
+  },
+  modulos: {
+    idTabla: "tablaModulos",
+    nuevo: () => ({ nombre: "Nuevo módulo", desc: "", costo: 10000, horizonte: "Año 2" }),
+    fila: (r, i) => `
+      <td><input value="${esc(r.nombre)}" oninput="setCampoFila('modulos',${i},'nombre',this.value)"></td>
+      <td><input value="${esc(r.desc)}" oninput="setCampoFila('modulos',${i},'desc',this.value)"></td>
+      <td><input type="number" min="0" value="${r.costo}" oninput="setCampoFila('modulos',${i},'costo',this.value)"></td>
+      <td><input value="${esc(r.horizonte)}" oninput="setCampoFila('modulos',${i},'horizonte',this.value)"></td>
+      <td><button class="btn-mini rojo" onclick="quitarFila('modulos',${i})">✕</button></td>`
+  }
+};
+function filaRequerimiento(lista, r, i) {
+  return `
+    <td><input value="${esc(r.desc)}" oninput="setCampoFila('${lista}',${i},'desc',this.value)"></td>
+    <td><input type="number" min="0" value="${r.horas}" oninput="setCampoFila('${lista}',${i},'horas',this.value)"></td>
+    <td><input type="number" min="0" value="${r.costoHora}" oninput="setCampoFila('${lista}',${i},'costoHora',this.value)"></td>
+    <td class="num celda-calc">${fmt(num(r.horas) * num(r.costoHora))}</td>
+    <td><button class="btn-mini rojo" onclick="quitarFila('${lista}',${i})">✕</button></td>`;
+}
+function esc(t) { return String(t == null ? "" : t).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;"); }
+
+function renderTabla(nombre) {
+  const def = TABLAS[nombre];
+  const cuerpo = document.querySelector("#" + def.idTabla + " tbody");
+  cuerpo.innerHTML = state[nombre].map((r, i) => `<tr>${def.fila(r, i)}</tr>`).join("");
+}
+function agregarFila(nombre) { state[nombre].push(TABLAS[nombre].nuevo()); renderTabla(nombre); recalcular(); }
+function quitarFila(nombre, i) { state[nombre].splice(i, 1); renderTabla(nombre); recalcular(); }
+function setCampoFila(nombre, i, campo, valor) {
+  state[nombre][i][campo] = valor;
+  /* Solo se actualizan las celdas calculadas de la fila para no perder el foco */
+  const tr = document.querySelectorAll("#" + TABLAS[nombre].idTabla + " tbody tr")[i];
+  const tmp = document.createElement("tr"); tmp.innerHTML = TABLAS[nombre].fila(state[nombre][i], i);
+  const nuevas = tmp.querySelectorAll(".celda-calc, .pildora");
+  tr.querySelectorAll(".celda-calc, .pildora").forEach((c, k) => { if (nuevas[k]) c.outerHTML = nuevas[k].outerHTML; });
+  recalcular();
+}
+
+/* ============================================================================
+   5. CAMPOS SIMPLES (inputs ↔ estado)
+   ========================================================================== */
+const CAMPOS_SIMPLES = [
+  ["inEscenario", "escenario"], ["inNombre", "nombre"], ["inDescripcion", "descripcion"],
+  ["inDuracion", "duracion"], ["inFases", "fases"], ["inAnios", "anios"],
+  ["inDistribucion", "distribucion"], ["inMantModo", "mantModo"], ["inMantValor", "mantValor"],
+  ["inExitoCuant", "exitoCuant"], ["inExitoCual", "exitoCual"], ["inImpacto", "impacto"]
+];
+function enlazarCampos() {
+  CAMPOS_SIMPLES.forEach(([id, clave]) => {
+    const el = document.getElementById(id);
+    el.value = state[clave];
+    el.addEventListener("input", () => {
+      state[clave] = el.value;
+      if (id === "inEscenario") aplicarEscenario();
+      if (id === "inFases" || id === "inDistribucion") renderFases();
+      recalcular();
+    });
+  });
+}
+
+/* Visibilidad condicional según escenario: clases solo-interno / solo-saas / solo-comparativa */
+function aplicarEscenario() {
+  const e = state.escenario;
+  document.querySelectorAll(".solo-interno,.solo-saas,.solo-comparativa").forEach(el => {
+    const ok = (e === "comparativa" && el.classList.contains("solo-comparativa")) ||
+               (e === "interno" && el.classList.contains("solo-interno")) ||
+               (e === "saas" && el.classList.contains("solo-saas"));
+    el.style.display = ok ? "" : "none";
+  });
+}
+
+/* ============================================================================
+   6. FASES (distribución manual)
+   ========================================================================== */
+function renderFases() {
+  const zona = document.getElementById("zonaFases");
+  const n = Math.max(1, Math.round(num(state.fases)));
+  while (state.porcentajesFases.length < n) state.porcentajesFases.push(0);
+  state.porcentajesFases.length = n;
+  if (state.distribucion !== "manual") { zona.innerHTML = ""; return; }
+  zona.innerHTML = "<h3>Porcentaje de inversión por fase</h3><div class='fila'>" +
+    state.porcentajesFases.map((p, i) =>
+      `<div><label>Fase ${i + 1} (%)</label>
+       <input type="number" min="0" max="100" value="${p}" oninput="setPctFase(${i},this.value)"></div>`).join("") +
+    "</div>";
+}
+function setPctFase(i, v) { state.porcentajesFases[i] = num(v); recalcular(); }
+
+/* ============================================================================
+   7. GRÁFICAS (Chart.js) — creación/actualización idempotente
+   ========================================================================== */
+const COLORES = { interno: "#16395f", saas: "#2563a8", benef: "#2e7d32", alerta: "#c62828", gris: "#5a6472", claro: "#7da7d9" };
+function dibujar(id, config) {
+  if (typeof Chart === "undefined") return;          // CDN no disponible: la app sigue funcionando sin gráficas
+  if (charts[id]) { charts[id].data = config.data; charts[id].options = config.options || charts[id].options; charts[id].update(); return; }
+  charts[id] = new Chart(document.getElementById(id), config);
+}
+const opcionesBase = titulo => ({
+  responsive: true, maintainAspectRatio: false,
+  plugins: {
+    title: { display: !!titulo, text: titulo },
+    tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${fmt(c.parsed.y)}` } },
+    legend: { position: "bottom" }
+  },
+  scales: { y: { ticks: { callback: v => "$" + (v >= 1000 ? (v / 1000) + "k" : v) } } }
+});
+
+function renderGraficas(c) {
+  const e = state.escenario;
+  /* --- Curva de inversión acumulada (Paso 3) --- */
+  const dsInv = [];
+  if (e !== "saas") dsInv.push({ label: "Desarrollo Interno", data: c.cumInterno, borderColor: COLORES.interno, backgroundColor: "rgba(22,57,95,.12)", fill: true, pointRadius: 0, tension: .2 });
+  if (e !== "interno") dsInv.push({ label: "SaaS", data: c.cumSaaS, borderColor: COLORES.saas, backgroundColor: "rgba(37,99,168,.10)", fill: true, pointRadius: 0, tension: .2 });
+  dibujar("chartInversion", { type: "line", data: { labels: c.etiquetas, datasets: dsInv }, options: opcionesBase("Inversión acumulada mes a mes") });
+
+  /* --- TCO (Paso 4) --- */
+  const lblAnios = Array.from({ length: c.anios + 1 }, (_, y) => "Año " + y);
+  const dsTCO = [];
+  if (e !== "saas") dsTCO.push({ label: "TCO Interno", data: c.tcoInterno, borderColor: COLORES.interno, backgroundColor: COLORES.interno, type: "line", tension: .2 });
+  if (e !== "interno") dsTCO.push({ label: "TCO SaaS", data: c.tcoSaaS, borderColor: COLORES.saas, backgroundColor: COLORES.saas, type: "line", tension: .2 });
+  dibujar("chartTCO", { type: "line", data: { labels: lblAnios, datasets: dsTCO }, options: opcionesBase("Costo Total de Propiedad (TCO)") });
+
+  /* --- Costos vs beneficios (Paso 5) --- */
+  dibujar("chartBeneficios", { type: "line", data: { labels: c.etiquetas, datasets: [
+    { label: "Costo acumulado", data: c.esSaaS ? c.cumSaaS : c.cumInterno, borderColor: COLORES.alerta, pointRadius: 0, tension: .2 },
+    { label: "Beneficios acumulados", data: c.cumBenef, borderColor: COLORES.benef, pointRadius: 0, tension: .2 }
+  ] }, options: opcionesBase("Costos vs beneficios acumulados") });
+
+  /* --- Sensibilidad (Paso 6) --- */
+  const escenariosSens = [
+    { nombre: "Base", op: {} },
+    { nombre: "+10% costo", op: { factorCosto: 1.1 } },
+    { nombre: "+20% costo", op: { factorCosto: 1.2 } },
+    { nombre: "+30% costo", op: { factorCosto: 1.3 } },
+    { nombre: "+1 mes", op: { mesesExtra: 1 } },
+    { nombre: "+2 meses", op: { mesesExtra: 2 } },
+    { nombre: "+3 meses", op: { mesesExtra: 3 } }
+  ].map(s => ({ ...s, r: calcular(s.op) }));
+  dibujar("chartSensibilidad", { type: "bar", data: {
+    labels: escenariosSens.map(s => s.nombre),
+    datasets: [{ label: "ROI (%)", data: escenariosSens.map(s => s.r.roi),
+      backgroundColor: escenariosSens.map(s => s.r.roi < 0 ? COLORES.alerta : s.r.roi < 30 ? "#ef6c00" : COLORES.benef) }]
+  }, options: { responsive: true, maintainAspectRatio: false,
+      plugins: { title: { display: true, text: "ROI bajo escenarios de sensibilidad" }, legend: { display: false },
+        tooltip: { callbacks: { label: ctx => " ROI: " + ctx.parsed.y.toFixed(1) + "%" } } },
+      scales: { y: { ticks: { callback: v => v + "%" } } } } });
+  document.getElementById("tablaSensibilidadWrap").innerHTML = `
+    <table><thead><tr><th>Escenario</th><th class="num">ROI</th><th class="num">Recuperación</th><th class="num">Break-even SaaS/Interno</th></tr></thead>
+    <tbody>${escenariosSens.map(s => `<tr><td>${s.nombre}</td>
+      <td class="num" style="color:${s.r.roi < 0 ? "var(--rojo)" : "inherit"}">${s.r.roi.toFixed(1)}%</td>
+      <td class="num">${s.r.payback ? "Mes " + s.r.payback : "No se recupera en el horizonte"}</td>
+      <td class="num">${state.escenario === "comparativa" ? (s.r.breakEven ? "Mes " + s.r.breakEven : "—") : "n/a"}</td></tr>`).join("")}</tbody></table>`;
+
+  /* --- Comparativa dashboard (Paso 7) --- */
+  if (e === "comparativa") {
+    dibujar("chartComparativa", { type: "bar", data: {
+      labels: ["Inversión inicial", `TCO a ${c.anios} años`],
+      datasets: [
+        { label: "Desarrollo Interno", data: [c.totalInterno, c.tcoInterno[c.anios]], backgroundColor: COLORES.interno },
+        { label: "SaaS", data: [c.saasUnico, c.tcoSaaS[c.anios]], backgroundColor: COLORES.claro }
+      ] }, options: opcionesBase("Interno vs SaaS") });
+  }
+
+  /* --- Timeline de fases (Paso 7): barras horizontales apiladas --- */
+  let inicio = 0;
+  const fasesDS = c.mesesFase.map((m, i) => {
+    const ds = { label: `Fase ${i + 1} (${m} mes${m === 1 ? "" : "es"} · ${(c.pct[i] / c.sumaPct * 100).toFixed(0)}%)`,
+      data: [m], base: inicio, backgroundColor: ["#16395f", "#2563a8", "#7da7d9", "#5a6472", "#0d2440", "#90a4ae"][i % 6] };
+    inicio += m; return ds;
+  });
+  dibujar("chartTimeline", { type: "bar", data: { labels: [state.nombre || "Proyecto"], datasets: fasesDS },
+    options: { indexAxis: "y", responsive: true, maintainAspectRatio: false,
+      plugins: { title: { display: true, text: "Fases del proyecto (meses)" }, legend: { position: "bottom" },
+        tooltip: { callbacks: { label: ctx => " " + ctx.dataset.label } } },
+      scales: { x: { stacked: false, title: { display: true, text: "Mes" } }, y: { stacked: true } } } });
+}
+
+/* ============================================================================
+   8. MATRIZ DE RIESGOS
+   ========================================================================== */
+function renderMatriz() {
+  const niveles = ["Alta", "Media", "Baja"];
+  const impactos = ["Bajo", "Medio", "Alto"];
+  const colores = { 1: "#7da7d9", 2: "#5a8fc4", 3: "#ef9a3c", 4: "#ef6c00", 6: "#e05252", 9: "#c62828" };
+  let html = "";
+  niveles.forEach(p => {
+    html += `<div class="eje">Prob. ${p}</div>`;
+    impactos.forEach(imp => {
+      const s = PESOS[p] * PESOS[imp];
+      const items = state.riesgos.filter(r => r.prob === p && r.imp === imp)
+        .map(r => `<span class="riesgo-tag">${esc(r.desc).slice(0, 42)}${r.desc.length > 42 ? "…" : ""}</span>`).join("");
+      html += `<div class="celda" style="background:${colores[s] || "#5a8fc4"}"><b>${s}</b>${items}</div>`;
+    });
+  });
+  html += `<div class="eje"></div>` + impactos.map(i => `<div class="eje">Impacto ${i}</div>`).join("");
+  document.getElementById("matrizRiesgos").innerHTML = html;
+}
+
+/* ============================================================================
+   9. DASHBOARD, RECOMENDACIÓN Y RESUMEN EJECUTIVO
+   ========================================================================== */
+function renderDashboard(c) {
+  const claseRiesgo = c.nivelRiesgo === "Alto" ? "alerta" : c.nivelRiesgo === "Medio" ? "medio" : "ok";
+  const claseROI = c.roi < 0 ? "alerta" : c.roi < 30 ? "medio" : "ok";
+  document.getElementById("kpisDashboard").innerHTML = `
+    <div class="kpi"><div class="etiqueta">Inversión total inicial</div><div class="valor">${fmt(c.inversionInicial)}</div></div>
+    <div class="kpi ${claseROI}"><div class="etiqueta">ROI a ${c.anios} años</div><div class="valor">${c.roi.toFixed(1)}%</div></div>
+    <div class="kpi"><div class="etiqueta">Período de recuperación</div><div class="valor">${c.payback ? "Mes " + c.payback : "—"}</div></div>
+    <div class="kpi"><div class="etiqueta">Mantenimiento anual</div><div class="valor">${fmt(c.mantPrincipal)}</div></div>
+    <div class="kpi ${claseRiesgo}"><div class="etiqueta">Nivel de riesgo general</div><div class="valor">${c.nivelRiesgo}</div></div>`;
+
+  /* Recomendación: combina ROI, recuperación dentro del horizonte y riesgo */
+  let decision, color, razon;
+  const recuperaEnHorizonte = c.payback && c.payback <= c.horizonte;
+  if (c.roi >= 30 && recuperaEnHorizonte && c.nivelRiesgo !== "Alto") {
+    decision = "✔ PROCEDER"; color = "var(--verde)";
+    razon = `El proyecto presenta un ROI de ${c.roi.toFixed(1)}% a ${c.anios} años, recuperación de la inversión en el mes ${c.payback} y nivel de riesgo ${c.nivelRiesgo.toLowerCase()}.`;
+  } else if (c.roi >= 0 && recuperaEnHorizonte) {
+    decision = "⚠ REVISAR"; color = "var(--ambar)";
+    razon = `El ROI (${c.roi.toFixed(1)}%) es positivo pero moderado o el riesgo es ${c.nivelRiesgo.toLowerCase()}. Se sugiere optimizar costos, reforzar mitigaciones o renegociar alcance antes de aprobar.`;
+  } else {
+    decision = "✖ RECHAZAR / REPLANTEAR"; color = "var(--rojo)";
+    razon = `Con los datos actuales ${c.roi < 0 ? "el ROI es negativo (" + c.roi.toFixed(1) + "%)" : "la inversión no se recupera dentro del horizonte de " + c.anios + " años"}. Replantear alcance, beneficios o alternativa de implementación.`;
+  }
+  let comp = "";
+  if (state.escenario === "comparativa") {
+    const dif = c.tcoSaaS[c.anios] - c.tcoInterno[c.anios];
+    comp = dif > 0
+      ? ` En el horizonte de ${c.anios} años, el desarrollo interno resulta ${fmt(Math.abs(dif))} más económico que SaaS${c.breakEven ? " (break-even en el mes " + c.breakEven + ")" : ""}.`
+      : ` En el horizonte de ${c.anios} años, la alternativa SaaS resulta ${fmt(Math.abs(dif))} más económica que el desarrollo interno.`;
+  }
+  document.getElementById("recomendacion").innerHTML =
+    `<div style="border-left:6px solid ${color};background:var(--gris-100);padding:14px;border-radius:0 8px 8px 0">
+     <span class="pildora" style="background:${color}">${decision}</span><p>${razon}${comp}</p></div>`;
+
+  renderResumen(c, decision, razon + comp);
+}
+
+function renderResumen(c, decision, razon) {
+  const hoy = new Date().toLocaleDateString("es-CO", { year: "numeric", month: "long", day: "numeric" });
+  const nombreEsc = { comparativa: "SaaS vs Desarrollo Interno", interno: "Desarrollo Interno", saas: "Implementación SaaS" }[state.escenario];
+  const topRiesgos = [...state.riesgos]
+    .sort((a, b) => PESOS[b.prob] * PESOS[b.imp] - PESOS[a.prob] * PESOS[a.imp]).slice(0, 3);
+  document.getElementById("resumenEjecutivo").innerHTML = `
+    <h2 style="border:none">${esc(state.nombre) || "Proyecto"} — Resumen Ejecutivo</h2>
+    <p style="color:var(--gris-600);margin-top:-6px">${hoy} · Escenario: ${nombreEsc} · Horizonte: ${c.anios} años</p>
+    <p>${esc(state.descripcion)}</p>
+    <table>
+      <tr><th>Indicador</th><th>Valor</th><th>Indicador</th><th>Valor</th></tr>
+      <tr><td>Inversión inicial</td><td class="num"><b>${fmt(c.inversionInicial)}</b></td>
+          <td>ROI a ${c.anios} años</td><td class="num"><b>${c.roi.toFixed(1)}%</b></td></tr>
+      <tr><td>Duración</td><td class="num">${c.dur} meses · ${state.fases} fases</td>
+          <td>Recuperación</td><td class="num">${c.payback ? "Mes " + c.payback : "No se recupera en horizonte"}</td></tr>
+      <tr><td>Mantenimiento anual</td><td class="num">${fmt(c.mantPrincipal)}</td>
+          <td>TCO a ${c.anios} años</td><td class="num">${fmt(c.esSaaS ? c.tcoSaaS[c.anios] : c.tcoInterno[c.anios])}</td></tr>
+      <tr><td>Beneficio mensual estimado</td><td class="num">${fmt(c.beneficioMensual)}</td>
+          <td>Nivel de riesgo</td><td class="num">${c.nivelRiesgo}</td></tr>
+      ${state.escenario === "comparativa" ? `<tr><td>TCO Interno vs SaaS (${c.anios} años)</td>
+        <td class="num">${fmt(c.tcoInterno[c.anios])} vs ${fmt(c.tcoSaaS[c.anios])}</td>
+        <td>Break-even Interno/SaaS</td><td class="num">${c.breakEven ? "Mes " + c.breakEven : "—"}</td></tr>` : ""}
+    </table>
+    <h3>Principales riesgos</h3>
+    <ul>${topRiesgos.map(r => `<li><b>${esc(r.desc)}</b> (P: ${r.prob}, I: ${r.imp}) — ${esc(r.mit)}</li>`).join("") || "<li>Sin riesgos registrados.</li>"}</ul>
+    <h3>Impacto organizacional</h3><p>${esc(state.impacto) || "—"}</p>
+    <h3>Criterios de éxito</h3>
+    <p><b>Cuantitativos:</b> ${esc(state.exitoCuant) || "—"}<br><b>Cualitativos:</b> ${esc(state.exitoCual) || "—"}</p>
+    <h3>Recomendación</h3><p><b>${decision}</b> — ${razon}</p>`;
+}
+
+/* ============================================================================
+   10. RECÁLCULO GENERAL
+   ========================================================================== */
+function recalcular() {
+  const c = calcular();
+
+  /* Totales de tablas */
+  const totEquipoMes = state.equipo.reduce((s, r) => s + num(r.personas) * num(r.dedicacion) / 100 * num(r.costoHora) * HORAS_MES, 0);
+  document.getElementById("totEquipo").textContent = fmt(totEquipoMes) + " /mes";
+  document.getElementById("totReqFunc").textContent = fmt(c.totFunc);
+  document.getElementById("totReqTec").textContent = fmt(c.totTec);
+  document.getElementById("totInterno").textContent = fmt(c.totFunc + c.totTec);
+  document.getElementById("totSaasUnico").textContent = fmt(c.saasUnico);
+  document.getElementById("totSaasAnual").textContent = fmt(c.saasAnual) + " /año";
+  document.getElementById("refSaasAnual").textContent = fmt(c.saasAnual) + " /año";
+  document.getElementById("totBenefMes").textContent = fmt(c.beneficioMensual);
+  document.getElementById("totBenefAnio").textContent = fmt(c.beneficioMensual * 12);
+  document.getElementById("totModulos").textContent = fmt(state.modulos.reduce((s, m) => s + num(m.costo), 0));
+  document.querySelectorAll(".refAnios").forEach(el => el.textContent = c.anios);
+
+  /* Mantenimiento */
+  document.getElementById("lblMantUnidad").textContent = state.mantModo === "porcentaje" ? "%" : "$";
+  document.getElementById("outMantAnual").value = fmt(c.mantAnual) + " /año";
+
+  /* Aviso de % de fases */
+  const aviso = document.getElementById("avisoFases");
+  if (state.distribucion === "manual" && Math.abs(c.sumaPct - 100) > 0.5) {
+    aviso.innerHTML = `<div class="alerta-roja">⚠ Los porcentajes de fase suman ${c.sumaPct.toFixed(1)}%. Se normalizan automáticamente, pero se recomienda que sumen 100%.</div>`;
+  } else aviso.innerHTML = "";
+
+  /* Break-even (Paso 3) */
+  const be = document.getElementById("textoBreakEven");
+  if (state.escenario === "comparativa") {
+    be.innerHTML = c.breakEven
+      ? `<b>Punto de equilibrio:</b> a partir del <b>mes ${c.breakEven}</b> el costo acumulado del desarrollo interno es menor o igual al de la alternativa SaaS.`
+      : `<b>Punto de equilibrio:</b> dentro del horizonte analizado (${c.horizonte} meses) el desarrollo interno no llega a ser más económico que SaaS.`;
+  } else {
+    be.innerHTML = c.payback
+      ? `<b>Recuperación de la inversión:</b> los beneficios acumulados igualan la inversión en el <b>mes ${c.payback}</b>.`
+      : `<b>Recuperación de la inversión:</b> no se alcanza dentro del horizonte de ${c.horizonte} meses.`;
+  }
+
+  /* KPIs del paso 5 */
+  document.getElementById("kpiROI5").textContent = c.roi.toFixed(1) + "%";
+  document.getElementById("kpiPayback5").textContent = c.payback ? "Mes " + c.payback : "—";
+
+  /* Tabla TCO */
+  document.getElementById("tablaTCOwrap").innerHTML = `
+    <table><thead><tr><th>Año</th>
+      ${state.escenario !== "saas" ? "<th class='num'>TCO Interno</th>" : ""}
+      ${state.escenario !== "interno" ? "<th class='num'>TCO SaaS</th>" : ""}</tr></thead>
+    <tbody>${c.tcoInterno.map((_, y) => `<tr><td>Año ${y}</td>
+      ${state.escenario !== "saas" ? `<td class="num">${fmt(c.tcoInterno[y])}</td>` : ""}
+      ${state.escenario !== "interno" ? `<td class="num">${fmt(c.tcoSaaS[y])}</td>` : ""}</tr>`).join("")}</tbody></table>`;
+
+  renderMatriz();
+  renderGraficas(c);
+  renderDashboard(c);
+  guardar();
+}
+
+/* ============================================================================
+   11. NAVEGACIÓN ENTRE PASOS
+   ========================================================================== */
+const TITULOS_PASOS = ["1. Escenario y Equipo", "2. Requerimientos", "3. Timeline y Costos",
+  "4. Ciclo de Vida / TCO", "5. Beneficios y ROI", "6. Riesgos y Sensibilidad",
+  "7. Dashboard Ejecutivo", "8. Escalabilidad"];
+function renderNav() {
+  document.getElementById("navPasos").innerHTML = TITULOS_PASOS.map((t, i) =>
+    `<button class="${state.pasoActual === i + 1 ? "activo" : ""}" onclick="irPaso(${i + 1})">${t}</button>`).join("");
+}
+function irPaso(n) {
+  state.pasoActual = Math.min(8, Math.max(1, n));
+  document.querySelectorAll("section.paso").forEach(s =>
+    s.classList.toggle("visible", +s.dataset.paso === state.pasoActual));
+  renderNav(); guardar();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function moverPaso(d) { irPaso(state.pasoActual + d); }
+
+/* ============================================================================
+   12. ARRANQUE
+   ========================================================================== */
+function renderTodo() {
+  enlazarValores();
+  Object.keys(TABLAS).forEach(renderTabla);
+  renderFases();
+  aplicarEscenario();
+  irPaso(state.pasoActual || 1);
+  recalcular();
+}
+function enlazarValores() { CAMPOS_SIMPLES.forEach(([id, clave]) => { document.getElementById(id).value = state[clave]; }); }
+
+document.addEventListener("DOMContentLoaded", () => {
+  enlazarCampos();
+  Object.keys(TABLAS).forEach(renderTabla);
+  renderFases();
+  aplicarEscenario();
+  irPaso(state.pasoActual || 1);
+  recalcular();
+  if (!lsDisponible) {
+    alert("localStorage no está disponible en este navegador. Use «Exportar/Importar JSON» para no perder sus datos.");
+  }
+});
+</script>
+</body>
+</html>
