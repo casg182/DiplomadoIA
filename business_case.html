@@ -170,24 +170,42 @@
   <h2>Paso 2 · Requerimientos Funcionales y Consideraciones Técnicas</h2>
 
   <div class="solo-interno solo-comparativa">
+    <h3>Carga masiva de requerimientos <span class="tip" data-tip="Pegue filas desde Excel (separadas por tabulación) o con punto y coma. Cada línea: Tipo; Agrupador; Descripción; Horas; Costo/Hora. Tipo = Funcional o Técnico.">?</span></h3>
+    <div class="nota">Formato por línea: <code>Tipo; Agrupador; Descripción; Horas; Costo/Hora</code> — el <b>Tipo</b> define si la fila va a requerimientos <b>F</b>uncionales o <b>T</b>écnicos y el <b>Agrupador</b> permite organizar por módulo o categoría. Puede pegar directamente celdas copiadas desde Excel. Use números sin separador de miles.</div>
+    <textarea id="inCargaMasiva" rows="5" placeholder="Funcional; Core; Módulo de facturación; 200; 30&#10;Técnico; Integraciones; API con CRM; 120; 38"></textarea>
+    <div style="margin:8px 0">
+      <select id="inCargaModo" style="width:auto;display:inline-block">
+        <option value="agregar">Agregar a los existentes</option>
+        <option value="reemplazar">Reemplazar todos los requerimientos</option>
+      </select>
+      <button class="btn-mini" onclick="procesarCargaMasiva()">⬆ Procesar carga</button>
+      <button class="btn-mini gris" onclick="document.getElementById('archivoCSVreq').click()">📄 Importar CSV/TXT</button>
+      <button class="btn-mini gris" onclick="descargarPlantillaReq()">⬇ Descargar plantilla CSV</button>
+      <input type="file" id="archivoCSVreq" accept=".csv,.txt,.tsv" style="display:none" onchange="importarCSVreq(this)">
+    </div>
+    <div id="resultadoCarga"></div>
+
     <h3>Requerimientos funcionales (Desarrollo Interno) <span class="tip" data-tip="Funcionalidades que el sistema debe cumplir. Subtotal = Horas-hombre × Costo/Hora.">?</span></h3>
     <table id="tablaReqFunc">
-      <thead><tr><th style="width:45%">Descripción</th><th>Horas-Hombre</th><th>Costo/Hora ($)</th><th class="num">Subtotal ($)</th><th></th></tr></thead>
+      <thead><tr><th style="width:38%">Descripción</th><th style="width:14%">Agrupador</th><th>Horas-Hombre</th><th>Costo/Hora ($)</th><th class="num">Subtotal ($)</th><th></th></tr></thead>
       <tbody></tbody>
-      <tfoot><tr><td colspan="3">Total requerimientos funcionales</td><td class="num" id="totReqFunc">—</td><td></td></tr></tfoot>
+      <tfoot><tr><td colspan="4">Total requerimientos funcionales</td><td class="num" id="totReqFunc">—</td><td></td></tr></tfoot>
     </table>
     <button class="btn-mini" onclick="agregarFila('reqFunc')">＋ Agregar requerimiento</button>
     <button class="btn-mini gris" onclick="copiarTabla('tablaReqFunc')">⧉ Copiar tabla</button>
 
     <h3>Consideraciones técnicas (Desarrollo Interno) <span class="tip" data-tip="Integraciones, seguridad, performance, migraciones de datos, APIs e infraestructura.">?</span></h3>
     <table id="tablaReqTec">
-      <thead><tr><th style="width:45%">Descripción</th><th>Horas-Hombre</th><th>Costo/Hora ($)</th><th class="num">Subtotal ($)</th><th></th></tr></thead>
+      <thead><tr><th style="width:38%">Descripción</th><th style="width:14%">Agrupador</th><th>Horas-Hombre</th><th>Costo/Hora ($)</th><th class="num">Subtotal ($)</th><th></th></tr></thead>
       <tbody></tbody>
-      <tfoot><tr><td colspan="3">Total consideraciones técnicas</td><td class="num" id="totReqTec">—</td><td></td></tr></tfoot>
+      <tfoot><tr><td colspan="4">Total consideraciones técnicas</td><td class="num" id="totReqTec">—</td><td></td></tr></tfoot>
     </table>
     <button class="btn-mini" onclick="agregarFila('reqTec')">＋ Agregar consideración</button>
     <button class="btn-mini gris" onclick="copiarTabla('tablaReqTec')">⧉ Copiar tabla</button>
     <div class="nota"><b>Total Desarrollo Interno (inversión inicial): <span id="totInterno">—</span></b> = Funcionales + Técnicas.</div>
+
+    <h3>Resumen por agrupador <span class="tip" data-tip="Consolidado de horas y costo por agrupador, combinando requerimientos funcionales y técnicos.">?</span></h3>
+    <div id="resumenAgrupadores"></div>
   </div>
 
   <div class="solo-saas solo-comparativa">
@@ -351,6 +369,8 @@
   </details>
 </section>
 
+<datalist id="listaAgrupadores"></datalist>
+
 <div class="nav-inferior">
   <button onclick="moverPaso(-1)">← Anterior</button>
   <button onclick="moverPaso(1)">Siguiente →</button>
@@ -385,16 +405,16 @@ const ESTADO_DEFECTO = {
     { rol: "Analyst", personas: 1, dedicacion: 60, costoHora: 25 }
   ],
   reqFunc: [
-    { desc: "Módulo de registro y autenticación de usuarios", horas: 120, costoHora: 30 },
-    { desc: "Flujo de creación y aprobación de solicitudes", horas: 300, costoHora: 30 },
-    { desc: "Panel de reportes y tableros de seguimiento", horas: 180, costoHora: 30 },
-    { desc: "Notificaciones por correo y recordatorios", horas: 80, costoHora: 28 }
+    { desc: "Módulo de registro y autenticación de usuarios", grupo: "Seguridad", horas: 120, costoHora: 30 },
+    { desc: "Flujo de creación y aprobación de solicitudes", grupo: "Core", horas: 300, costoHora: 30 },
+    { desc: "Panel de reportes y tableros de seguimiento", grupo: "Reportes", horas: 180, costoHora: 30 },
+    { desc: "Notificaciones por correo y recordatorios", grupo: "Core", horas: 80, costoHora: 28 }
   ],
   reqTec: [
-    { desc: "Integración con ERP / sistema contable (API)", horas: 160, costoHora: 38 },
-    { desc: "Seguridad: SSO, cifrado y control de accesos", horas: 100, costoHora: 40 },
-    { desc: "Migración de datos históricos", horas: 90, costoHora: 32 },
-    { desc: "Infraestructura, despliegue y ambientes", horas: 70, costoHora: 35 }
+    { desc: "Integración con ERP / sistema contable (API)", grupo: "Integraciones", horas: 160, costoHora: 38 },
+    { desc: "Seguridad: SSO, cifrado y control de accesos", grupo: "Seguridad", horas: 100, costoHora: 40 },
+    { desc: "Migración de datos históricos", grupo: "Datos", horas: 90, costoHora: 32 },
+    { desc: "Infraestructura, despliegue y ambientes", grupo: "Infraestructura", horas: 70, costoHora: 35 }
   ],
   saas: [
     { desc: "Setup e implementación inicial", tipo: "unico", valor: 12000 },
@@ -606,12 +626,12 @@ const TABLAS = {
   },
   reqFunc: {
     idTabla: "tablaReqFunc",
-    nuevo: () => ({ desc: "Nuevo requerimiento", horas: 40, costoHora: 30 }),
+    nuevo: () => ({ desc: "Nuevo requerimiento", grupo: "General", horas: 40, costoHora: 30 }),
     fila: (r, i) => filaRequerimiento("reqFunc", r, i)
   },
   reqTec: {
     idTabla: "tablaReqTec",
-    nuevo: () => ({ desc: "Nueva consideración técnica", horas: 40, costoHora: 35 }),
+    nuevo: () => ({ desc: "Nueva consideración técnica", grupo: "General", horas: 40, costoHora: 35 }),
     fila: (r, i) => filaRequerimiento("reqTec", r, i)
   },
   saas: {
@@ -669,6 +689,7 @@ const TABLAS = {
 function filaRequerimiento(lista, r, i) {
   return `
     <td><input value="${esc(r.desc)}" oninput="setCampoFila('${lista}',${i},'desc',this.value)"></td>
+    <td><input value="${esc(r.grupo || "")}" list="listaAgrupadores" oninput="setCampoFila('${lista}',${i},'grupo',this.value)"></td>
     <td><input type="number" min="0" value="${r.horas}" oninput="setCampoFila('${lista}',${i},'horas',this.value)"></td>
     <td><input type="number" min="0" value="${r.costoHora}" oninput="setCampoFila('${lista}',${i},'costoHora',this.value)"></td>
     <td class="num celda-calc">${fmt(num(r.horas) * num(r.costoHora))}</td>
@@ -691,6 +712,93 @@ function setCampoFila(nombre, i, campo, valor) {
   const nuevas = tmp.querySelectorAll(".celda-calc, .pildora");
   tr.querySelectorAll(".celda-calc, .pildora").forEach((c, k) => { if (nuevas[k]) c.outerHTML = nuevas[k].outerHTML; });
   recalcular();
+}
+
+/* ============================================================================
+   4b. CARGA MASIVA DE REQUERIMIENTOS
+   Formato por línea: Tipo; Agrupador; Descripción; Horas; Costo/Hora
+   Acepta separadores: tabulación (pegado desde Excel), punto y coma o coma.
+   Tipo: empieza por F → funcional, por T → técnico/consideración técnica.
+   ========================================================================== */
+function limpiarNumero(s) {
+  /* tolera "$ 1.200,50" o "1,200.50": deja solo dígitos y un separador decimal */
+  let t = String(s).replace(/[^\d.,-]/g, "");
+  if (t.includes(".") && t.includes(",")) t = t.replace(/\./g, "").replace(",", ".");
+  else t = t.replace(",", ".");
+  return num(t);
+}
+function procesarCargaMasiva() {
+  const texto = document.getElementById("inCargaMasiva").value.trim();
+  const salida = document.getElementById("resultadoCarga");
+  if (!texto) { salida.innerHTML = `<div class="alerta-roja">No hay datos para procesar. Pegue las filas en el cuadro de texto.</div>`; return; }
+  if (document.getElementById("inCargaModo").value === "reemplazar") {
+    if (!confirm("Esto reemplazará TODOS los requerimientos funcionales y técnicos actuales. ¿Continuar?")) return;
+    state.reqFunc = []; state.reqTec = [];
+  }
+  let nFunc = 0, nTec = 0; const errores = [];
+  texto.split(/\r?\n/).forEach((linea, idx) => {
+    if (!linea.trim()) return;
+    const sep = linea.includes("\t") ? "\t" : linea.includes(";") ? ";" : ",";
+    const p = linea.split(sep).map(s => s.trim());
+    const tipo = (p[0] || "").toLowerCase();
+    if (idx === 0 && tipo === "tipo") return;                     // ignora fila de encabezado
+    if (p.length < 5) { errores.push(`Línea ${idx + 1}: se esperan 5 columnas (Tipo; Agrupador; Descripción; Horas; Costo/Hora) y llegaron ${p.length}.`); return; }
+    const fila = { desc: p[2], grupo: p[1] || "General", horas: limpiarNumero(p[3]), costoHora: limpiarNumero(p[4]) };
+    if (!fila.desc) { errores.push(`Línea ${idx + 1}: la descripción está vacía.`); return; }
+    if (tipo.startsWith("f")) { state.reqFunc.push(fila); nFunc++; }
+    else if (tipo.startsWith("t") || tipo.startsWith("c")) { state.reqTec.push(fila); nTec++; }
+    else errores.push(`Línea ${idx + 1}: tipo «${p[0]}» no reconocido (use Funcional o Técnico).`);
+  });
+  renderTabla("reqFunc"); renderTabla("reqTec"); recalcular();
+  salida.innerHTML =
+    `<div class="nota">✔ Carga procesada: <b>${nFunc}</b> requerimiento(s) funcional(es) y <b>${nTec}</b> consideración(es) técnica(s) agregados.</div>` +
+    (errores.length ? `<div class="alerta-roja">⚠ ${errores.length} línea(s) con problemas:<br>${errores.join("<br>")}</div>` : "");
+  if (nFunc + nTec > 0) document.getElementById("inCargaMasiva").value = "";
+}
+function importarCSVreq(input) {
+  const f = input.files[0]; if (!f) return;
+  const lector = new FileReader();
+  lector.onload = e => { document.getElementById("inCargaMasiva").value = e.target.result; procesarCargaMasiva(); };
+  lector.readAsText(f); input.value = "";
+}
+function descargarPlantillaReq() {
+  const plantilla = [
+    "Tipo;Agrupador;Descripción;Horas;Costo/Hora",
+    "Funcional;Core;Módulo de facturación electrónica;200;30",
+    "Funcional;Reportes;Tablero de indicadores;120;30",
+    "Técnico;Integraciones;API de sincronización con CRM;160;38",
+    "Técnico;Seguridad;Cifrado de datos en reposo;80;40"
+  ].join("\n");
+  const blob = new Blob(["﻿" + plantilla], { type: "text/csv;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = "plantilla_requerimientos.csv";
+  a.click(); URL.revokeObjectURL(a.href);
+}
+/* Consolidado de horas y costo por agrupador (funcionales + técnicos) */
+function renderResumenAgrupadores() {
+  const grupos = {};
+  const acumular = (lista, tipo) => state[lista].forEach(r => {
+    const g = (r.grupo || "Sin agrupador").trim() || "Sin agrupador";
+    grupos[g] = grupos[g] || { horas: 0, costo: 0, nF: 0, nT: 0 };
+    grupos[g].horas += num(r.horas);
+    grupos[g].costo += num(r.horas) * num(r.costoHora);
+    grupos[g][tipo]++;
+  });
+  acumular("reqFunc", "nF"); acumular("reqTec", "nT");
+  const nombres = Object.keys(grupos).sort((a, b) => grupos[b].costo - grupos[a].costo);
+  const total = nombres.reduce((s, g) => s + grupos[g].costo, 0) || 1;
+  document.getElementById("resumenAgrupadores").innerHTML = `
+    <table id="tablaAgrupadores"><thead><tr><th>Agrupador</th><th class="num">Func.</th><th class="num">Téc.</th>
+      <th class="num">Horas</th><th class="num">Costo ($)</th><th class="num">% del total</th></tr></thead>
+    <tbody>${nombres.map(g => `<tr><td><b>${esc(g)}</b></td>
+      <td class="num">${grupos[g].nF}</td><td class="num">${grupos[g].nT}</td>
+      <td class="num">${Math.round(grupos[g].horas).toLocaleString("es-CO")}</td>
+      <td class="num">${fmt(grupos[g].costo)}</td>
+      <td class="num">${(grupos[g].costo / total * 100).toFixed(1)}%</td></tr>`).join("")}</tbody></table>
+    <button class="btn-mini gris" onclick="copiarTabla('tablaAgrupadores')">⧉ Copiar tabla</button>`;
+  /* datalist para autocompletar agrupadores existentes en las filas */
+  document.getElementById("listaAgrupadores").innerHTML =
+    nombres.map(g => `<option value="${esc(g)}">`).join("");
 }
 
 /* ============================================================================
@@ -981,6 +1089,7 @@ function recalcular() {
       ${state.escenario !== "saas" ? `<td class="num">${fmt(c.tcoInterno[y])}</td>` : ""}
       ${state.escenario !== "interno" ? `<td class="num">${fmt(c.tcoSaaS[y])}</td>` : ""}</tr>`).join("")}</tbody></table>`;
 
+  renderResumenAgrupadores();
   renderMatriz();
   renderGraficas(c);
   renderDashboard(c);
