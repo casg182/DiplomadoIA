@@ -60,17 +60,17 @@ app-configuracion-sociedades/
 
 ## 📦 Catálogo por defecto incluido
 
-53 preguntas en 14 secciones que cubren el alcance multimódulo de la creación de una sociedad en S/4HANA:
+57 preguntas en 14 secciones que cubren el alcance multimódulo de la creación de una sociedad en S/4HANA:
 
 | Sección / Módulo | Temas y transacciones cubiertas |
 |---|---|
 | Datos generales y alcance | Código y razón social (OX02/EC01), número de sociedades, domicilios/sucursales, país y esquema de impuestos (OBBG), moneda, idioma, migración de datos (LTMC), datos maestros centralizados (MDG) |
-| Contabilidad principal (GL) | Plan de cuentas (OB13/OB62), variante de ejercicio (OB29/OB37), períodos (OBBO/OBBP/OB52), monedas paralelas (OB22/FINSC_LEDGER), status de campo (OBC4/OBC5), validaciones (OB28/GGB0), revaluación de monedas (FAGL_FCV/OBA1), estructura de balance (OB58), intercompany (OBYA), lugares comerciales |
+| Contabilidad principal (GL) | Plan de cuentas (OB13/OB62), variante de ejercicio (OB29/OB37), períodos (OBBO/OBBP/OB52), monedas paralelas (OB22/FINSC_LEDGER), status de campo (OBC4/OBC5), validaciones (OB28/GGB0), revaluación de monedas (FAGL_FCV/OBA1), estructura de balance (OB58), intercompany (OBYA), lugares comerciales, segmentos NIIF 8 y desglose de documentos (document splitting) |
 | Impuestos y retenciones | Retención ampliada (extended withholding tax), indicadores de IVA (FTXP/OB40) |
 | Cuentas por pagar (AP) | Grupos de BP proveedor (OBD3), programa de pagos (FBZP/F110), anticipos (OBYR) |
 | Cuentas por cobrar (AR) | Grupos de BP cliente (OBD2), anticipos (OBXR), reclamaciones (FBMP/F150), crédito FSCM (OB38/UKM) |
 | Activos fijos (AA) | Plan de valoración (OAOB/EC08/OADB), clases de activos (OAOA/AO90), claves de amortización (AFAMA) |
-| Controlling (CO) | Sociedad CO (OKKP/OX19), centros de coste (OKEON/KS01), órdenes internas (KOT2_OPA/OKO7) |
+| Controlling (CO) | Sociedad CO (OKKP/OX19), centros de coste CECO (OKEON/KS01), centros de beneficio CEBE (KCH1/KE51/FAGL3KEH), órdenes internas (KOT2_OPA/OKO7) |
 | Control presupuestal (FM) | Entidad CP y BCS (OF18/FMUF), centros gestores/posiciones (FMSA/FMCIA), derivación CAPEX-OPEX y AVC (FMDERIVE/OF39) |
 | Proyectos (PS) | Perfil de proyecto y PEP (OPSA/OPSK), capitalización a activos (OITA/OKO7) |
 | Tesorería (TR/TRM) | Bancos propios y BAM (FI12), extracto electrónico (OT83/FF_5), Cash Management (FQM), instrumentos financieros TRM (FTR_CREATE) |

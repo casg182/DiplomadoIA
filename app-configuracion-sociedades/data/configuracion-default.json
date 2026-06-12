@@ -348,6 +348,26 @@
       ]
     },
     {
+      "id": "p_segmentos", "seccion": "contable", "orden": 12, "tipo": "si_no", "obligatoria": true,
+      "texto": "¿Se requiere reporting por segmentos (NIIF 8 / unidades de negocio en estados financieros)?",
+      "ayuda": "Segmentos para revelar resultados y posición financiera por línea de negocio.",
+      "dependeDe": null, "mapeoDirecto": null,
+      "opciones": [
+        { "id": "o_seg_si", "texto": "Sí", "mapeo": { "descripcionConfig": "Definir segmentos y su derivación desde centros de beneficio", "transaccion": "SPRO", "rutaIMG": "Estructura de la empresa > Definición > Gestión financiera > Definir segmento", "tablaCampo": "FAGL_SEGM / CEPC-SEGMENT", "valorPropuesto": "Un segmento por línea de negocio reportable, asignado en el maestro de cada CeBe", "notas": "Para obtener balances por segmento se requiere activar el desglose de documentos con la característica Segmento." } },
+        { "id": "o_seg_no", "texto": "No", "mapeo": { "descripcionConfig": "Sin segmentos NIIF 8", "transaccion": "-", "rutaIMG": "-", "tablaCampo": "-", "valorPropuesto": "-", "notas": "" } }
+      ]
+    },
+    {
+      "id": "p_desglose", "seccion": "contable", "orden": 13, "tipo": "si_no", "obligatoria": true,
+      "texto": "¿El balance debe cuadrar a nivel de centro de beneficio y/o segmento (desglose de documentos)?",
+      "ayuda": "Document splitting: cada partida del documento se enriquece con CeBe/segmento y el balance cierra por esas características.",
+      "dependeDe": null, "mapeoDirecto": null,
+      "opciones": [
+        { "id": "o_des_si", "texto": "Sí", "mapeo": { "descripcionConfig": "Activar y configurar el desglose de documentos (document splitting)", "transaccion": "SPRO (varias actividades)", "rutaIMG": "Gestión financiera > Contabilidad principal > Operaciones contables > Desglose del documento", "tablaCampo": "FAGL_SPLINFO / clasificación de cuentas y clases de documento", "valorPropuesto": "Método estándar 0000000012 + clasificar cuentas/clases de documento + constante de desglose + características CeBe y Segmento (saldo cero, obligatorias)", "notas": "CRÍTICO: decidir e implementar ANTES del primer asiento; activarlo después de contabilizar requiere proyecto de migración especializado." } },
+        { "id": "o_des_no", "texto": "No", "mapeo": { "descripcionConfig": "Sin desglose: reporting por CeBe solo informativo en posiciones de PyG", "transaccion": "-", "rutaIMG": "-", "tablaCampo": "-", "valorPropuesto": "-", "notas": "Confirmar con auditoría/consolidación que no se exigirán balances completos por CeBe o segmento." } }
+      ]
+    },
+    {
       "id": "p_retenciones", "seccion": "impuestos", "orden": 1, "tipo": "si_no", "obligatoria": true,
       "texto": "¿La sociedad aplica retenciones en la fuente (withholding tax)?",
       "ayuda": "Retenciones de renta, IVA, ICA u otras según legislación local.",
@@ -520,6 +540,16 @@
       "opciones": [
         { "id": "o_oi_si", "texto": "Sí", "mapeo": { "descripcionConfig": "Definir tipos de órdenes internas y perfiles de liquidación", "transaccion": "KOT2_OPA + OKO7", "rutaIMG": "Controlling > Órdenes internas > Funciones específicas de orden > Definir tipos de orden", "tablaCampo": "T003O", "valorPropuesto": "Tipos de orden por uso (gastos, marketing, CAPEX menor) con rango de números", "notas": "Definir norma de liquidación (a centro de coste o activo) y status de usuario si se requiere control de cierre." } },
         { "id": "o_oi_no", "texto": "No", "mapeo": { "descripcionConfig": "Sin órdenes internas", "transaccion": "-", "rutaIMG": "-", "tablaCampo": "-", "valorPropuesto": "-", "notas": "" } }
+      ]
+    },
+    {
+      "id": "p_cebes", "seccion": "controlling", "orden": 5, "tipo": "si_no", "obligatoria": true,
+      "texto": "¿Se gestionarán centros de beneficio (CEBE) para medir resultados por línea o unidad de negocio?",
+      "ayuda": "Los CEBE permiten estados de resultados internos por unidad, línea de producto o región.",
+      "dependeDe": null, "mapeoDirecto": null,
+      "opciones": [
+        { "id": "o_cebe_si", "texto": "Sí", "mapeo": { "descripcionConfig": "Definir jerarquía estándar y centros de beneficio (CEBE)", "transaccion": "KCH1 (jerarquía) + KE51 (CeBe) + 0KE5", "rutaIMG": "Gestión financiera > Contabilidad principal > Datos maestros > Centro de beneficio", "tablaCampo": "CEPC / SETNODE / TKA01-PHINR", "valorPropuesto": "Jerarquía estándar + un CeBe por línea/unidad de negocio + CeBe dummy por defecto", "notas": "Definir las reglas de derivación: CECO→CeBe (en el maestro del centro de coste), material→CeBe y cuentas por defecto (FAGL3KEH)." } },
+        { "id": "o_cebe_no", "texto": "No", "mapeo": { "descripcionConfig": "Definir un centro de beneficio único por defecto", "transaccion": "KE51 + FAGL3KEH", "rutaIMG": "Gestión financiera > Contabilidad principal > Datos maestros > Centro de beneficio", "tablaCampo": "CEPC", "valorPropuesto": "CeBe único (ej. el código de la sociedad)", "notas": "Aunque no se use para análisis, en S/4HANA todas las posiciones requieren CeBe si el desglose lo exige." } }
       ]
     },
     {

@@ -30,6 +30,10 @@ o_ico_si,p_ico,Sí
 o_ico_no,p_ico,No
 o_lc_si,p_lugares,Sí
 o_lc_no,p_lugares,No
+o_seg_si,p_segmentos,Sí
+o_seg_no,p_segmentos,No
+o_des_si,p_desglose,Sí
+o_des_no,p_desglose,No
 o_ret_si,p_retenciones,Sí
 o_ret_no,p_retenciones,No
 o_iva_std,p_iva_ind,Copiar indicadores estándar del país
@@ -62,6 +66,8 @@ o_cc_si,p_centros_coste,Sí
 o_cc_no,p_centros_coste,No
 o_oi_si,p_co_ordenes,Sí
 o_oi_no,p_co_ordenes,No
+o_cebe_si,p_cebes,Sí
+o_cebe_no,p_cebes,No
 o_fm_si,p_fm_usa,Sí
 o_fm_no,p_fm_usa,No
 o_fmc_si,p_fm_capex,Sí
