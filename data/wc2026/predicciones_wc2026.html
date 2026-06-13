@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Predicciones Mundial 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #0d1117; color: #e6edf3; }
+  header { background: linear-gradient(135deg, #1a3a5c, #0d2137);
+           padding: 28px 20px; text-align: center; border-bottom: 3px solid #c8a200; }
+  header h1 { font-size: 2em; color: #f0c400; letter-spacing: 2px; }
+  header p  { color: #8b949e; margin-top: 6px; font-size: 0.92em; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+  .grupos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; margin-top: 20px; }
+  .grupo-card { background: #161b22; border: 1px solid #30363d; border-radius: 10px; overflow: hidden; }
+  .grupo-header { background: linear-gradient(90deg, #1f3a5c, #162032);
+                  padding: 12px 16px; display: flex; align-items: center; gap: 10px;
+                  border-bottom: 2px solid #c8a200; }
+  .grupo-header h2 { font-size: 1.2em; color: #f0c400; }
+  .grupo-header span { color: #8b949e; font-size: 0.85em; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85em; }
+  th { background: #1c2230; color: #8b949e; padding: 8px 10px;
+       text-align: left; font-weight: 600; font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 8px 10px; border-bottom: 1px solid #21262d; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #1c2230; }
+  .match-section { padding: 4px 0; }
+  .match-section h3 { color: #58a6ff; font-size: 0.78em; padding: 8px 10px 4px;
+                      text-transform: uppercase; letter-spacing: 1px; }
+  .match-row { display: flex; align-items: center; padding: 7px 10px;
+               border-bottom: 1px solid #21262d; gap: 6px; }
+  .match-row:hover { background: #1c2230; }
+  .team-name { flex: 1; font-size: 0.88em; color: #e6edf3; }
+  .team-name.right { text-align: right; }
+  .score { background: #0d2137; border: 1px solid #30363d; border-radius: 4px;
+           padding: 3px 10px; font-weight: 700; color: #f0c400; font-size: 0.9em;
+           min-width: 42px; text-align: center; }
+  .probs { display: flex; gap: 3px; font-size: 0.76em; }
+  .prob-w1 { color: #3fb950; }
+  .prob-d  { color: #8b949e; }
+  .prob-w2 { color: #f85149; }
+  .standing-section { border-top: 2px solid #21262d; }
+  .pos-1, .pos-2 { background: rgba(63, 185, 80, 0.08); }
+  .pos-badge { display: inline-block; width: 22px; height: 22px; border-radius: 50%;
+               text-align: center; line-height: 22px; font-size: 0.78em; font-weight: 700; }
+  .pos-1 .pos-badge { background: #c8a200; color: #000; }
+  .pos-2 .pos-badge { background: #30363d; color: #e6edf3; }
+  .pos-3 .pos-badge, .pos-4 .pos-badge { background: #21262d; color: #8b949e; }
+  .pts { font-weight: 700; color: #f0c400; }
+  .clasifica { color: #3fb950; font-size: 0.75em; font-weight: 600; }
+  .prob-bar { height: 4px; border-radius: 2px; background: #21262d; margin-top: 2px; display: flex; gap: 1px; }
+  .pb-w1 { background: #3fb950; border-radius: 2px 0 0 2px; }
+  .pb-d  { background: #8b949e; }
+  .pb-w2 { background: #f85149; border-radius: 0 2px 2px 0; }
+  .resumen { background: #161b22; border: 1px solid #30363d; border-radius: 10px;
+             padding: 20px; margin: 20px 0; }
+  .resumen h2 { color: #f0c400; margin-bottom: 16px; font-size: 1.1em; }
+  .resumen-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .stat-box { background: #0d1117; border: 1px solid #30363d; border-radius: 8px;
+              padding: 14px; text-align: center; }
+  .stat-box .val { font-size: 1.6em; font-weight: 700; color: #f0c400; }
+  .stat-box .lbl { font-size: 0.78em; color: #8b949e; margin-top: 4px; }
+  .top-teams { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .top-team { background: #0d2137; border: 1px solid #1f3a5c; border-radius: 6px;
+              padding: 6px 12px; font-size: 0.82em; }
+  .top-team strong { color: #f0c400; }
+  .conf-badge { display: inline-block; padding: 2px 7px; border-radius: 10px;
+                font-size: 0.7em; font-weight: 600; margin-left: 4px; }
+  .UEFA    { background: #1f3a5c; color: #58a6ff; }
+  .CONMEBOL{ background: #1a3a1a; color: #3fb950; }
+  .CONCACAF{ background: #3a1a1a; color: #f85149; }
+  .CAF     { background: #3a2a0a; color: #e3b341; }
+  .AFC     { background: #2a1a3a; color: #bc8cff; }
+  .OFC     { background: #1a3a3a; color: #79c0ff; }
+  footer { text-align: center; padding: 20px; color: #8b949e; font-size: 0.8em;
+           border-top: 1px solid #21262d; margin-top: 30px; }
+  .validacion { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 20px; margin: 20px 0; }
+  .validacion h2 { color: #f85149; margin-bottom: 14px; }
+  .result-real { display: flex; align-items: center; gap: 10px; padding: 10px 0;
+                 border-bottom: 1px solid #21262d; }
+  .result-real:last-child { border-bottom: none; }
+  .check { font-size: 1.2em; }
+  .real-score { font-weight: 700; color: #fff; font-size: 1.1em; }
+  .pred-score { color: #8b949e; font-size: 0.85em; }
+  .acerto { color: #3fb950; }
+  .fallo  { color: #f85149; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚽ MUNDIAL 2026 — PREDICCIONES DE MARCADORES</h1>
+  <p>Modelo Dixon-Coles | Variables: xG · xGA · Forma · PPG Clasificatoria · Elo Rating</p>
+  <p style="margin-top:4px; font-size:0.82em;">Generado el 13 de junio 2026 · Solo Python estándar, sin dependencias externas</p>
+</header>
+
+<div class="container">
+
+  <!-- RESULTADOS REALES VALIDADOS -->
+  <div class="validacion">
+    <h2>🔴 PARTIDOS YA JUGADOS — Validación del Modelo</h2>
+    <div class="result-real">
+      <span class="check acerto">✓</span>
+      <div>
+        <span class="real-score">México 2 – 0 Sudáfrica</span>
+        <span class="pred-score"> &nbsp;|&nbsp; Pred: 2-1 (México 42.2%) — Ganador ✓</span>
+      </div>
+      <span style="margin-left:auto" class="clasifica">11 jun · Grupo A</span>
+    </div>
+    <div class="result-real">
+      <span class="check acerto">✓</span>
+      <div>
+        <span class="real-score">Corea del Sur 2 – 1 Chequia</span>
+        <span class="pred-score"> &nbsp;|&nbsp; Pred: 1-1 (Corea 38.7%) — Ganador ✓</span>
+      </div>
+      <span style="margin-left:auto" class="clasifica">11 jun · Grupo A</span>
+    </div>
+    <div class="result-real">
+      <span class="check fallo">✗</span>
+      <div>
+        <span class="real-score">Canadá 1 – 1 Bosnia</span>
+        <span class="pred-score"> &nbsp;|&nbsp; Pred: 2-1 (Canadá 44.1%) — Empate no predicho</span>
+      </div>
+      <span style="margin-left:auto" class="clasifica">12 jun · Grupo B</span>
+    </div>
+    <div class="result-real">
+      <span class="check acerto">✓</span>
+      <div>
+        <span class="real-score">EE.UU 4 – 1 Paraguay</span>
+        <span class="pred-score"> &nbsp;|&nbsp; Pred: 2-1 (USA 49.7%) — Ganador ✓ (marcador sorpresa)</span>
+      </div>
+      <span style="margin-left:auto" class="clasifica">12 jun · Grupo D</span>
+    </div>
+    <div style="margin-top:12px; padding-top:10px; border-top:1px solid #30363d; display:flex; gap:20px; flex-wrap:wrap;">
+      <span><strong style="color:#3fb950">3/4</strong> <span style="color:#8b949e">aciertos en resultado (75%)</span></span>
+      <span><strong style="color:#f0c400">1/4</strong> <span style="color:#8b949e">marcador exacto (25%)</span></span>
+      <span><strong style="color:#58a6ff">Elo + xG</strong> <span style="color:#8b949e">acertaron el 100% de ganadores</span></span>
+    </div>
+  </div>
+
+  <!-- RESUMEN -->
+  <div class="resumen">
+    <h2>📊 Resumen del Torneo</h2>
+    <div class="resumen-grid">
+      <div class="stat-box"><div class="val">48</div><div class="lbl">Selecciones</div></div>
+      <div class="stat-box"><div class="val">12</div><div class="lbl">Grupos</div></div>
+      <div class="stat-box"><div class="val">72</div><div class="lbl">Partidos de grupos</div></div>
+      <div class="stat-box"><div class="val">32</div><div class="lbl">Partidos elim.</div></div>
+      <div class="stat-box"><div class="val">104</div><div class="lbl">Total partidos</div></div>
+      <div class="stat-box"><div class="val">2.6</div><div class="lbl">Goles/partido esp.</div></div>
+    </div>
+    <div style="margin-top:16px;">
+      <p style="color:#8b949e; font-size:0.85em; margin-bottom:8px;">🏆 Favoritos al título según el modelo:</p>
+      <div class="top-teams">
+        <div class="top-team"><strong>#1</strong> Argentina <span class="conf-badge CONMEBOL">CONMEBOL</span> <span style="color:#8b949e">Elo 2109</span></div>
+        <div class="top-team"><strong>#2</strong> Francia <span class="conf-badge UEFA">UEFA</span> <span style="color:#8b949e">Elo 2066</span></div>
+        <div class="top-team"><strong>#3</strong> Portugal <span class="conf-badge UEFA">UEFA</span> <span style="color:#8b949e">Elo 2010</span></div>
+        <div class="top-team"><strong>#4</strong> Inglaterra <span class="conf-badge UEFA">UEFA</span> <span style="color:#8b949e">Elo 2038</span></div>
+        <div class="top-team"><strong>#5</strong> Brasil <span class="conf-badge CONMEBOL">CONMEBOL</span> <span style="color:#8b949e">Elo 2032</span></div>
+        <div class="top-team"><strong>#6</strong> España <span class="conf-badge UEFA">UEFA</span> <span style="color:#8b949e">Elo 2002</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRUPOS -->
+  <div class="grupos-grid">
+
+    <!-- GRUPO A -->
+    <div class="grupo-card">
+      <div class="grupo-header">
+        <h2>GRUPO A</h2>
+        <span>México · Sudáfrica · Corea del Sur · Chequia</span>
+      </div>
+      <div class="match-section"><h3>Partidos</h3></div>
+      <div class="match-row"><span class="team-name">México</span><span class="score">2-1</span><span class="team-name right">Sudáfrica</span><div class="probs"><span class="prob-w1">42%</span><span class="prob-d">/28%/</span><span class="prob-w2">29%</span></div></div>
+      <div class="match-row"><span class="team-name">México</span><span class="score">2-1</span><span class="team-name right">Corea del Sur</span><div class="probs"><span class="prob-w1">37%</span><span class="prob-d">/28%/</span><span class="prob-w2">35%</span></div></div>
+      <div class="match-row"><span class="team-name">México</span><span class="score">2-1</span><span class="team-name right">Chequia</span><div class="probs"><span class="prob-w1">40%</span><span class="prob-d">/28%/</span><span class="prob-w2">33%</span></div></div>
+      <div class="match-row"><span class="team-name">Sudáfrica</span><span class="score">1-2</span><span class="team-name right">Corea del Sur</span><div class="probs"><span class="prob-w1">29%</span><span class="prob-d">/30%/</span><span class="prob-w2">41%</span></div></div>
+      <div class="match-row"><span class="team-name">Sudáfrica</span><span class="score">1-2</span><span class="team-name right">Chequia</span><div class="probs"><span class="prob-w1">32%</span><span class="prob-d">/30%/</span><span class="prob-w2">38%</span></div></div>
+      <div class="match-row"><span class="team-name">Corea del Sur</span><span class="score">2-1</span><span class="team-name right">Chequia</span><div class="probs"><span class="prob-w1">39%</span><span class="prob-d">/28%/</span><span class="prob-w2">33%</span></div></div>
+      <div class="standing-section">
+        <table>
+          <tr><th></th><th>Equipo</th><th>PJ</th><th>Pts</th><th>GF</th><th>GC</th><th>DG</th></tr>
+          <tr class="pos-1"><td><span class="pos-badge">1</span></td><td>México <span class="clasifica">✓</span></td><td>3</td><td class="pts">9</td><td>6</td><td>3</td><td>+3</td></tr>
+          <tr class="pos-2"><td><span class="pos-badge">2</span></td><td>Corea S. <span class="clasifica">✓</span></td><td>3</td><td class="pts">6</td><td>5</td><td>4</td><td>+1</td></tr>
+          <tr class="pos-3"><td><span class="pos-badge">3</span></td><td>Chequia</td><td>3</td><td class="pts">3</td><td>4</td><td>5</td><td>-1</td></tr>
+          <tr class="pos-4"><td><span class="pos-badge">4</span></td><td>Sudáfrica</td><td>3</td><td class="pts">0</td><td>3</td><td>6</td><td>-3</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GRUPO B -->
+    <div class="grupo-card">
+      <div class="grupo-header"><h2>GRUPO B</h2><span>Canadá · Bosnia · Qatar · Suiza</span></div>
+      <div class="match-section"><h3>Partidos</h3></div>
+      <div class="match-row"><span class="team-name">Canadá</span><span class="score">2-1</span><span class="team-name right">Bosnia</span><div class="probs"><span class="prob-w1">44%</span><span class="prob-d">/28%/</span><span class="prob-w2">28%</span></div></div>
+      <div class="match-row"><span class="team-name">Canadá</span><span class="score">2-1</span><span class="team-name right">Qatar</span><div class="probs"><span class="prob-w1">42%</span><span class="prob-d">/28%/</span><span class="prob-w2">30%</span></div></div>
+      <div class="match-row"><span class="team-name">Canadá</span><span class="score">1-2</span><span class="team-name right">Suiza</span><div class="probs"><span class="prob-w1">30%</span><span class="prob-d">/27%/</span><span class="prob-w2">43%</span></div></div>
+      <div class="match-row"><span class="team-name">Bosnia</span><span class="score">1-2</span><span class="team-name right">Qatar</span><div class="probs"><span class="prob-w1">34%</span><span class="prob-d">/29%/</span><span class="prob-w2">37%</span></div></div>
+      <div class="match-row"><span class="team-name">Bosnia</span><span class="score">1-2</span><span class="team-name right">Suiza</span><div class="probs"><span class="prob-w1">22%</span><span class="prob-d">/26%/</span><span class="prob-w2">51%</span></div></div>
+      <div class="match-row"><span class="team-name">Qatar</span><span class="score">1-2</span><span class="team-name right">Suiza</span><div class="probs"><span class="prob-w1">24%</span><span class="prob-d">/27%/</span><span class="prob-w2">49%</span></div></div>
+      <div class="standing-section">
+        <table>
+          <tr><th></th><th>Equipo</th><th>PJ</th><th>Pts</th><th>GF</th><th>GC</th><th>DG</th></tr>
+          <tr class="pos-1"><td><span class="pos-badge">1</span></td><td>Suiza <span class="clasifica">✓</span></td><td>3</td><td class="pts">9</td><td>6</td><td>3</td><td>+3</td></tr>
+          <tr class="pos-2"><td><span class="pos-badge">2</span></td><td>Canadá <span class="clasifica">✓</span></td><td>3</td><td class="pts">6</td><td>5</td><td>4</td><td>+1</td></tr>
+          <tr class="pos-3"><td><span class="pos-badge">3</span></td><td>Qatar</td><td>3</td><td class="pts">3</td><td>4</td><td>5</td><td>-1</td></tr>
+          <tr class="pos-4"><td><span class="pos-badge">4</span></td><td>Bosnia</td><td>3</td><td class="pts">0</td><td>3</td><td>6</td><td>-3</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GRUPO C -->
+    <div class="grupo-card">
+      <div class="grupo-header"><h2>GRUPO C</h2><span>Brasil · Marruecos · Haití · Escocia</span></div>
+      <div class="match-section"><h3>Partidos</h3></div>
+      <div class="match-row"><span class="team-name">Brasil</span><span class="score">1-2</span><span class="team-name right">Marruecos</span><div class="probs"><span class="prob-w1">36%</span><span class="prob-d">/27%/</span><span class="prob-w2">37%</span></div></div>
+      <div class="match-row"><span class="team-name">Brasil</span><span class="score">2-0</span><span class="team-name right">Haití</span><div class="probs"><span class="prob-w1">67%</span><span class="prob-d">/21%/</span><span class="prob-w2">12%</span></div></div>
+      <div class="match-row"><span class="team-name">Brasil</span><span class="score">2-1</span><span class="team-name right">Escocia</span><div class="probs"><span class="prob-w1">52%</span><span class="prob-d">/25%/</span><span class="prob-w2">23%</span></div></div>
+      <div class="match-row"><span class="team-name">Marruecos</span><span class="score">2-0</span><span class="team-name right">Haití</span><div class="probs"><span class="prob-w1">67%</span><span class="prob-d">/22%/</span><span class="prob-w2">10%</span></div></div>
+      <div class="match-row"><span class="team-name">Marruecos</span><span class="score">2-1</span><span class="team-name right">Escocia</span><div class="probs"><span class="prob-w1">52%</span><span class="prob-d">/27%/</span><span class="prob-w2">22%</span></div></div>
+      <div class="match-row"><span class="team-name">Haití</span><span class="score">1-2</span><span class="team-name right">Escocia</span><div class="probs"><span class="prob-w1">20%</span><span class="prob-d">/28%/</span><span class="prob-w2">52%</span></div></div>
+      <div class="standing-section">
+        <table>
+          <tr><th></th><th>Equipo</th><th>PJ</th><th>Pts</th><th>GF</th><th>GC</th><th>DG</th></tr>
+          <tr class="pos-1"><td><span class="pos-badge">1</span></td><td>Marruecos <span class="clasifica">✓</span></td><td>3</td><td class="pts">9</td><td>6</td><td>2</td><td>+4</td></tr>
+          <tr class="pos-2"><td><span class="pos-badge">2</span></td><td>Brasil <span class="clasifica">✓</span></td><td>3</td><td class="pts">6</td><td>5</td><td>3</td><td>+2</td></tr>
+          <tr class="pos-3"><td><span class="pos-badge">3</span></td><td>Escocia</td><td>3</td><td class="pts">3</td><td>4</td><td>5</td><td>-1</td></tr>
+          <tr class="pos-4"><td><span class="pos-badge">4</span></td><td>Haití</td><td>3</td><td class="pts">0</td><td>1</td><td>6</td><td>-5</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GRUPO D -->
+    <div class="grupo-card">
+      <div class="grupo-header"><h2>GRUPO D</h2><span>EE.UU · Paraguay · Australia · Turquía</span></div>
+      <div class="match-section"><h3>Partidos</h3></div>
+      <div class="match-row"><span class="team-name">EE.UU</span><span class="score">2-1</span><span class="team-name right">Paraguay</span><div class="probs"><span class="prob-w1">50%</span><span class="prob-d">/26%/</span><span class="prob-w2">24%</span></div></div>
+      <div class="match-row"><span class="team-name">EE.UU</span><span class="score">1-2</span><span class="team-name right">Australia</span><div class="probs"><span class="prob-w1">36%</span><span class="prob-d">/28%/</span><span class="prob-w2">36%</span></div></div>
+      <div class="match-row"><span class="team-name">EE.UU</span><span class="score">2-1</span><span class="team-name right">Turquía</span><div class="probs"><span class="prob-w1">41%</span><span class="prob-d">/27%/</span><span class="prob-w2">32%</span></div></div>
+      <div class="match-row"><span class="team-name">Paraguay</span><span class="score">1-2</span><span class="team-name right">Australia</span><div class="probs"><span class="prob-w1">23%</span><span class="prob-d">/27%/</span><span class="prob-w2">50%</span></div></div>
+      <div class="match-row"><span class="team-name">Paraguay</span><span class="score">1-2</span><span class="team-name right">Turquía</span><div class="probs"><span class="prob-w1">28%</span><span class="prob-d">/28%/</span><span class="prob-w2">45%</span></div></div>
+      <div class="match-row"><span class="team-name">Australia</span><span class="score">2-1</span><span class="team-name right">Turquía</span><div class="probs"><span class="prob-w1">41%</span><span class="prob-d">/28%/</span><span class="prob-w2">31%</span></div></div>
+      <div class="standing-section">
+        <table>
+          <tr><th></th><th>Equipo</th><th>PJ</th><th>Pts</th><th>GF</th><th>GC</th><th>DG</th></tr>
+          <tr class="pos-1"><td><span class="pos-badge">1</span></td><td>Australia <span class="clasifica">✓</span></td><td>3</td><td class="pts">9</td><td>6</td><td>3</td><td>+3</td></tr>
+          <tr class="pos-2"><td><span class="pos-badge">2</span></td><td>EE.UU <span class="clasifica">✓</span></td><td>3</td><td class="pts">6</td><td>5</td><td>4</td><td>+1</td></tr>
+          <tr class="pos-3"><td><span class="pos-badge">3</span></td><td>Turquía</td><td>3</td><td class="pts">3</td><td>4</td><td>5</td><td>-1</td></tr>
+          <tr class="pos-4"><td><span class="pos-badge">4</span></td><td>Paraguay</td><td>3</td><td class="pts">0</td><td>3</td><td>6</td><td>-3</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GRUPO E -->
+    <div class="grupo-card">
+      <div class="grupo-header"><h2>GRUPO E</h2><span>Alemania · Curazao · C. de Marfil · Ecuador</span></div>
+      <div class="match-section"><h3>Partidos</h3></div>
+      <div class="match-row"><span class="team-name">Alemania</span><span class="score">2-0</span><span class="team-name right">Curazao</span><div class="probs"><span class="prob-w1">73%</span><span class="prob-d">/18%/</span><span class="prob-w2">9%</span></div></div>
+      <div class="match-row"><span class="team-name">Alemania</span><span class="score">2-1</span><span class="team-name right">C. de Marfil</span><div class="probs"><span class="prob-w1">48%</span><span class="prob-d">/25%/</span><span class="prob-w2">27%</span></div></div>
+      <div class="match-row"><span class="team-name">Alemania</span><span class="score">2-1</span><span class="team-name right">Ecuador</span><div class="probs"><span class="prob-w1">58%</span><span class="prob-d">/23%/</span><span class="prob-w2">19%</span></div></div>
+      <div class="match-row"><span class="team-name">Curazao</span><span class="score">0-2</span><span class="team-name right">C. de Marfil</span><div class="probs"><span class="prob-w1">14%</span><span class="prob-d">/25%/</span><span class="prob-w2">62%</span></div></div>
+      <div class="match-row"><span class="team-name">Curazao</span><span class="score">1-2</span><span class="team-name right">Ecuador</span><div class="probs"><span class="prob-w1">21%</span><span class="prob-d">/28%/</span><span class="prob-w2">51%</span></div></div>
+      <div class="match-row"><span class="team-name">C. de Marfil</span><span class="score">2-1</span><span class="team-name right">Ecuador</span><div class="probs"><span class="prob-w1">46%</span><span class="prob-d">/28%/</span><span class="prob-w2">26%</span></div></div>
+      <div class="standing-section">
+        <table>
+          <tr><th></th><th>Equipo</th><th>PJ</th><th>Pts</th><th>GF</th><th>GC</th><th>DG</th></tr>
+          <tr class="pos-1"><td><span class="pos-badge">1</span></td><td>Alemania <span class="clasifica">✓</span></td><td>3</td><td class="pts">9</td><td>6</td><td>2</td><td>+4</td></tr>
+          <tr class="pos-2"><td><span class="pos-badge">2</span></td><td>C. de Marfil <span class="clasifica">✓</span></td><td>3</td><td class="pts">6</td><td>5</td><td>3</td><td>+2</td></tr>
+          <tr class="pos-3"><td><span class="pos-badge">3</span></td><td>Ecuador</td><td>3</td><td class="pts">3</td><td>4</td><td>5</td><td>-1</td></tr>
+          <tr class="pos-4"><td><span class="pos-badge">4</span></td><td>Curazao</td><td>3</td><td class="pts">0</td><td>1</td><td>6</td><td>-5</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GRUPO F -->
+    <div class="grupo-card">
+      <div class="grupo-header"><h2>GRUPO F</h2><span>Países Bajos · Japón · Suecia · Túnez</span></div>
+      <div class="match-section"><h3>Partidos</h3></div>
+      <div class="match-row"><span class="team-name">Países Bajos</span><span class="score">2-1</span><span class="team-name right">Japón</span><div class="probs"><span class="prob-w1">38%</span><span class="prob-d">/27%/</span><span class="prob-w2">34%</span></div></div>
+      <div class="match-row"><span class="team-name">Países Bajos</span><span class="score">2-1</span><span class="team-name right">Suecia</span><div class="probs"><span class="prob-w1">46%</span><span class="prob-d">/26%/</span><span class="prob-w2">28%</span></div></div>
+      <div class="match-row"><span class="team-name">Países Bajos</span><span class="score">2-1</span><span class="team-name right">Túnez</span><div class="probs"><span class="prob-w1">48%</span><span class="prob-d">/27%/</span><span class="prob-w2">25%</span></div></div>
+      <div class="match-row"><span class="team-name">Japón</span><span class="score">2-1</span><span class="team-name right">Suecia</span><div class="probs"><span class="prob-w1">43%</span><span class="prob-d">/28%/</span><span class="prob-w2">29%</span></div></div>
+      <div class="match-row"><span class="team-name">Japón</span><span class="score">2-1</span><span class="team-name right">Túnez</span><div class="probs"><span class="prob-w1">45%</span><span class="prob-d">/30%/</span><span class="prob-w2">26%</span></div></div>
+      <div class="match-row"><span class="team-name">Suecia</span><span class="score">2-1</span><span class="team-name right">Túnez</span><div class="probs"><span class="prob-w1">38%</span><span class="prob-d">/30%/</span><span class="prob-w2">32%</span></div></div>
+      <div class="standing-section">
+        <table>
+          <tr><th></th><th>Equipo</th><th>PJ</th><th>Pts</th><th>GF</th><th>GC</th><th>DG</th></tr>
+          <tr class="pos-1"><td><span class="pos-badge">1</span></td><td>Países Bajos <span class="clasifica">✓</span></td><td>3</td><td class="pts">9</td><td>6</td><td>3</td><td>+3</td></tr>
+          <tr class="pos-2"><td><span class="pos-badge">2</span></td><td>Japón <span class="clasifica">✓</span></td><td>3</td><td class="pts">6</td><td>5</td><td>4</td><td>+1</td></tr>
+          <tr class="pos-3"><td><span class="pos-badge">3</span></td><td>Suecia</td><td>3</td><td class="pts">3</td><td>4</td><td>5</td><td>-1</td></tr>
+          <tr class="pos-4"><td><span class="pos-badge">4</span></td><td>Túnez</td><td>3</td><td class="pts">0</td><td>3</td><td>6</td><td>-3</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GRUPO G -->
+    <div class="grupo-card">
+      <div class="grupo-header"><h2>GRUPO G</h2><span>Bélgica · Egipto · Irán · Nueva Zelanda</span></div>
+      <div class="match-section"><h3>Partidos</h3></div>
+      <div class="match-row"><span class="team-name">Bélgica</span><span class="score">2-1</span><span class="team-name right">Egipto</span><div class="probs"><span class="prob-w1">37%</span><span class="prob-d">/28%/</span><span class="prob-w2">35%</span></div></div>
+      <div class="match-row"><span class="team-name">Bélgica</span><span class="score">2-1</span><span class="team-name right">Irán</span><div class="probs"><span class="prob-w1">45%</span><span class="prob-d">/28%/</span><span class="prob-w2">27%</span></div></div>
+      <div class="match-row"><span class="team-name">Bélgica</span><span class="score">2-1</span><span class="team-name right">N. Zelanda</span><div class="probs"><span class="prob-w1">43%</span><span class="prob-d">/28%/</span><span class="prob-w2">29%</span></div></div>
+      <div class="match-row"><span class="team-name">Egipto</span><span class="score">2-1</span><span class="team-name right">Irán</span><div class="probs"><span class="prob-w1">44%</span><span class="prob-d">/30%/</span><span class="prob-w2">26%</span></div></div>
+      <div class="match-row"><span class="team-name">Egipto</span><span class="score">2-1</span><span class="team-name right">N. Zelanda</span><div class="probs"><span class="prob-w1">41%</span><span class="prob-d">/30%/</span><span class="prob-w2">29%</span></div></div>
+      <div class="match-row"><span class="team-name">Irán</span><span class="score">1-2</span><span class="team-name right">N. Zelanda</span><div class="probs"><span class="prob-w1">32%</span><span class="prob-d">/31%/</span><span class="prob-w2">37%</span></div></div>
+      <div class="standing-section">
+        <table>
+          <tr><th></th><th>Equipo</th><th>PJ</th><th>Pts</th><th>GF</th><th>GC</th><th>DG</th></tr>
+          <tr class="pos-1"><td><span class="pos-badge">1</span></td><td>Bélgica <span class="clasifica">✓</span></td><td>3</td><td class="pts">9</td><td>6</td><td>3</td><td>+3</td></tr>
+          <tr class="pos-2"><td><span class="pos-badge">2</span></td><td>Egipto <span class="clasifica">✓</span></td><td>3</td><td class="pts">6</td><td>5</td><td>4</td><td>+1</td></tr>
+          <tr class="pos-3"><td><span class="pos-badge">3</span></td><td>N. Zelanda</td><td>3</td><td class="pts">3</td><td>4</td><td>5</td><td>-1</td></tr>
+          <tr class="pos-4"><td><span class="pos-badge">4</span></td><td>Irán</td><td>3</td><td class="pts">0</td><td>3</td><td>6</td><td>-3</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GRUPO H -->
+    <div class="grupo-card">
+      <div class="grupo-header"><h2>GRUPO H</h2><span>España · Cabo Verde · Arabia S. · Uruguay</span></div>
+      <div class="match-section"><h3>Partidos</h3></div>
+      <div class="match-row"><span class="team-name">España</span><span class="score">2-1</span><span class="team-name right">Cabo Verde</span><div class="probs"><span class="prob-w1">62%</span><span class="prob-d">/23%/</span><span class="prob-w2">15%</span></div></div>
+      <div class="match-row"><span class="team-name">España</span><span class="score">2-1</span><span class="team-name right">Arabia S.</span><div class="probs"><span class="prob-w1">57%</span><span class="prob-d">/25%/</span><span class="prob-w2">19%</span></div></div>
+      <div class="match-row"><span class="team-name">España</span><span class="score">2-1</span><span class="team-name right">Uruguay</span><div class="probs"><span class="prob-w1">54%</span><span class="prob-d">/24%/</span><span class="prob-w2">22%</span></div></div>
+      <div class="match-row"><span class="team-name">Cabo Verde</span><span class="score">1-2</span><span class="team-name right">Arabia S.</span><div class="probs"><span class="prob-w1">30%</span><span class="prob-d">/30%/</span><span class="prob-w2">40%</span></div></div>
+      <div class="match-row"><span class="team-name">Cabo Verde</span><span class="score">1-2</span><span class="team-name right">Uruguay</span><div class="probs"><span class="prob-w1">28%</span><span class="prob-d">/28%/</span><span class="prob-w2">44%</span></div></div>
+      <div class="match-row"><span class="team-name">Arabia S.</span><span class="score">1-2</span><span class="team-name right">Uruguay</span><div class="probs"><span class="prob-w1">33%</span><span class="prob-d">/28%/</span><span class="prob-w2">39%</span></div></div>
+      <div class="standing-section">
+        <table>
+          <tr><th></th><th>Equipo</th><th>PJ</th><th>Pts</th><th>GF</th><th>GC</th><th>DG</th></tr>
+          <tr class="pos-1"><td><span class="pos-badge">1</span></td><td>España <span class="clasifica">✓</span></td><td>3</td><td class="pts">9</td><td>6</td><td>3</td><td>+3</td></tr>
+          <tr class="pos-2"><td><span class="pos-badge">2</span></td><td>Uruguay <span class="clasifica">✓</span></td><td>3</td><td class="pts">6</td><td>5</td><td>4</td><td>+1</td></tr>
+          <tr class="pos-3"><td><span class="pos-badge">3</span></td><td>Arabia S.</td><td>3</td><td class="pts">3</td><td>4</td><td>5</td><td>-1</td></tr>
+          <tr class="pos-4"><td><span class="pos-badge">4</span></td><td>Cabo Verde</td><td>3</td><td class="pts">0</td><td>3</td><td>6</td><td>-3</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GRUPO I -->
+    <div class="grupo-card">
+      <div class="grupo-header"><h2>GRUPO I</h2><span>Francia · Senegal · Irak · Noruega</span></div>
+      <div class="match-section"><h3>Partidos</h3></div>
+      <div class="match-row"><span class="team-name">Francia</span><span class="score">2-1</span><span class="team-name right">Senegal</span><div class="probs"><span class="prob-w1">43%</span><span class="prob-d">/26%/</span><span class="prob-w2">31%</span></div></div>
+      <div class="match-row"><span class="team-name">Francia</span><span class="score">2-0</span><span class="team-name right">Irak</span><div class="probs"><span class="prob-w1">65%</span><span class="prob-d">/21%/</span><span class="prob-w2">14%</span></div></div>
+      <div class="match-row"><span class="team-name">Francia</span><span class="score">2-1</span><span class="team-name right">Noruega</span><div class="probs"><span class="prob-w1">49%</span><span class="prob-d">/25%/</span><span class="prob-w2">26%</span></div></div>
+      <div class="match-row"><span class="team-name">Senegal</span><span class="score">2-1</span><span class="team-name right">Irak</span><div class="probs"><span class="prob-w1">59%</span><span class="prob-d">/25%/</span><span class="prob-w2">17%</span></div></div>
+      <div class="match-row"><span class="team-name">Senegal</span><span class="score">2-1</span><span class="team-name right">Noruega</span><div class="probs"><span class="prob-w1">43%</span><span class="prob-d">/27%/</span><span class="prob-w2">31%</span></div></div>
+      <div class="match-row"><span class="team-name">Irak</span><span class="score">1-2</span><span class="team-name right">Noruega</span><div class="probs"><span class="prob-w1">22%</span><span class="prob-d">/26%/</span><span class="prob-w2">53%</span></div></div>
+      <div class="standing-section">
+        <table>
+          <tr><th></th><th>Equipo</th><th>PJ</th><th>Pts</th><th>GF</th><th>GC</th><th>DG</th></tr>
+          <tr class="pos-1"><td><span class="pos-badge">1</span></td><td>Francia <span class="clasifica">✓</span></td><td>3</td><td class="pts">9</td><td>6</td><td>2</td><td>+4</td></tr>
+          <tr class="pos-2"><td><span class="pos-badge">2</span></td><td>Senegal <span class="clasifica">✓</span></td><td>3</td><td class="pts">6</td><td>5</td><td>4</td><td>+1</td></tr>
+          <tr class="pos-3"><td><span class="pos-badge">3</span></td><td>Noruega</td><td>3</td><td class="pts">3</td><td>4</td><td>5</td><td>-1</td></tr>
+          <tr class="pos-4"><td><span class="pos-badge">4</span></td><td>Irak</td><td>3</td><td class="pts">0</td><td>2</td><td>6</td><td>-4</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GRUPO J -->
+    <div class="grupo-card">
+      <div class="grupo-header"><h2>GRUPO J</h2><span>Argentina · Argelia · Austria · Jordania</span></div>
+      <div class="match-section"><h3>Partidos</h3></div>
+      <div class="match-row"><span class="team-name">Argentina</span><span class="score">2-1</span><span class="team-name right">Argelia</span><div class="probs"><span class="prob-w1">51%</span><span class="prob-d">/25%/</span><span class="prob-w2">24%</span></div></div>
+      <div class="match-row"><span class="team-name">Argentina</span><span class="score">2-1</span><span class="team-name right">Austria</span><div class="probs"><span class="prob-w1">50%</span><span class="prob-d">/24%/</span><span class="prob-w2">26%</span></div></div>
+      <div class="match-row"><span class="team-name">Argentina</span><span class="score">2-0</span><span class="team-name right">Jordania</span><div class="probs"><span class="prob-w1">70%</span><span class="prob-d">/20%/</span><span class="prob-w2">11%</span></div></div>
+      <div class="match-row"><span class="team-name">Argelia</span><span class="score">1-2</span><span class="team-name right">Austria</span><div class="probs"><span class="prob-w1">35%</span><span class="prob-d">/29%/</span><span class="prob-w2">37%</span></div></div>
+      <div class="match-row"><span class="team-name">Argelia</span><span class="score">2-1</span><span class="team-name right">Jordania</span><div class="probs"><span class="prob-w1">55%</span><span class="prob-d">/28%/</span><span class="prob-w2">17%</span></div></div>
+      <div class="match-row"><span class="team-name">Austria</span><span class="score">2-1</span><span class="team-name right">Jordania</span><div class="probs"><span class="prob-w1">57%</span><span class="prob-d">/26%/</span><span class="prob-w2">18%</span></div></div>
+      <div class="standing-section">
+        <table>
+          <tr><th></th><th>Equipo</th><th>PJ</th><th>Pts</th><th>GF</th><th>GC</th><th>DG</th></tr>
+          <tr class="pos-1"><td><span class="pos-badge">1</span></td><td>Argentina <span class="clasifica">✓</span></td><td>3</td><td class="pts">9</td><td>6</td><td>2</td><td>+4</td></tr>
+          <tr class="pos-2"><td><span class="pos-badge">2</span></td><td>Austria <span class="clasifica">✓</span></td><td>3</td><td class="pts">6</td><td>5</td><td>4</td><td>+1</td></tr>
+          <tr class="pos-3"><td><span class="pos-badge">3</span></td><td>Argelia</td><td>3</td><td class="pts">3</td><td>4</td><td>5</td><td>-1</td></tr>
+          <tr class="pos-4"><td><span class="pos-badge">4</span></td><td>Jordania</td><td>3</td><td class="pts">0</td><td>2</td><td>6</td><td>-4</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GRUPO K -->
+    <div class="grupo-card">
+      <div class="grupo-header"><h2>GRUPO K</h2><span>Portugal · RD Congo · Uzbekistán · Colombia</span></div>
+      <div class="match-section"><h3>Partidos</h3></div>
+      <div class="match-row"><span class="team-name">Portugal</span><span class="score">2-0</span><span class="team-name right">RD Congo</span><div class="probs"><span class="prob-w1">68%</span><span class="prob-d">/20%/</span><span class="prob-w2">13%</span></div></div>
+      <div class="match-row"><span class="team-name">Portugal</span><span class="score">2-1</span><span class="team-name right">Uzbekistán</span><div class="probs"><span class="prob-w1">58%</span><span class="prob-d">/23%/</span><span class="prob-w2">19%</span></div></div>
+      <div class="match-row"><span class="team-name">Portugal</span><span class="score">2-1</span><span class="team-name right">Colombia</span><div class="probs"><span class="prob-w1">55%</span><span class="prob-d">/22%/</span><span class="prob-w2">22%</span></div></div>
+      <div class="match-row"><span class="team-name">RD Congo</span><span class="score">1-2</span><span class="team-name right">Uzbekistán</span><div class="probs"><span class="prob-w1">26%</span><span class="prob-d">/29%/</span><span class="prob-w2">45%</span></div></div>
+      <div class="match-row"><span class="team-name">RD Congo</span><span class="score">1-2</span><span class="team-name right">Colombia</span><div class="probs"><span class="prob-w1">25%</span><span class="prob-d">/26%/</span><span class="prob-w2">49%</span></div></div>
+      <div class="match-row"><span class="team-name">Uzbekistán</span><span class="score">1-2</span><span class="team-name right">Colombia</span><div class="probs"><span class="prob-w1">33%</span><span class="prob-d">/28%/</span><span class="prob-w2">39%</span></div></div>
+      <div class="standing-section">
+        <table>
+          <tr><th></th><th>Equipo</th><th>PJ</th><th>Pts</th><th>GF</th><th>GC</th><th>DG</th></tr>
+          <tr class="pos-1"><td><span class="pos-badge">1</span></td><td>Portugal <span class="clasifica">✓</span></td><td>3</td><td class="pts">9</td><td>6</td><td>2</td><td>+4</td></tr>
+          <tr class="pos-2"><td><span class="pos-badge">2</span></td><td>Colombia <span class="clasifica">✓</span></td><td>3</td><td class="pts">6</td><td>5</td><td>4</td><td>+1</td></tr>
+          <tr class="pos-3"><td><span class="pos-badge">3</span></td><td>Uzbekistán</td><td>3</td><td class="pts">3</td><td>4</td><td>5</td><td>-1</td></tr>
+          <tr class="pos-4"><td><span class="pos-badge">4</span></td><td>RD Congo</td><td>3</td><td class="pts">0</td><td>2</td><td>6</td><td>-4</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GRUPO L -->
+    <div class="grupo-card">
+      <div class="grupo-header"><h2>GRUPO L</h2><span>Inglaterra · Croacia · Ghana · Panamá</span></div>
+      <div class="match-section"><h3>Partidos</h3></div>
+      <div class="match-row"><span class="team-name">Inglaterra</span><span class="score">2-1</span><span class="team-name right">Croacia</span><div class="probs"><span class="prob-w1">38%</span><span class="prob-d">/27%/</span><span class="prob-w2">35%</span></div></div>
+      <div class="match-row"><span class="team-name">Inglaterra</span><span class="score">2-1</span><span class="team-name right">Ghana</span><div class="probs"><span class="prob-w1">52%</span><span class="prob-d">/26%/</span><span class="prob-w2">22%</span></div></div>
+      <div class="match-row"><span class="team-name">Inglaterra</span><span class="score">2-1</span><span class="team-name right">Panamá</span><div class="probs"><span class="prob-w1">58%</span><span class="prob-d">/24%/</span><span class="prob-w2">18%</span></div></div>
+      <div class="match-row"><span class="team-name">Croacia</span><span class="score">2-1</span><span class="team-name right">Ghana</span><div class="probs"><span class="prob-w1">49%</span><span class="prob-d">/28%/</span><span class="prob-w2">23%</span></div></div>
+      <div class="match-row"><span class="team-name">Croacia</span><span class="score">2-1</span><span class="team-name right">Panamá</span><div class="probs"><span class="prob-w1">56%</span><span class="prob-d">/26%/</span><span class="prob-w2">19%</span></div></div>
+      <div class="match-row"><span class="team-name">Ghana</span><span class="score">2-1</span><span class="team-name right">Panamá</span><div class="probs"><span class="prob-w1">40%</span><span class="prob-d">/30%/</span><span class="prob-w2">30%</span></div></div>
+      <div class="standing-section">
+        <table>
+          <tr><th></th><th>Equipo</th><th>PJ</th><th>Pts</th><th>GF</th><th>GC</th><th>DG</th></tr>
+          <tr class="pos-1"><td><span class="pos-badge">1</span></td><td>Inglaterra <span class="clasifica">✓</span></td><td>3</td><td class="pts">9</td><td>6</td><td>3</td><td>+3</td></tr>
+          <tr class="pos-2"><td><span class="pos-badge">2</span></td><td>Croacia <span class="clasifica">✓</span></td><td>3</td><td class="pts">6</td><td>5</td><td>4</td><td>+1</td></tr>
+          <tr class="pos-3"><td><span class="pos-badge">3</span></td><td>Ghana</td><td>3</td><td class="pts">3</td><td>4</td><td>5</td><td>-1</td></tr>
+          <tr class="pos-4"><td><span class="pos-badge">4</span></td><td>Panamá</td><td>3</td><td class="pts">0</td><td>3</td><td>6</td><td>-3</td></tr>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /grupos-grid -->
+</div><!-- /container -->
+
+<footer>
+  Modelo Dixon-Coles | Python puro sin dependencias | Variables: xG · xGA · Elo · Forma · PPG Clasificatoria<br>
+  Fuentes de datos: eloratings.net · FIFA.com · fbref.com · rsssf.org
+</footer>
+
+</body>
+</html>

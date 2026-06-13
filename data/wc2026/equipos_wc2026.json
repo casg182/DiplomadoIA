@@ -1,142 +1,16 @@
 {
-  "_nota": "Datos pre-torneo al corte ~mayo 2026. Fuentes: FIFA.com, eloratings.net, fbref.com, transfermarkt.com",
+  "_nota": "Grupos OFICIALES del Mundial 2026 según sorteo FIFA. Datos pre-torneo mayo 2026.",
   "_fuentes": {
-    "elo":              "https://www.eloratings.net/  — descarga: eloratings.net/World.tsv",
-    "fifa_ranking":     "https://www.fifa.com/fifa-world-ranking/men",
-    "clasificatoria":   "https://www.rsssf.org/tables/  — estadisticas por confederacion",
-    "xg_plantilla":     "https://fbref.com/en/country/players/  — estadisticas avanzadas",
-    "valor_mercado":    "https://www.transfermarkt.com  — valor total de plantilla en M€"
+    "elo":           "https://www.eloratings.net/World.tsv",
+    "fifa_ranking":  "https://www.fifa.com/fifa-world-ranking/men",
+    "xg_clasif":     "https://fbref.com/en/country/players/",
+    "clasificacion": "https://www.rsssf.org/tables/"
   },
 
   "equipos": {
-    "Argentina": {
-      "grupo": "E", "confederacion": "CONMEBOL",
-      "elo": 2109, "fifa_rank": 1,
-      "clasif_ppg": 2.47, "clasif_gf": 34, "clasif_gc": 12, "clasif_partidos": 18,
-      "forma_ultimos10": [3,3,3,3,1,3,3,3,1,3],
-      "xg_prom": 2.18, "xga_prom": 0.89,
-      "valor_plantilla_M": 920, "mundiales_jugados": 18,
-      "goleador_principal": "Lionel Messi", "goles_goleador": 5
-    },
-    "France": {
-      "grupo": "F", "confederacion": "UEFA",
-      "elo": 2066, "fifa_rank": 2,
-      "clasif_ppg": 2.40, "clasif_gf": 25, "clasif_gc": 6, "clasif_partidos": 10,
-      "forma_ultimos10": [3,1,3,3,3,3,1,3,3,3],
-      "xg_prom": 2.05, "xga_prom": 0.72,
-      "valor_plantilla_M": 1250, "mundiales_jugados": 16,
-      "goleador_principal": "Kylian Mbappé", "goles_goleador": 7
-    },
-    "England": {
-      "grupo": "I", "confederacion": "UEFA",
-      "elo": 2038, "fifa_rank": 3,
-      "clasif_ppg": 2.20, "clasif_gf": 22, "clasif_gc": 8, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,1,3,3,1,3,3,3,1],
-      "xg_prom": 1.95, "xga_prom": 0.85,
-      "valor_plantilla_M": 1100, "mundiales_jugados": 17,
-      "goleador_principal": "Harry Kane", "goles_goleador": 6
-    },
-    "Brazil": {
-      "grupo": "D", "confederacion": "CONMEBOL",
-      "elo": 2032, "fifa_rank": 4,
-      "clasif_ppg": 2.11, "clasif_gf": 33, "clasif_gc": 14, "clasif_partidos": 18,
-      "forma_ultimos10": [3,3,3,1,3,0,3,3,1,3],
-      "xg_prom": 1.98, "xga_prom": 0.97,
-      "valor_plantilla_M": 1050, "mundiales_jugados": 22,
-      "goleador_principal": "Vinicius Jr.", "goles_goleador": 7
-    },
-    "Portugal": {
-      "grupo": "J", "confederacion": "UEFA",
-      "elo": 2010, "fifa_rank": 6,
-      "clasif_ppg": 2.60, "clasif_gf": 36, "clasif_gc": 8, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,3,3,3,1,3,3,3,3],
-      "xg_prom": 2.42, "xga_prom": 0.65,
-      "valor_plantilla_M": 1180, "mundiales_jugados": 9,
-      "goleador_principal": "Cristiano Ronaldo", "goles_goleador": 8
-    },
-    "Spain": {
-      "grupo": "G", "confederacion": "UEFA",
-      "elo": 2002, "fifa_rank": 5,
-      "clasif_ppg": 2.40, "clasif_gf": 29, "clasif_gc": 5, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,3,1,3,3,3,3,1,3],
-      "xg_prom": 2.10, "xga_prom": 0.60,
-      "valor_plantilla_M": 1020, "mundiales_jugados": 16,
-      "goleador_principal": "Lamine Yamal", "goles_goleador": 5
-    },
-    "Netherlands": {
-      "grupo": "K", "confederacion": "UEFA",
-      "elo": 1988, "fifa_rank": 7,
-      "clasif_ppg": 2.20, "clasif_gf": 28, "clasif_gc": 10, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,1,3,3,3,0,3,3,3],
-      "xg_prom": 1.92, "xga_prom": 0.90,
-      "valor_plantilla_M": 890, "mundiales_jugados": 11,
-      "goleador_principal": "Cody Gakpo", "goles_goleador": 4
-    },
-    "Germany": {
-      "grupo": "H", "confederacion": "UEFA",
-      "elo": 1984, "fifa_rank": 12,
-      "clasif_ppg": 2.50, "clasif_gf": 40, "clasif_gc": 8, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,3,3,1,3,3,3,3,1],
-      "xg_prom": 2.28, "xga_prom": 0.78,
-      "valor_plantilla_M": 870, "mundiales_jugados": 20,
-      "goleador_principal": "Florian Wirtz", "goles_goleador": 6
-    },
-    "Belgium": {
-      "grupo": "F", "confederacion": "UEFA",
-      "elo": 1972, "fifa_rank": 8,
-      "clasif_ppg": 2.10, "clasif_gf": 24, "clasif_gc": 8, "clasif_partidos": 10,
-      "forma_ultimos10": [3,1,3,3,3,0,3,3,1,3],
-      "xg_prom": 1.85, "xga_prom": 0.88,
-      "valor_plantilla_M": 760, "mundiales_jugados": 14,
-      "goleador_principal": "Romelu Lukaku", "goles_goleador": 4
-    },
-    "Croatia": {
-      "grupo": "J", "confederacion": "UEFA",
-      "elo": 1960, "fifa_rank": 10,
-      "clasif_ppg": 2.20, "clasif_gf": 26, "clasif_gc": 7, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,1,3,3,3,1,3,3,3],
-      "xg_prom": 1.78, "xga_prom": 0.70,
-      "valor_plantilla_M": 490, "mundiales_jugados": 6,
-      "goleador_principal": "Andrej Kramaric", "goles_goleador": 4
-    },
-    "Morocco": {
-      "grupo": "C", "confederacion": "CAF",
-      "elo": 1944, "fifa_rank": 11,
-      "clasif_ppg": 2.33, "clasif_gf": 18, "clasif_gc": 4, "clasif_partidos": 6,
-      "forma_ultimos10": [3,3,3,1,3,3,3,3,1,3],
-      "xg_prom": 1.72, "xga_prom": 0.55,
-      "valor_plantilla_M": 380, "mundiales_jugados": 6,
-      "goleador_principal": "Hakim Ziyech", "goles_goleador": 3
-    },
-    "Colombia": {
-      "grupo": "L", "confederacion": "CONMEBOL",
-      "elo": 1936, "fifa_rank": 13,
-      "clasif_ppg": 2.17, "clasif_gf": 28, "clasif_gc": 15, "clasif_partidos": 18,
-      "forma_ultimos10": [3,3,3,3,1,3,3,3,3,1],
-      "xg_prom": 1.82, "xga_prom": 1.05,
-      "valor_plantilla_M": 520, "mundiales_jugados": 7,
-      "goleador_principal": "Luis Diaz", "goles_goleador": 5
-    },
-    "Uruguay": {
-      "grupo": "L", "confederacion": "CONMEBOL",
-      "elo": 1930, "fifa_rank": 14,
-      "clasif_ppg": 1.94, "clasif_gf": 22, "clasif_gc": 17, "clasif_partidos": 18,
-      "forma_ultimos10": [3,1,3,3,0,3,3,1,3,3],
-      "xg_prom": 1.60, "xga_prom": 1.10,
-      "valor_plantilla_M": 420, "mundiales_jugados": 14,
-      "goleador_principal": "Darwin Nunez", "goles_goleador": 5
-    },
-    "USA": {
-      "grupo": "A", "confederacion": "CONCACAF",
-      "elo": 1920, "fifa_rank": 16,
-      "clasif_ppg": 2.12, "clasif_gf": 29, "clasif_gc": 10, "clasif_partidos": 16,
-      "forma_ultimos10": [3,3,3,1,3,3,0,3,3,3],
-      "xg_prom": 1.75, "xga_prom": 0.92,
-      "valor_plantilla_M": 560, "mundiales_jugados": 11,
-      "goleador_principal": "Christian Pulisic", "goles_goleador": 6
-    },
+
     "Mexico": {
-      "grupo": "B", "confederacion": "CONCACAF",
+      "grupo": "A", "confederacion": "CONCACAF",
       "elo": 1918, "fifa_rank": 15,
       "clasif_ppg": 2.00, "clasif_gf": 25, "clasif_gc": 12, "clasif_partidos": 16,
       "forma_ultimos10": [3,1,3,3,3,0,3,3,1,3],
@@ -144,260 +18,8 @@
       "valor_plantilla_M": 420, "mundiales_jugados": 17,
       "goleador_principal": "Hirving Lozano", "goles_goleador": 4
     },
-    "Canada": {
-      "grupo": "C", "confederacion": "CONCACAF",
-      "elo": 1815, "fifa_rank": 35,
-      "clasif_ppg": 2.06, "clasif_gf": 26, "clasif_gc": 11, "clasif_partidos": 16,
-      "forma_ultimos10": [3,3,3,0,3,3,1,3,3,1],
-      "xg_prom": 1.70, "xga_prom": 0.95,
-      "valor_plantilla_M": 480, "mundiales_jugados": 3,
-      "goleador_principal": "Jonathan David", "goles_goleador": 8
-    },
-    "Japan": {
-      "grupo": "H", "confederacion": "AFC",
-      "elo": 1905, "fifa_rank": 18,
-      "clasif_ppg": 2.25, "clasif_gf": 20, "clasif_gc": 6, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,3,1,3,3,3,3,1,3],
-      "xg_prom": 1.68, "xga_prom": 0.62,
-      "valor_plantilla_M": 350, "mundiales_jugados": 8,
-      "goleador_principal": "Takefusa Kubo", "goles_goleador": 4
-    },
-    "Denmark": {
-      "grupo": "K", "confederacion": "UEFA",
-      "elo": 1930, "fifa_rank": 20,
-      "clasif_ppg": 2.30, "clasif_gf": 30, "clasif_gc": 7, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,3,3,1,3,3,3,3,1],
-      "xg_prom": 1.90, "xga_prom": 0.72,
-      "valor_plantilla_M": 460, "mundiales_jugados": 6,
-      "goleador_principal": "Rasmus Hojlund", "goles_goleador": 5
-    },
-    "Switzerland": {
-      "grupo": "L", "confederacion": "UEFA",
-      "elo": 1900, "fifa_rank": 19,
-      "clasif_ppg": 2.20, "clasif_gf": 22, "clasif_gc": 8, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,1,3,3,3,3,1,3,3],
-      "xg_prom": 1.72, "xga_prom": 0.78,
-      "valor_plantilla_M": 410, "mundiales_jugados": 12,
-      "goleador_principal": "Breel Embolo", "goles_goleador": 4
-    },
-    "Senegal": {
-      "grupo": "I", "confederacion": "CAF",
-      "elo": 1910, "fifa_rank": 17,
-      "clasif_ppg": 2.50, "clasif_gf": 20, "clasif_gc": 4, "clasif_partidos": 6,
-      "forma_ultimos10": [3,3,3,3,1,3,3,3,3,3],
-      "xg_prom": 1.80, "xga_prom": 0.58,
-      "valor_plantilla_M": 390, "mundiales_jugados": 4,
-      "goleador_principal": "Sadio Mane", "goles_goleador": 3
-    },
-    "Austria": {
-      "grupo": "H", "confederacion": "UEFA",
-      "elo": 1888, "fifa_rank": 22,
-      "clasif_ppg": 2.10, "clasif_gf": 22, "clasif_gc": 8, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,1,3,3,3,1,3,3,3],
-      "xg_prom": 1.74, "xga_prom": 0.80,
-      "valor_plantilla_M": 390, "mundiales_jugados": 7,
-      "goleador_principal": "Marcel Sabitzer", "goles_goleador": 4
-    },
-    "Turkey": {
-      "grupo": "I", "confederacion": "UEFA",
-      "elo": 1868, "fifa_rank": 24,
-      "clasif_ppg": 1.90, "clasif_gf": 20, "clasif_gc": 11, "clasif_partidos": 10,
-      "forma_ultimos10": [3,1,3,3,0,3,3,1,3,3],
-      "xg_prom": 1.65, "xga_prom": 0.98,
-      "valor_plantilla_M": 450, "mundiales_jugados": 3,
-      "goleador_principal": "Arda Guler", "goles_goleador": 5
-    },
-    "Serbia": {
-      "grupo": "G", "confederacion": "UEFA",
-      "elo": 1845, "fifa_rank": 27,
-      "clasif_ppg": 1.90, "clasif_gf": 18, "clasif_gc": 10, "clasif_partidos": 10,
-      "forma_ultimos10": [3,1,3,3,1,3,0,3,3,3],
-      "xg_prom": 1.60, "xga_prom": 0.95,
-      "valor_plantilla_M": 380, "mundiales_jugados": 13,
-      "goleador_principal": "Dusan Vlahovic", "goles_goleador": 5
-    },
-    "Ukraine": {
-      "grupo": "L", "confederacion": "UEFA",
-      "elo": 1844, "fifa_rank": 28,
-      "clasif_ppg": 1.80, "clasif_gf": 18, "clasif_gc": 11, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,1,3,0,3,3,1,3,3],
-      "xg_prom": 1.55, "xga_prom": 1.00,
-      "valor_plantilla_M": 340, "mundiales_jugados": 2,
-      "goleador_principal": "Mykhailo Mudryk", "goles_goleador": 4
-    },
-    "Ivory Coast": {
-      "grupo": "D", "confederacion": "CAF",
-      "elo": 1840, "fifa_rank": 29,
-      "clasif_ppg": 2.17, "clasif_gf": 16, "clasif_gc": 5, "clasif_partidos": 6,
-      "forma_ultimos10": [3,3,3,1,3,3,3,1,3,3],
-      "xg_prom": 1.70, "xga_prom": 0.65,
-      "valor_plantilla_M": 320, "mundiales_jugados": 4,
-      "goleador_principal": "Sebastien Haller", "goles_goleador": 3
-    },
-    "Egypt": {
-      "grupo": "J", "confederacion": "CAF",
-      "elo": 1838, "fifa_rank": 30,
-      "clasif_ppg": 2.50, "clasif_gf": 14, "clasif_gc": 3, "clasif_partidos": 6,
-      "forma_ultimos10": [3,3,3,3,1,3,3,3,3,3],
-      "xg_prom": 1.55, "xga_prom": 0.50,
-      "valor_plantilla_M": 210, "mundiales_jugados": 3,
-      "goleador_principal": "Mohamed Salah", "goles_goleador": 9
-    },
-    "South Korea": {
-      "grupo": "C", "confederacion": "AFC",
-      "elo": 1878, "fifa_rank": 21,
-      "clasif_ppg": 2.00, "clasif_gf": 21, "clasif_gc": 9, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,1,3,3,0,3,3,3,1],
-      "xg_prom": 1.62, "xga_prom": 0.88,
-      "valor_plantilla_M": 370, "mundiales_jugados": 11,
-      "goleador_principal": "Son Heung-min", "goles_goleador": 5
-    },
-    "Ecuador": {
-      "grupo": "A", "confederacion": "CONMEBOL",
-      "elo": 1875, "fifa_rank": 23,
-      "clasif_ppg": 1.78, "clasif_gf": 20, "clasif_gc": 18, "clasif_partidos": 18,
-      "forma_ultimos10": [3,1,3,0,3,3,1,3,3,1],
-      "xg_prom": 1.48, "xga_prom": 1.12,
-      "valor_plantilla_M": 280, "mundiales_jugados": 4,
-      "goleador_principal": "Enner Valencia", "goles_goleador": 4
-    },
-    "Australia": {
-      "grupo": "E", "confederacion": "AFC",
-      "elo": 1865, "fifa_rank": 24,
-      "clasif_ppg": 2.20, "clasif_gf": 25, "clasif_gc": 7, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,3,1,3,3,3,1,3,3],
-      "xg_prom": 1.65, "xga_prom": 0.70,
-      "valor_plantilla_M": 260, "mundiales_jugados": 6,
-      "goleador_principal": "Mathew Leckie", "goles_goleador": 3
-    },
-    "Iran": {
-      "grupo": "F", "confederacion": "AFC",
-      "elo": 1818, "fifa_rank": 33,
-      "clasif_ppg": 2.00, "clasif_gf": 16, "clasif_gc": 7, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,1,3,3,0,3,3,1,3],
-      "xg_prom": 1.42, "xga_prom": 0.78,
-      "valor_plantilla_M": 140, "mundiales_jugados": 6,
-      "goleador_principal": "Mehdi Taremi", "goles_goleador": 4
-    },
-    "Nigeria": {
-      "grupo": "F", "confederacion": "CAF",
-      "elo": 1828, "fifa_rank": 32,
-      "clasif_ppg": 2.17, "clasif_gf": 14, "clasif_gc": 5, "clasif_partidos": 6,
-      "forma_ultimos10": [3,3,3,1,3,3,1,3,3,3],
-      "xg_prom": 1.58, "xga_prom": 0.68,
-      "valor_plantilla_M": 320, "mundiales_jugados": 7,
-      "goleador_principal": "Victor Osimhen", "goles_goleador": 5
-    },
-    "Saudi Arabia": {
-      "grupo": "E", "confederacion": "AFC",
-      "elo": 1810, "fifa_rank": 34,
-      "clasif_ppg": 1.90, "clasif_gf": 18, "clasif_gc": 9, "clasif_partidos": 10,
-      "forma_ultimos10": [3,3,1,3,0,3,3,1,3,3],
-      "xg_prom": 1.45, "xga_prom": 0.88,
-      "valor_plantilla_M": 190, "mundiales_jugados": 6,
-      "goleador_principal": "Salem Al-Dawsari", "goles_goleador": 3
-    },
-    "Algeria": {
-      "grupo": "H", "confederacion": "CAF",
-      "elo": 1832, "fifa_rank": 31,
-      "clasif_ppg": 2.33, "clasif_gf": 15, "clasif_gc": 4, "clasif_partidos": 6,
-      "forma_ultimos10": [3,3,3,3,1,3,3,1,3,3],
-      "xg_prom": 1.52, "xga_prom": 0.55,
-      "valor_plantilla_M": 230, "mundiales_jugados": 4,
-      "goleador_principal": "Islam Slimani", "goles_goleador": 3
-    },
-    "Chile": {
-      "grupo": "E", "confederacion": "CONMEBOL",
-      "elo": 1855, "fifa_rank": 26,
-      "clasif_ppg": 1.50, "clasif_gf": 18, "clasif_gc": 22, "clasif_partidos": 18,
-      "forma_ultimos10": [1,3,0,3,3,1,3,0,3,3],
-      "xg_prom": 1.52, "xga_prom": 1.30,
-      "valor_plantilla_M": 260, "mundiales_jugados": 10,
-      "goleador_principal": "Ben Brereton", "goles_goleador": 4
-    },
-    "Peru": {
-      "grupo": "I", "confederacion": "CONMEBOL",
-      "elo": 1808, "fifa_rank": 40,
-      "clasif_ppg": 1.39, "clasif_gf": 17, "clasif_gc": 24, "clasif_partidos": 18,
-      "forma_ultimos10": [0,3,1,3,0,3,1,3,0,3],
-      "xg_prom": 1.35, "xga_prom": 1.42,
-      "valor_plantilla_M": 180, "mundiales_jugados": 9,
-      "goleador_principal": "Andre Carrillo", "goles_goleador": 3
-    },
-    "Paraguay": {
-      "grupo": "D", "confederacion": "CONMEBOL",
-      "elo": 1845, "fifa_rank": 28,
-      "clasif_ppg": 1.67, "clasif_gf": 18, "clasif_gc": 18, "clasif_partidos": 18,
-      "forma_ultimos10": [3,0,3,1,3,3,0,3,1,3],
-      "xg_prom": 1.38, "xga_prom": 1.20,
-      "valor_plantilla_M": 210, "mundiales_jugados": 9,
-      "goleador_principal": "Miguel Almiron", "goles_goleador": 4
-    },
-    "Venezuela": {
-      "grupo": "B", "confederacion": "CONMEBOL",
-      "elo": 1790, "fifa_rank": 38,
-      "clasif_ppg": 1.56, "clasif_gf": 19, "clasif_gc": 21, "clasif_partidos": 18,
-      "forma_ultimos10": [3,1,3,0,3,3,1,0,3,3],
-      "xg_prom": 1.40, "xga_prom": 1.28,
-      "valor_plantilla_M": 200, "mundiales_jugados": 1,
-      "goleador_principal": "Salomon Rondon", "goles_goleador": 3
-    },
-    "Bolivia": {
-      "grupo": "A", "confederacion": "CONMEBOL",
-      "elo": 1768, "fifa_rank": 85,
-      "clasif_ppg": 0.89, "clasif_gf": 11, "clasif_gc": 30, "clasif_partidos": 18,
-      "forma_ultimos10": [0,1,0,3,0,1,0,0,3,0],
-      "xg_prom": 0.82, "xga_prom": 1.95,
-      "valor_plantilla_M": 60, "mundiales_jugados": 4,
-      "goleador_principal": "Marcelo Martins", "goles_goleador": 2
-    },
-    "Panama": {
-      "grupo": "A", "confederacion": "CONCACAF",
-      "elo": 1712, "fifa_rank": 44,
-      "clasif_ppg": 1.75, "clasif_gf": 22, "clasif_gc": 12, "clasif_partidos": 16,
-      "forma_ultimos10": [3,3,1,3,3,1,0,3,3,1],
-      "xg_prom": 1.42, "xga_prom": 0.98,
-      "valor_plantilla_M": 90, "mundiales_jugados": 2,
-      "goleador_principal": "Ismael Diaz", "goles_goleador": 4
-    },
-    "Costa Rica": {
-      "grupo": "J", "confederacion": "CONCACAF",
-      "elo": 1718, "fifa_rank": 47,
-      "clasif_ppg": 1.56, "clasif_gf": 20, "clasif_gc": 15, "clasif_partidos": 16,
-      "forma_ultimos10": [3,1,3,0,3,3,1,3,0,3],
-      "xg_prom": 1.30, "xga_prom": 1.08,
-      "valor_plantilla_M": 85, "mundiales_jugados": 6,
-      "goleador_principal": "Joel Campbell", "goles_goleador": 3
-    },
-    "Honduras": {
-      "grupo": "C", "confederacion": "CONCACAF",
-      "elo": 1702, "fifa_rank": 50,
-      "clasif_ppg": 1.44, "clasif_gf": 16, "clasif_gc": 17, "clasif_partidos": 16,
-      "forma_ultimos10": [3,0,3,1,3,0,3,3,1,0],
-      "xg_prom": 1.20, "xga_prom": 1.15,
-      "valor_plantilla_M": 70, "mundiales_jugados": 3,
-      "goleador_principal": "Alberth Elis", "goles_goleador": 3
-    },
-    "Jamaica": {
-      "grupo": "B", "confederacion": "CONCACAF",
-      "elo": 1698, "fifa_rank": 53,
-      "clasif_ppg": 1.50, "clasif_gf": 18, "clasif_gc": 15, "clasif_partidos": 16,
-      "forma_ultimos10": [3,3,1,0,3,3,1,3,0,3],
-      "xg_prom": 1.25, "xga_prom": 1.10,
-      "valor_plantilla_M": 80, "mundiales_jugados": 1,
-      "goleador_principal": "Leon Bailey", "goles_goleador": 5
-    },
-    "Cameroon": {
-      "grupo": "B", "confederacion": "CAF",
-      "elo": 1760, "fifa_rank": 43,
-      "clasif_ppg": 2.00, "clasif_gf": 12, "clasif_gc": 4, "clasif_partidos": 6,
-      "forma_ultimos10": [3,3,3,1,3,3,0,3,3,1],
-      "xg_prom": 1.48, "xga_prom": 0.72,
-      "valor_plantilla_M": 200, "mundiales_jugados": 9,
-      "goleador_principal": "Vincent Aboubakar", "goles_goleador": 3
-    },
     "South Africa": {
-      "grupo": "G", "confederacion": "CAF",
+      "grupo": "A", "confederacion": "CAF",
       "elo": 1768, "fifa_rank": 42,
       "clasif_ppg": 1.83, "clasif_gf": 10, "clasif_gc": 5, "clasif_partidos": 6,
       "forma_ultimos10": [3,3,3,1,3,1,3,0,3,3],
@@ -405,32 +27,14 @@
       "valor_plantilla_M": 130, "mundiales_jugados": 4,
       "goleador_principal": "Percy Tau", "goles_goleador": 3
     },
-    "Tunisia": {
-      "grupo": "D", "confederacion": "CAF",
-      "elo": 1772, "fifa_rank": 40,
-      "clasif_ppg": 2.00, "clasif_gf": 12, "clasif_gc": 5, "clasif_partidos": 6,
-      "forma_ultimos10": [3,3,3,1,3,3,0,3,1,3],
-      "xg_prom": 1.38, "xga_prom": 0.62,
-      "valor_plantilla_M": 120, "mundiales_jugados": 6,
-      "goleador_principal": "Wahbi Khazri", "goles_goleador": 3
-    },
-    "Ghana": {
-      "grupo": "K", "confederacion": "CAF",
-      "elo": 1762, "fifa_rank": 45,
-      "clasif_ppg": 1.83, "clasif_gf": 11, "clasif_gc": 6, "clasif_partidos": 6,
-      "forma_ultimos10": [3,3,1,3,3,0,3,3,1,3],
-      "xg_prom": 1.42, "xga_prom": 0.75,
-      "valor_plantilla_M": 175, "mundiales_jugados": 4,
-      "goleador_principal": "Jordan Ayew", "goles_goleador": 3
-    },
-    "New Zealand": {
-      "grupo": "K", "confederacion": "OFC",
-      "elo": 1648, "fifa_rank": 100,
-      "clasif_ppg": 2.50, "clasif_gf": 18, "clasif_gc": 4, "clasif_partidos": 8,
-      "forma_ultimos10": [3,3,3,3,3,1,3,3,3,1],
-      "xg_prom": 1.55, "xga_prom": 0.48,
-      "valor_plantilla_M": 40, "mundiales_jugados": 2,
-      "goleador_principal": "Chris Wood", "goles_goleador": 4
+    "South Korea": {
+      "grupo": "A", "confederacion": "AFC",
+      "elo": 1878, "fifa_rank": 21,
+      "clasif_ppg": 2.00, "clasif_gf": 21, "clasif_gc": 9, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,1,3,3,0,3,3,3,1],
+      "xg_prom": 1.62, "xga_prom": 0.88,
+      "valor_plantilla_M": 370, "mundiales_jugados": 11,
+      "goleador_principal": "Son Heung-min", "goles_goleador": 5
     },
     "Czech Republic": {
       "grupo": "A", "confederacion": "UEFA",
@@ -441,6 +45,16 @@
       "valor_plantilla_M": 310, "mundiales_jugados": 10,
       "goleador_principal": "Patrik Schick", "goles_goleador": 5
     },
+
+    "Canada": {
+      "grupo": "B", "confederacion": "CONCACAF",
+      "elo": 1815, "fifa_rank": 35,
+      "clasif_ppg": 2.06, "clasif_gf": 26, "clasif_gc": 11, "clasif_partidos": 16,
+      "forma_ultimos10": [3,3,3,0,3,3,1,3,3,1],
+      "xg_prom": 1.70, "xga_prom": 0.95,
+      "valor_plantilla_M": 480, "mundiales_jugados": 3,
+      "goleador_principal": "Jonathan David", "goles_goleador": 8
+    },
     "Bosnia and Herzegovina": {
       "grupo": "B", "confederacion": "UEFA",
       "elo": 1782, "fifa_rank": 56,
@@ -450,14 +64,394 @@
       "valor_plantilla_M": 175, "mundiales_jugados": 1,
       "goleador_principal": "Edin Dzeko", "goles_goleador": 3
     },
-    "Uzbekistan": {
+    "Qatar": {
+      "grupo": "B", "confederacion": "AFC",
+      "elo": 1742, "fifa_rank": 60,
+      "clasif_ppg": 1.80, "clasif_gf": 18, "clasif_gc": 10, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,1,3,3,0,3,1,3,3],
+      "xg_prom": 1.38, "xga_prom": 0.92,
+      "valor_plantilla_M": 95, "mundiales_jugados": 2,
+      "goleador_principal": "Akram Afif", "goles_goleador": 4
+    },
+    "Switzerland": {
+      "grupo": "B", "confederacion": "UEFA",
+      "elo": 1900, "fifa_rank": 19,
+      "clasif_ppg": 2.20, "clasif_gf": 22, "clasif_gc": 8, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,1,3,3,3,3,1,3,3],
+      "xg_prom": 1.72, "xga_prom": 0.78,
+      "valor_plantilla_M": 410, "mundiales_jugados": 12,
+      "goleador_principal": "Breel Embolo", "goles_goleador": 4
+    },
+
+    "Brazil": {
+      "grupo": "C", "confederacion": "CONMEBOL",
+      "elo": 2032, "fifa_rank": 4,
+      "clasif_ppg": 2.11, "clasif_gf": 33, "clasif_gc": 14, "clasif_partidos": 18,
+      "forma_ultimos10": [3,3,3,1,3,0,3,3,1,3],
+      "xg_prom": 1.98, "xga_prom": 0.97,
+      "valor_plantilla_M": 1050, "mundiales_jugados": 22,
+      "goleador_principal": "Vinicius Jr.", "goles_goleador": 7
+    },
+    "Morocco": {
+      "grupo": "C", "confederacion": "CAF",
+      "elo": 1944, "fifa_rank": 11,
+      "clasif_ppg": 2.33, "clasif_gf": 18, "clasif_gc": 4, "clasif_partidos": 6,
+      "forma_ultimos10": [3,3,3,1,3,3,3,3,1,3],
+      "xg_prom": 1.72, "xga_prom": 0.55,
+      "valor_plantilla_M": 380, "mundiales_jugados": 6,
+      "goleador_principal": "Hakim Ziyech", "goles_goleador": 3
+    },
+    "Haiti": {
+      "grupo": "C", "confederacion": "CONCACAF",
+      "elo": 1640, "fifa_rank": 88,
+      "clasif_ppg": 1.44, "clasif_gf": 14, "clasif_gc": 13, "clasif_partidos": 16,
+      "forma_ultimos10": [3,0,3,1,3,0,3,1,0,3],
+      "xg_prom": 0.98, "xga_prom": 1.18,
+      "valor_plantilla_M": 22, "mundiales_jugados": 1,
+      "goleador_principal": "Duckens Nazon", "goles_goleador": 3
+    },
+    "Scotland": {
+      "grupo": "C", "confederacion": "UEFA",
+      "elo": 1800, "fifa_rank": 38,
+      "clasif_ppg": 1.80, "clasif_gf": 20, "clasif_gc": 11, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,1,3,0,3,3,1,3,3],
+      "xg_prom": 1.55, "xga_prom": 1.05,
+      "valor_plantilla_M": 280, "mundiales_jugados": 8,
+      "goleador_principal": "Scott McTominay", "goles_goleador": 5
+    },
+
+    "USA": {
+      "grupo": "D", "confederacion": "CONCACAF",
+      "elo": 1920, "fifa_rank": 16,
+      "clasif_ppg": 2.12, "clasif_gf": 29, "clasif_gc": 10, "clasif_partidos": 16,
+      "forma_ultimos10": [3,3,3,1,3,3,0,3,3,3],
+      "xg_prom": 1.75, "xga_prom": 0.92,
+      "valor_plantilla_M": 560, "mundiales_jugados": 11,
+      "goleador_principal": "Christian Pulisic", "goles_goleador": 6
+    },
+    "Paraguay": {
+      "grupo": "D", "confederacion": "CONMEBOL",
+      "elo": 1845, "fifa_rank": 28,
+      "clasif_ppg": 1.67, "clasif_gf": 18, "clasif_gc": 18, "clasif_partidos": 18,
+      "forma_ultimos10": [3,0,3,1,3,3,0,3,1,3],
+      "xg_prom": 1.38, "xga_prom": 1.20,
+      "valor_plantilla_M": 210, "mundiales_jugados": 9,
+      "goleador_principal": "Miguel Almiron", "goles_goleador": 4
+    },
+    "Australia": {
+      "grupo": "D", "confederacion": "AFC",
+      "elo": 1865, "fifa_rank": 24,
+      "clasif_ppg": 2.20, "clasif_gf": 25, "clasif_gc": 7, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,3,1,3,3,3,1,3,3],
+      "xg_prom": 1.65, "xga_prom": 0.70,
+      "valor_plantilla_M": 260, "mundiales_jugados": 6,
+      "goleador_principal": "Mathew Leckie", "goles_goleador": 3
+    },
+    "Turkey": {
+      "grupo": "D", "confederacion": "UEFA",
+      "elo": 1868, "fifa_rank": 24,
+      "clasif_ppg": 1.90, "clasif_gf": 20, "clasif_gc": 11, "clasif_partidos": 10,
+      "forma_ultimos10": [3,1,3,3,0,3,3,1,3,3],
+      "xg_prom": 1.65, "xga_prom": 0.98,
+      "valor_plantilla_M": 450, "mundiales_jugados": 3,
+      "goleador_principal": "Arda Guler", "goles_goleador": 5
+    },
+
+    "Germany": {
+      "grupo": "E", "confederacion": "UEFA",
+      "elo": 1984, "fifa_rank": 12,
+      "clasif_ppg": 2.50, "clasif_gf": 40, "clasif_gc": 8, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,3,3,1,3,3,3,3,1],
+      "xg_prom": 2.28, "xga_prom": 0.78,
+      "valor_plantilla_M": 870, "mundiales_jugados": 20,
+      "goleador_principal": "Florian Wirtz", "goles_goleador": 6
+    },
+    "Curacao": {
+      "grupo": "E", "confederacion": "CONCACAF",
+      "elo": 1645, "fifa_rank": 82,
+      "clasif_ppg": 1.50, "clasif_gf": 17, "clasif_gc": 14, "clasif_partidos": 16,
+      "forma_ultimos10": [3,0,3,1,3,0,3,3,1,0],
+      "xg_prom": 1.05, "xga_prom": 1.20,
+      "valor_plantilla_M": 18, "mundiales_jugados": 0,
+      "goleador_principal": "Cuco Martina", "goles_goleador": 2
+    },
+    "Ivory Coast": {
+      "grupo": "E", "confederacion": "CAF",
+      "elo": 1840, "fifa_rank": 29,
+      "clasif_ppg": 2.17, "clasif_gf": 16, "clasif_gc": 5, "clasif_partidos": 6,
+      "forma_ultimos10": [3,3,3,1,3,3,3,1,3,3],
+      "xg_prom": 1.70, "xga_prom": 0.65,
+      "valor_plantilla_M": 320, "mundiales_jugados": 4,
+      "goleador_principal": "Sebastien Haller", "goles_goleador": 3
+    },
+    "Ecuador": {
+      "grupo": "E", "confederacion": "CONMEBOL",
+      "elo": 1875, "fifa_rank": 23,
+      "clasif_ppg": 1.78, "clasif_gf": 20, "clasif_gc": 18, "clasif_partidos": 18,
+      "forma_ultimos10": [3,1,3,0,3,3,1,3,3,1],
+      "xg_prom": 1.48, "xga_prom": 1.12,
+      "valor_plantilla_M": 280, "mundiales_jugados": 4,
+      "goleador_principal": "Enner Valencia", "goles_goleador": 4
+    },
+
+    "Netherlands": {
+      "grupo": "F", "confederacion": "UEFA",
+      "elo": 1988, "fifa_rank": 7,
+      "clasif_ppg": 2.20, "clasif_gf": 28, "clasif_gc": 10, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,1,3,3,3,0,3,3,3],
+      "xg_prom": 1.92, "xga_prom": 0.90,
+      "valor_plantilla_M": 890, "mundiales_jugados": 11,
+      "goleador_principal": "Cody Gakpo", "goles_goleador": 4
+    },
+    "Japan": {
+      "grupo": "F", "confederacion": "AFC",
+      "elo": 1905, "fifa_rank": 18,
+      "clasif_ppg": 2.25, "clasif_gf": 20, "clasif_gc": 6, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,3,1,3,3,3,3,1,3],
+      "xg_prom": 1.68, "xga_prom": 0.62,
+      "valor_plantilla_M": 350, "mundiales_jugados": 8,
+      "goleador_principal": "Takefusa Kubo", "goles_goleador": 4
+    },
+    "Sweden": {
+      "grupo": "F", "confederacion": "UEFA",
+      "elo": 1882, "fifa_rank": 27,
+      "clasif_ppg": 1.90, "clasif_gf": 19, "clasif_gc": 10, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,1,3,3,1,3,3,1,3],
+      "xg_prom": 1.65, "xga_prom": 0.95,
+      "valor_plantilla_M": 310, "mundiales_jugados": 12,
+      "goleador_principal": "Alexander Isak", "goles_goleador": 6
+    },
+    "Tunisia": {
+      "grupo": "F", "confederacion": "CAF",
+      "elo": 1772, "fifa_rank": 40,
+      "clasif_ppg": 2.00, "clasif_gf": 12, "clasif_gc": 5, "clasif_partidos": 6,
+      "forma_ultimos10": [3,3,3,1,3,3,0,3,1,3],
+      "xg_prom": 1.38, "xga_prom": 0.62,
+      "valor_plantilla_M": 120, "mundiales_jugados": 6,
+      "goleador_principal": "Wahbi Khazri", "goles_goleador": 3
+    },
+
+    "Belgium": {
+      "grupo": "G", "confederacion": "UEFA",
+      "elo": 1972, "fifa_rank": 8,
+      "clasif_ppg": 2.10, "clasif_gf": 24, "clasif_gc": 8, "clasif_partidos": 10,
+      "forma_ultimos10": [3,1,3,3,3,0,3,3,1,3],
+      "xg_prom": 1.85, "xga_prom": 0.88,
+      "valor_plantilla_M": 760, "mundiales_jugados": 14,
+      "goleador_principal": "Romelu Lukaku", "goles_goleador": 4
+    },
+    "Egypt": {
+      "grupo": "G", "confederacion": "CAF",
+      "elo": 1838, "fifa_rank": 30,
+      "clasif_ppg": 2.50, "clasif_gf": 14, "clasif_gc": 3, "clasif_partidos": 6,
+      "forma_ultimos10": [3,3,3,3,1,3,3,3,3,3],
+      "xg_prom": 1.55, "xga_prom": 0.50,
+      "valor_plantilla_M": 210, "mundiales_jugados": 3,
+      "goleador_principal": "Mohamed Salah", "goles_goleador": 9
+    },
+    "Iran": {
       "grupo": "G", "confederacion": "AFC",
+      "elo": 1818, "fifa_rank": 33,
+      "clasif_ppg": 2.00, "clasif_gf": 16, "clasif_gc": 7, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,1,3,3,0,3,3,1,3],
+      "xg_prom": 1.42, "xga_prom": 0.78,
+      "valor_plantilla_M": 140, "mundiales_jugados": 6,
+      "goleador_principal": "Mehdi Taremi", "goles_goleador": 4
+    },
+    "New Zealand": {
+      "grupo": "G", "confederacion": "OFC",
+      "elo": 1648, "fifa_rank": 100,
+      "clasif_ppg": 2.50, "clasif_gf": 18, "clasif_gc": 4, "clasif_partidos": 8,
+      "forma_ultimos10": [3,3,3,3,3,1,3,3,3,1],
+      "xg_prom": 1.55, "xga_prom": 0.48,
+      "valor_plantilla_M": 40, "mundiales_jugados": 2,
+      "goleador_principal": "Chris Wood", "goles_goleador": 4
+    },
+
+    "Spain": {
+      "grupo": "H", "confederacion": "UEFA",
+      "elo": 2002, "fifa_rank": 5,
+      "clasif_ppg": 2.40, "clasif_gf": 29, "clasif_gc": 5, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,3,1,3,3,3,3,1,3],
+      "xg_prom": 2.10, "xga_prom": 0.60,
+      "valor_plantilla_M": 1020, "mundiales_jugados": 16,
+      "goleador_principal": "Lamine Yamal", "goles_goleador": 5
+    },
+    "Cape Verde": {
+      "grupo": "H", "confederacion": "CAF",
+      "elo": 1718, "fifa_rank": 68,
+      "clasif_ppg": 1.83, "clasif_gf": 11, "clasif_gc": 6, "clasif_partidos": 6,
+      "forma_ultimos10": [3,3,1,3,3,0,3,3,1,3],
+      "xg_prom": 1.28, "xga_prom": 0.88,
+      "valor_plantilla_M": 45, "mundiales_jugados": 0,
+      "goleador_principal": "Ryan Mendes", "goles_goleador": 3
+    },
+    "Saudi Arabia": {
+      "grupo": "H", "confederacion": "AFC",
+      "elo": 1810, "fifa_rank": 34,
+      "clasif_ppg": 1.90, "clasif_gf": 18, "clasif_gc": 9, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,1,3,0,3,3,1,3,3],
+      "xg_prom": 1.45, "xga_prom": 0.88,
+      "valor_plantilla_M": 190, "mundiales_jugados": 6,
+      "goleador_principal": "Salem Al-Dawsari", "goles_goleador": 3
+    },
+    "Uruguay": {
+      "grupo": "H", "confederacion": "CONMEBOL",
+      "elo": 1930, "fifa_rank": 14,
+      "clasif_ppg": 1.94, "clasif_gf": 22, "clasif_gc": 17, "clasif_partidos": 18,
+      "forma_ultimos10": [3,1,3,3,0,3,3,1,3,3],
+      "xg_prom": 1.60, "xga_prom": 1.10,
+      "valor_plantilla_M": 420, "mundiales_jugados": 14,
+      "goleador_principal": "Darwin Nunez", "goles_goleador": 5
+    },
+
+    "France": {
+      "grupo": "I", "confederacion": "UEFA",
+      "elo": 2066, "fifa_rank": 2,
+      "clasif_ppg": 2.40, "clasif_gf": 25, "clasif_gc": 6, "clasif_partidos": 10,
+      "forma_ultimos10": [3,1,3,3,3,3,1,3,3,3],
+      "xg_prom": 2.05, "xga_prom": 0.72,
+      "valor_plantilla_M": 1250, "mundiales_jugados": 16,
+      "goleador_principal": "Kylian Mbappe", "goles_goleador": 7
+    },
+    "Senegal": {
+      "grupo": "I", "confederacion": "CAF",
+      "elo": 1910, "fifa_rank": 17,
+      "clasif_ppg": 2.50, "clasif_gf": 20, "clasif_gc": 4, "clasif_partidos": 6,
+      "forma_ultimos10": [3,3,3,3,1,3,3,3,3,3],
+      "xg_prom": 1.80, "xga_prom": 0.58,
+      "valor_plantilla_M": 390, "mundiales_jugados": 4,
+      "goleador_principal": "Sadio Mane", "goles_goleador": 3
+    },
+    "Iraq": {
+      "grupo": "I", "confederacion": "AFC",
+      "elo": 1735, "fifa_rank": 58,
+      "clasif_ppg": 1.70, "clasif_gf": 18, "clasif_gc": 11, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,1,3,0,3,3,1,3,3],
+      "xg_prom": 1.30, "xga_prom": 1.08,
+      "valor_plantilla_M": 60, "mundiales_jugados": 1,
+      "goleador_principal": "Mohanad Ali", "goles_goleador": 4
+    },
+    "Norway": {
+      "grupo": "I", "confederacion": "UEFA",
+      "elo": 1892, "fifa_rank": 22,
+      "clasif_ppg": 2.00, "clasif_gf": 21, "clasif_gc": 9, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,3,1,3,3,1,3,3,3],
+      "xg_prom": 1.88, "xga_prom": 0.92,
+      "valor_plantilla_M": 520, "mundiales_jugados": 3,
+      "goleador_principal": "Erling Haaland", "goles_goleador": 12
+    },
+
+    "Argentina": {
+      "grupo": "J", "confederacion": "CONMEBOL",
+      "elo": 2109, "fifa_rank": 1,
+      "clasif_ppg": 2.47, "clasif_gf": 34, "clasif_gc": 12, "clasif_partidos": 18,
+      "forma_ultimos10": [3,3,3,3,1,3,3,3,1,3],
+      "xg_prom": 2.18, "xga_prom": 0.89,
+      "valor_plantilla_M": 920, "mundiales_jugados": 18,
+      "goleador_principal": "Lionel Messi", "goles_goleador": 5
+    },
+    "Algeria": {
+      "grupo": "J", "confederacion": "CAF",
+      "elo": 1832, "fifa_rank": 31,
+      "clasif_ppg": 2.33, "clasif_gf": 15, "clasif_gc": 4, "clasif_partidos": 6,
+      "forma_ultimos10": [3,3,3,3,1,3,3,1,3,3],
+      "xg_prom": 1.52, "xga_prom": 0.55,
+      "valor_plantilla_M": 230, "mundiales_jugados": 4,
+      "goleador_principal": "Islam Slimani", "goles_goleador": 3
+    },
+    "Austria": {
+      "grupo": "J", "confederacion": "UEFA",
+      "elo": 1888, "fifa_rank": 22,
+      "clasif_ppg": 2.10, "clasif_gf": 22, "clasif_gc": 8, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,1,3,3,3,1,3,3,3],
+      "xg_prom": 1.74, "xga_prom": 0.80,
+      "valor_plantilla_M": 390, "mundiales_jugados": 7,
+      "goleador_principal": "Marcel Sabitzer", "goles_goleador": 4
+    },
+    "Jordan": {
+      "grupo": "J", "confederacion": "AFC",
+      "elo": 1702, "fifa_rank": 75,
+      "clasif_ppg": 1.60, "clasif_gf": 14, "clasif_gc": 10, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,1,3,0,3,3,1,0,3],
+      "xg_prom": 1.12, "xga_prom": 1.05,
+      "valor_plantilla_M": 35, "mundiales_jugados": 0,
+      "goleador_principal": "Yazan Al-Naimat", "goles_goleador": 3
+    },
+
+    "Portugal": {
+      "grupo": "K", "confederacion": "UEFA",
+      "elo": 2010, "fifa_rank": 6,
+      "clasif_ppg": 2.60, "clasif_gf": 36, "clasif_gc": 8, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,3,3,3,1,3,3,3,3],
+      "xg_prom": 2.42, "xga_prom": 0.65,
+      "valor_plantilla_M": 1180, "mundiales_jugados": 9,
+      "goleador_principal": "Cristiano Ronaldo", "goles_goleador": 8
+    },
+    "DR Congo": {
+      "grupo": "K", "confederacion": "CAF",
+      "elo": 1748, "fifa_rank": 62,
+      "clasif_ppg": 1.83, "clasif_gf": 12, "clasif_gc": 7, "clasif_partidos": 6,
+      "forma_ultimos10": [3,3,1,3,3,0,3,3,1,3],
+      "xg_prom": 1.38, "xga_prom": 1.00,
+      "valor_plantilla_M": 80, "mundiales_jugados": 1,
+      "goleador_principal": "Cedric Bakambu", "goles_goleador": 4
+    },
+    "Uzbekistan": {
+      "grupo": "K", "confederacion": "AFC",
       "elo": 1752, "fifa_rank": 62,
       "clasif_ppg": 2.20, "clasif_gf": 22, "clasif_gc": 6, "clasif_partidos": 10,
       "forma_ultimos10": [3,3,3,3,1,3,3,3,3,1],
       "xg_prom": 1.60, "xga_prom": 0.60,
       "valor_plantilla_M": 95, "mundiales_jugados": 0,
       "goleador_principal": "Eldor Shomurodov", "goles_goleador": 5
+    },
+    "Colombia": {
+      "grupo": "K", "confederacion": "CONMEBOL",
+      "elo": 1936, "fifa_rank": 13,
+      "clasif_ppg": 2.17, "clasif_gf": 28, "clasif_gc": 15, "clasif_partidos": 18,
+      "forma_ultimos10": [3,3,3,3,1,3,3,3,3,1],
+      "xg_prom": 1.82, "xga_prom": 1.05,
+      "valor_plantilla_M": 520, "mundiales_jugados": 7,
+      "goleador_principal": "Luis Diaz", "goles_goleador": 5
+    },
+
+    "England": {
+      "grupo": "L", "confederacion": "UEFA",
+      "elo": 2038, "fifa_rank": 3,
+      "clasif_ppg": 2.20, "clasif_gf": 22, "clasif_gc": 8, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,1,3,3,1,3,3,3,1],
+      "xg_prom": 1.95, "xga_prom": 0.85,
+      "valor_plantilla_M": 1100, "mundiales_jugados": 17,
+      "goleador_principal": "Harry Kane", "goles_goleador": 6
+    },
+    "Croatia": {
+      "grupo": "L", "confederacion": "UEFA",
+      "elo": 1960, "fifa_rank": 10,
+      "clasif_ppg": 2.20, "clasif_gf": 26, "clasif_gc": 7, "clasif_partidos": 10,
+      "forma_ultimos10": [3,3,1,3,3,3,1,3,3,3],
+      "xg_prom": 1.78, "xga_prom": 0.70,
+      "valor_plantilla_M": 490, "mundiales_jugados": 6,
+      "goleador_principal": "Andrej Kramaric", "goles_goleador": 4
+    },
+    "Ghana": {
+      "grupo": "L", "confederacion": "CAF",
+      "elo": 1762, "fifa_rank": 45,
+      "clasif_ppg": 1.83, "clasif_gf": 11, "clasif_gc": 6, "clasif_partidos": 6,
+      "forma_ultimos10": [3,3,1,3,3,0,3,3,1,3],
+      "xg_prom": 1.42, "xga_prom": 0.75,
+      "valor_plantilla_M": 175, "mundiales_jugados": 4,
+      "goleador_principal": "Jordan Ayew", "goles_goleador": 3
+    },
+    "Panama": {
+      "grupo": "L", "confederacion": "CONCACAF",
+      "elo": 1712, "fifa_rank": 44,
+      "clasif_ppg": 1.75, "clasif_gf": 22, "clasif_gc": 12, "clasif_partidos": 16,
+      "forma_ultimos10": [3,3,1,3,3,1,0,3,3,1],
+      "xg_prom": 1.42, "xga_prom": 0.98,
+      "valor_plantilla_M": 90, "mundiales_jugados": 2,
+      "goleador_principal": "Ismael Diaz", "goles_goleador": 4
     }
+
   }
 }
