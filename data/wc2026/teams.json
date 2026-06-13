@@ -1,0 +1,117 @@
+{
+  "tournament": "FIFA World Cup 2026",
+  "host_countries": ["USA", "Canada", "Mexico"],
+  "format": "12 grupos de 4 equipos | Top 2 por grupo + 8 mejores terceros = 32 equipos en eliminatorias",
+  "total_matches": 104,
+  "groups": {
+    "A": {
+      "teams": ["USA", "Panama", "Bolivia", "Ecuador"],
+      "note": "Sede: Dallas, San Francisco, Seattle (USA)"
+    },
+    "B": {
+      "teams": ["Mexico", "Jamaica", "Venezuela", "Cameroon"],
+      "note": "Sede: Guadalajara, Mexico City, Monterrey (MEX)"
+    },
+    "C": {
+      "teams": ["Canada", "Honduras", "Morocco", "South Korea"],
+      "note": "Sede: Toronto, Vancouver (CAN)"
+    },
+    "D": {
+      "teams": ["Brazil", "Paraguay", "Ivory Coast", "Tunisia"],
+      "note": "Sede: Los Angeles, San Francisco"
+    },
+    "E": {
+      "teams": ["Argentina", "Chile", "Australia", "Saudi Arabia"],
+      "note": "Sede: New York/New Jersey, Miami"
+    },
+    "F": {
+      "teams": ["France", "Belgium", "Nigeria", "Iran"],
+      "note": "Sede: Dallas, Houston"
+    },
+    "G": {
+      "teams": ["Spain", "Serbia", "South Africa", "Uzbekistan"],
+      "note": "Sede: Atlanta, Miami"
+    },
+    "H": {
+      "teams": ["Germany", "Austria", "Algeria", "Japan"],
+      "note": "Sede: Philadelphia, New York/New Jersey"
+    },
+    "I": {
+      "teams": ["England", "Turkey", "Senegal", "Peru"],
+      "note": "Sede: Boston, Philadelphia"
+    },
+    "J": {
+      "teams": ["Portugal", "Croatia", "Egypt", "Costa Rica"],
+      "note": "Sede: Kansas City, Seattle"
+    },
+    "K": {
+      "teams": ["Netherlands", "Denmark", "Ghana", "New Zealand"],
+      "note": "Sede: Los Angeles, San Francisco"
+    },
+    "L": {
+      "teams": ["Colombia", "Uruguay", "Switzerland", "Ukraine"],
+      "note": "Sede: Houston, Kansas City"
+    }
+  },
+  "confederation_slots": {
+    "UEFA": 16,
+    "CONMEBOL": 6,
+    "CONCACAF": 6,
+    "CAF": 9,
+    "AFC": 8,
+    "OFC": 1,
+    "Repechaje": 2
+  },
+  "team_info": {
+    "Argentina": {"confederation": "CONMEBOL", "fifa_ranking": 1, "elo": 2109, "world_cups": 18},
+    "France": {"confederation": "UEFA", "fifa_ranking": 2, "elo": 2075, "world_cups": 16},
+    "England": {"confederation": "UEFA", "fifa_ranking": 3, "elo": 2043, "world_cups": 17},
+    "Brazil": {"confederation": "CONMEBOL", "fifa_ranking": 4, "elo": 2041, "world_cups": 22},
+    "Belgium": {"confederation": "UEFA", "fifa_ranking": 5, "elo": 2009, "world_cups": 14},
+    "Portugal": {"confederation": "UEFA", "fifa_ranking": 6, "elo": 2001, "world_cups": 9},
+    "Spain": {"confederation": "UEFA", "fifa_ranking": 7, "elo": 1998, "world_cups": 16},
+    "Netherlands": {"confederation": "UEFA", "fifa_ranking": 8, "elo": 1988, "world_cups": 11},
+    "Germany": {"confederation": "UEFA", "fifa_ranking": 9, "elo": 1984, "world_cups": 20},
+    "Croatia": {"confederation": "UEFA", "fifa_ranking": 10, "elo": 1958, "world_cups": 6},
+    "Morocco": {"confederation": "CAF", "fifa_ranking": 11, "elo": 1942, "world_cups": 6},
+    "Colombia": {"confederation": "CONMEBOL", "fifa_ranking": 12, "elo": 1934, "world_cups": 7},
+    "Uruguay": {"confederation": "CONMEBOL", "fifa_ranking": 13, "elo": 1940, "world_cups": 14},
+    "Italy": {"confederation": "UEFA", "fifa_ranking": 9, "elo": 1932, "world_cups": 18},
+    "Denmark": {"confederation": "UEFA", "fifa_ranking": 14, "elo": 1928, "world_cups": 6},
+    "Mexico": {"confederation": "CONCACAF", "fifa_ranking": 15, "elo": 1924, "world_cups": 17},
+    "USA": {"confederation": "CONCACAF", "fifa_ranking": 16, "elo": 1918, "world_cups": 11},
+    "Senegal": {"confederation": "CAF", "fifa_ranking": 17, "elo": 1910, "world_cups": 4},
+    "Japan": {"confederation": "AFC", "fifa_ranking": 18, "elo": 1906, "world_cups": 8},
+    "Switzerland": {"confederation": "UEFA", "fifa_ranking": 19, "elo": 1904, "world_cups": 12},
+    "Austria": {"confederation": "UEFA", "fifa_ranking": 20, "elo": 1890, "world_cups": 7},
+    "South Korea": {"confederation": "AFC", "fifa_ranking": 21, "elo": 1882, "world_cups": 11},
+    "Ecuador": {"confederation": "CONMEBOL", "fifa_ranking": 22, "elo": 1878, "world_cups": 4},
+    "Australia": {"confederation": "AFC", "fifa_ranking": 23, "elo": 1870, "world_cups": 6},
+    "Turkey": {"confederation": "UEFA", "fifa_ranking": 24, "elo": 1868, "world_cups": 3},
+    "Chile": {"confederation": "CONMEBOL", "fifa_ranking": 25, "elo": 1862, "world_cups": 10},
+    "Paraguay": {"confederation": "CONMEBOL", "fifa_ranking": 26, "elo": 1850, "world_cups": 9},
+    "Serbia": {"confederation": "UEFA", "fifa_ranking": 27, "elo": 1848, "world_cups": 13},
+    "Ukraine": {"confederation": "UEFA", "fifa_ranking": 28, "elo": 1844, "world_cups": 2},
+    "Ivory Coast": {"confederation": "CAF", "fifa_ranking": 29, "elo": 1840, "world_cups": 4},
+    "Egypt": {"confederation": "CAF", "fifa_ranking": 30, "elo": 1838, "world_cups": 3},
+    "Algeria": {"confederation": "CAF", "fifa_ranking": 31, "elo": 1832, "world_cups": 4},
+    "Nigeria": {"confederation": "CAF", "fifa_ranking": 32, "elo": 1828, "world_cups": 7},
+    "Iran": {"confederation": "AFC", "fifa_ranking": 33, "elo": 1820, "world_cups": 6},
+    "Saudi Arabia": {"confederation": "AFC", "fifa_ranking": 34, "elo": 1815, "world_cups": 6},
+    "Canada": {"confederation": "CONCACAF", "fifa_ranking": 35, "elo": 1810, "world_cups": 3},
+    "Peru": {"confederation": "CONMEBOL", "fifa_ranking": 36, "elo": 1808, "world_cups": 9},
+    "Hungary": {"confederation": "UEFA", "fifa_ranking": 37, "elo": 1802, "world_cups": 9},
+    "Venezuela": {"confederation": "CONMEBOL", "fifa_ranking": 38, "elo": 1788, "world_cups": 1},
+    "Bolivia": {"confederation": "CONMEBOL", "fifa_ranking": 39, "elo": 1780, "world_cups": 4},
+    "Tunisia": {"confederation": "CAF", "fifa_ranking": 40, "elo": 1775, "world_cups": 6},
+    "South Africa": {"confederation": "CAF", "fifa_ranking": 41, "elo": 1770, "world_cups": 4},
+    "Ghana": {"confederation": "CAF", "fifa_ranking": 42, "elo": 1765, "world_cups": 4},
+    "Cameroon": {"confederation": "CAF", "fifa_ranking": 43, "elo": 1760, "world_cups": 9},
+    "Panama": {"confederation": "CONCACAF", "fifa_ranking": 44, "elo": 1710, "world_cups": 2},
+    "Honduras": {"confederation": "CONCACAF", "fifa_ranking": 45, "elo": 1705, "world_cups": 3},
+    "Jamaica": {"confederation": "CONCACAF", "fifa_ranking": 46, "elo": 1698, "world_cups": 1},
+    "Costa Rica": {"confederation": "CONCACAF", "fifa_ranking": 47, "elo": 1718, "world_cups": 6},
+    "Uzbekistan": {"confederation": "AFC", "fifa_ranking": 62, "elo": 1750, "world_cups": 0},
+    "New Zealand": {"confederation": "OFC", "fifa_ranking": 100, "elo": 1650, "world_cups": 2}
+  }
+}
