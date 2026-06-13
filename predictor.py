@@ -496,40 +496,156 @@ def export_all_groups_csv(equipos: dict, output: str = None):
 def validate_against_real(equipos: dict, resultados_reales: list[dict]):
     """
     Compara predicciones contra resultados reales ya jugados.
-    resultados_reales: lista de dicts con keys t1, t2, g1_real, g2_real
+    Muestra análisis de qué variable predijo mejor cada partido.
     """
-    print_header("VALIDACION: PREDICCION vs RESULTADO REAL")
-    correctos, total = 0, 0
+    print_header("VALIDACION: PREDICCION vs RESULTADO REAL — MUNDIAL 2026")
+
+    correctos_resultado = 0
+    correctos_marcador  = 0
+    prob_acumulada      = 0.0
+    total = 0
+
+    todos = []
 
     for r in resultados_reales:
         t1, t2 = r["t1"], r["t2"]
         if t1 not in equipos or t2 not in equipos:
-            print(f"  [AVISO] Equipo no encontrado: {t1} o {t2}")
+            equipos_faltantes = [e for e in [t1, t2] if e not in equipos]
+            print(f"\n  [AVISO] Equipo(s) no en base de datos: {equipos_faltantes}")
             continue
 
-        pred = predict_match(t1, equipos[t1], t2, equipos[t2])
+        e1, e2 = equipos[t1], equipos[t2]
+        pred = predict_match(t1, e1, t2, e2)
         g1r, g2r = r["g1_real"], r["g2_real"]
 
-        resultado_real = ("1" if g1r > g2r else "2" if g2r > g1r else "X")
-        resultado_pred = ("1" if pred["predicted_winner"] == t1
-                          else "2" if pred["predicted_winner"] == t2 else "X")
+        res_real = ("1" if g1r > g2r else "2" if g2r > g1r else "X")
+        res_pred = ("1" if pred["predicted_winner"] == t1
+                    else "2" if pred["predicted_winner"] == t2 else "X")
 
-        acierto = resultado_real == resultado_pred
-        if acierto:
-            correctos += 1
+        acierto_res = res_real == res_pred
+        acierto_marc = (pred["best_score"] == (g1r, g2r))
+        prob_real_resultado = (pred["p_win1"] if res_real == "1"
+                               else pred["p_win2"] if res_real == "2"
+                               else pred["p_draw"])
+
+        if acierto_res:
+            correctos_resultado += 1
+        if acierto_marc:
+            correctos_marcador += 1
+        prob_acumulada += prob_acumulada + prob_real_resultado
         total += 1
 
-        icono = "✓" if acierto else "✗"
-        print(f"\n  {icono} {t1:<22} {g1r}-{g2r}  {t2}")
-        print(f"    Prediccion: {pred['best_score'][0]}-{pred['best_score'][1]}"
-              f"  ({pred['p_win1']*100:.1f}% / {pred['p_draw']*100:.1f}% / {pred['p_win2']*100:.1f}%)")
-        print(f"    Goles esp.: {pred['expected'][0]:.2f} - {pred['expected'][1]:.2f}"
-              f"  |  Elo: {equipos[t1]['elo']} vs {equipos[t2]['elo']}")
+        # Variable que más apoyaba el resultado real
+        elo_diff = e1["elo"] - e2["elo"]
+        elo_fav = t1 if elo_diff > 0 else t2
+        xg_fav  = t1 if e1["xg_prom"] > e2["xg_prom"] else t2
+        ppg_fav = t1 if e1["clasif_ppg"] > e2["clasif_ppg"] else t2
+        forma1  = forma_score(e1["forma_ultimos10"])
+        forma2  = forma_score(e2["forma_ultimos10"])
+        forma_fav = t1 if forma1 > forma2 else t2
 
+        ganador_real = t1 if g1r > g2r else (t2 if g2r > g1r else "Empate")
+
+        todos.append({
+            "t1": t1, "t2": t2, "g1r": g1r, "g2r": g2r,
+            "pred": pred, "acierto_res": acierto_res,
+            "elo_fav": elo_fav, "xg_fav": xg_fav,
+            "ppg_fav": ppg_fav, "forma_fav": forma_fav,
+            "ganador_real": ganador_real,
+            "prob_real": prob_real_resultado,
+        })
+
+    # ── Imprimir análisis partido por partido ────────────────────────────────
+    for d in todos:
+        t1, t2 = d["t1"], d["t2"]
+        e1, e2 = equipos[t1], equipos[t2]
+        pred   = d["pred"]
+        g1r, g2r = d["g1r"], d["g2r"]
+        icono  = "✓" if d["acierto_res"] else "✗"
+
+        print(f"\n  {icono}  {t1.upper():<24} {g1r} - {g2r}  {t2.upper()}")
+        print(f"  {'─'*65}")
+
+        # Prediccion
+        ph = pred["p_win1"]*100
+        pd_ = pred["p_draw"]*100
+        pa = pred["p_win2"]*100
+        bar_h = "█" * int(ph / 4)
+        bar_d = "█" * int(pd_ / 4)
+        bar_a = "█" * int(pa / 4)
+        print(f"  Prediccion modelo:")
+        print(f"    Victoria {t1[:18]:<18}: {ph:5.1f}%  {bar_h}")
+        print(f"    Empate                      : {pd_:5.1f}%  {bar_d}")
+        print(f"    Victoria {t2[:18]:<18}: {pa:5.1f}%  {bar_a}")
+        print(f"    Marcador predicho: {pred['best_score'][0]}-{pred['best_score'][1]}"
+              f"  |  Goles esp.: {pred['expected'][0]:.2f} - {pred['expected'][1]:.2f}")
+
+        # Variables clave
+        print(f"\n  Variables pre-torneo:")
+        print(f"    {'Variable':<28} {t1[:14]:>14} {t2[:14]:>14}  Favorito")
+        print(f"    {'─'*65}")
+        print(f"    {'Elo rating':<28} {e1['elo']:>14,} {e2['elo']:>14,}"
+              f"  -> {d['elo_fav']}")
+        print(f"    {'FIFA Ranking':<28} {'#'+str(e1['fifa_rank']):>14} {'#'+str(e2['fifa_rank']):>14}"
+              f"  -> {'#'+str(min(e1['fifa_rank'],e2['fifa_rank'])) + ' '+[t1,t2][e1['fifa_rank']>e2['fifa_rank']]}")
+        print(f"    {'xG prom. clasificatoria':<28} {e1['xg_prom']:>14.2f} {e2['xg_prom']:>14.2f}"
+              f"  -> {d['xg_fav']}")
+        print(f"    {'xGA prom. (solidez def.)':<28} {e1['xga_prom']:>14.2f} {e2['xga_prom']:>14.2f}"
+              f"  -> {t1 if e1['xga_prom'] < e2['xga_prom'] else t2}")
+        print(f"    {'PPG clasificatoria':<28} {e1['clasif_ppg']:>14.2f} {e2['clasif_ppg']:>14.2f}"
+              f"  -> {d['ppg_fav']}")
+        f1 = forma_score(e1["forma_ultimos10"])
+        f2 = forma_score(e2["forma_ultimos10"])
+        print(f"    {'Forma reciente [0-1]':<28} {f1:>14.3f} {f2:>14.3f}"
+              f"  -> {d['forma_fav']}")
+
+        # Veredicto
+        ganador = d["ganador_real"]
+        prob_r  = d["prob_real"]
+        coincide_elo   = "✓" if d["elo_fav"]   == ganador else "✗"
+        coincide_xg    = "✓" if d["xg_fav"]    == ganador else "✗"
+        coincide_ppg   = "✓" if d["ppg_fav"]   == ganador else "✗"
+        coincide_forma = "✓" if d["forma_fav"]  == ganador else "✗"
+        coincide_model = "✓" if d["acierto_res"] else "✗"
+
+        print(f"\n  Resultado real: {ganador.upper() if ganador != 'Empate' else 'EMPATE'}")
+        print(f"    Prob. asignada al resultado real: {prob_r*100:.1f}%")
+        print(f"    ¿Qué predijo bien?")
+        print(f"      Modelo completo : {coincide_model}")
+        print(f"      Solo Elo        : {coincide_elo}")
+        print(f"      Solo xG         : {coincide_xg}")
+        print(f"      Solo PPG clasif.: {coincide_ppg}")
+        print(f"      Solo Forma      : {coincide_forma}")
+
+    # ── Resumen global ───────────────────────────────────────────────────────
     if total > 0:
         print(f"\n{'═'*70}")
-        print(f"  PRECISION RESULTADO (G/E/P): {correctos}/{total} "
-              f"= {correctos/total*100:.1f}%")
+        print(f"  RESUMEN GLOBAL — {total} PARTIDOS JUGADOS")
+        print(f"{'═'*70}")
+        print(f"  Acierto en resultado (G/E/P) : {correctos_resultado}/{total}"
+              f" = {correctos_resultado/total*100:.0f}%")
+        print(f"  Acierto en marcador exacto   : {correctos_marcador}/{total}"
+              f" = {correctos_marcador/total*100:.0f}%")
+        print()
+
+        # Ranking de variables por aciertos
+        var_aciertos = {"Elo": 0, "xG": 0, "PPG": 0, "Forma": 0, "Modelo": 0}
+        for d in todos:
+            g = d["ganador_real"]
+            if g == "Empate":
+                continue  # Empate no computa favorito
+            if d["elo_fav"]   == g: var_aciertos["Elo"]    += 1
+            if d["xg_fav"]    == g: var_aciertos["xG"]     += 1
+            if d["ppg_fav"]   == g: var_aciertos["PPG"]    += 1
+            if d["forma_fav"] == g: var_aciertos["Forma"]  += 1
+            if d["acierto_res"]:    var_aciertos["Modelo"] += 1
+
+        ganados = sum(1 for d in todos if d["ganador_real"] != "Empate")
+        print(f"  Ranking de variables (partidos sin empate: {ganados}):")
+        for var, ac in sorted(var_aciertos.items(), key=lambda x: -x[1]):
+            barra = "█" * ac
+            pct = ac/ganados*100 if ganados > 0 else 0
+            print(f"    {var:<12}: {ac}/{ganados}  {barra}  ({pct:.0f}%)")
         print(f"{'═'*70}")
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -596,17 +712,15 @@ def main():
         return
 
     if args.validar:
-        # ── RESULTADOS REALES: agrega aqui los partidos ya jugados ──────────
-        # Edita esta lista con los marcadores reales del Mundial 2026
+        # ── RESULTADOS REALES MUNDIAL 2026 (actualizar con cada jornada) ────
         resultados_reales = [
-            # Ejemplo formato: {"t1": "USA", "t2": "Panama", "g1_real": 3, "g2_real": 0}
-            # Agrega aqui los resultados que ya conoces:
+            # Jornada 1 — 11 y 12 de junio 2026
+            {"t1": "Mexico",               "t2": "South Africa",        "g1_real": 2, "g2_real": 0},
+            {"t1": "South Korea",          "t2": "Czech Republic",      "g1_real": 2, "g2_real": 1},
+            {"t1": "Canada",               "t2": "Bosnia and Herzegovina","g1_real": 1, "g2_real": 1},
+            {"t1": "USA",                  "t2": "Paraguay",            "g1_real": 4, "g2_real": 1},
         ]
-        if not resultados_reales:
-            print("\n[INFO] Agrega los resultados reales en la seccion --validar de main.py")
-            print("       Edita la lista 'resultados_reales' con los marcadores reales.")
-        else:
-            validate_against_real(equipos, resultados_reales)
+        validate_against_real(equipos, resultados_reales)
         return
 
     # Sin argumentos: menu

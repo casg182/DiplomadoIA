@@ -432,6 +432,24 @@
       "valor_plantilla_M": 40, "mundiales_jugados": 2,
       "goleador_principal": "Chris Wood", "goles_goleador": 4
     },
+    "Czech Republic": {
+      "grupo": "A", "confederacion": "UEFA",
+      "elo": 1848, "fifa_rank": 36,
+      "clasif_ppg": 1.80, "clasif_gf": 20, "clasif_gc": 12, "clasif_partidos": 10,
+      "forma_ultimos10": [3,1,3,3,0,3,3,1,3,3],
+      "xg_prom": 1.58, "xga_prom": 0.98,
+      "valor_plantilla_M": 310, "mundiales_jugados": 10,
+      "goleador_principal": "Patrik Schick", "goles_goleador": 5
+    },
+    "Bosnia and Herzegovina": {
+      "grupo": "B", "confederacion": "UEFA",
+      "elo": 1782, "fifa_rank": 56,
+      "clasif_ppg": 1.60, "clasif_gf": 16, "clasif_gc": 13, "clasif_partidos": 10,
+      "forma_ultimos10": [3,1,3,0,3,3,1,3,1,3],
+      "xg_prom": 1.42, "xga_prom": 1.12,
+      "valor_plantilla_M": 175, "mundiales_jugados": 1,
+      "goleador_principal": "Edin Dzeko", "goles_goleador": 3
+    },
     "Uzbekistan": {
       "grupo": "G", "confederacion": "AFC",
       "elo": 1752, "fifa_rank": 62,
