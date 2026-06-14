@@ -714,11 +714,17 @@ def main():
     if args.validar:
         # ── RESULTADOS REALES MUNDIAL 2026 (actualizar con cada jornada) ────
         resultados_reales = [
-            # Jornada 1 — 11 y 12 de junio 2026
-            {"t1": "Mexico",               "t2": "South Africa",        "g1_real": 2, "g2_real": 0},
-            {"t1": "South Korea",          "t2": "Czech Republic",      "g1_real": 2, "g2_real": 1},
+            # Jornada 1 — 11 jun
+            {"t1": "Mexico",               "t2": "South Africa",          "g1_real": 2, "g2_real": 0},
+            {"t1": "South Korea",          "t2": "Czech Republic",        "g1_real": 2, "g2_real": 1},
+            # Jornada 1 — 12 jun
             {"t1": "Canada",               "t2": "Bosnia and Herzegovina","g1_real": 1, "g2_real": 1},
-            {"t1": "USA",                  "t2": "Paraguay",            "g1_real": 4, "g2_real": 1},
+            {"t1": "USA",                  "t2": "Paraguay",              "g1_real": 4, "g2_real": 1},
+            # Jornada 1 — 13 jun
+            {"t1": "Qatar",                "t2": "Switzerland",           "g1_real": 1, "g2_real": 1},
+            {"t1": "Brazil",               "t2": "Morocco",               "g1_real": 1, "g2_real": 1},
+            {"t1": "Haiti",                "t2": "Scotland",              "g1_real": 0, "g2_real": 1},
+            {"t1": "Australia",            "t2": "Turkey",                "g1_real": 2, "g2_real": 0},
         ]
         validate_against_real(equipos, resultados_reales)
         return
